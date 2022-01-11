@@ -7,13 +7,13 @@ package frc.robot.commands.drive;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class TankDrive extends CommandBase {
   /** Creates a new TankDrive. */
-  DriveTrain m_driveTrain;
+  DrivetrainSubsystem m_driveTrain;
   DoubleSupplier m_leftValue, m_rightValue;
-  public TankDrive(DriveTrain driveTrain, DoubleSupplier leftValue, DoubleSupplier rightValue) {
+  public TankDrive(DrivetrainSubsystem driveTrain, DoubleSupplier leftValue, DoubleSupplier rightValue) {
     addRequirements(driveTrain);
     m_driveTrain = driveTrain;
     m_leftValue = leftValue;
