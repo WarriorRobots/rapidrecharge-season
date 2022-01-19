@@ -4,6 +4,7 @@
 
 package frc.robot.commands.drive;
 
+import java.lang.reflect.Parameter;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -15,6 +16,9 @@ public class TankDrive extends CommandBase {
   DoubleSupplier m_leftValue, m_rightValue;
   public TankDrive(DrivetrainSubsystem driveTrain, DoubleSupplier leftValue, DoubleSupplier rightValue) {
     addRequirements(driveTrain);
+    //driveTrain = m_driveTrain;
+    //leftValue = m_leftValue;
+    //rightValue = m_rightValue;
     m_driveTrain = driveTrain;
     m_leftValue = leftValue;
     m_rightValue = rightValue;
