@@ -6,11 +6,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.camera.CameraChangePipeline;
 import frc.robot.commands.drive.TankDrive;
+import frc.robot.commands.turret.TurretRotate;
+import frc.robot.commands.turret.TurretUnsafeRotate;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
-//import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -26,10 +30,13 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   protected static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   protected static final CameraSubsystem m_CameraSubsystem = new CameraSubsystem();
+  protected static final TurretSubsystem m_TurretSubsystem = new TurretSubsystem();
 
   private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
   private final CameraChangePipeline m_TrackingCameraChangePipeline = new CameraChangePipeline(m_CameraSubsystem, CameraSubsystem.Tracking_Pipline);
   private final CameraChangePipeline m_DriverCameraChangePipeline = new CameraChangePipeline(m_CameraSubsystem, CameraSubsystem.Drive_Pipline);
+  private final TurretRotate m_TurretRotate = new TurretRotate(m_TurretSubsystem, ()->IO.getXBoxLeftX());
+  private final TurretUnsafeRotate m_TurretUnsafeRotate = new TurretUnsafeRotate(m_TurretSubsystem, ()->IO.getXBoxLeftY());
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
