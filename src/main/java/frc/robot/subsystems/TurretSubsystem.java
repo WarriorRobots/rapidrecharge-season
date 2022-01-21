@@ -32,7 +32,7 @@ public class TurretSubsystem extends SubsystemBase {
    */
   public void rotateNoSafety(double voltage) {
     turret.set(voltage);
-  } 
+  }
 
   /**
    * Rotates to a position given as a heading relative to the robot
