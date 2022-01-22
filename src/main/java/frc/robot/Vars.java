@@ -10,8 +10,8 @@ public class Vars {
   public static final boolean TURRET_ENCODER_REVERSED = false;
 
   // turret
-  public static final double MAX_ROTATION = 60; // degrees clockwise
-  public static final double MIN_ROTATION = -240; // degrees clockwise
+  public static final double MAX_ROTATION = 175; // degrees clockwise
+  public static final double MIN_ROTATION = -175; // degrees clockwise
   public static final double TURRET_TOLERANCE = 2; // degrees
   public static final double TURRET_KP = 10;
 }

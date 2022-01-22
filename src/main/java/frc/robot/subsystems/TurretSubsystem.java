@@ -88,6 +88,10 @@ public class TurretSubsystem extends SubsystemBase {
     return (int) Math.round(degrees * CLICKS_PER_REV / 360.0);
   }
 
+  public double getClicks(){
+    return turret.getSelectedSensorPosition();
+  }
+
   /** 
    * Converts betweens encoder clicks and degrees.
    */  
