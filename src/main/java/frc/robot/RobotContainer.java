@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TurretAim;
 import frc.robot.commands.camera.CameraChangePipeline;
 import frc.robot.commands.drive.TankDrive;
 import frc.robot.commands.turret.TurretPreset;
@@ -51,6 +52,7 @@ public class RobotContainer {
   private final TurretPreset m_TurretPreset90 = new TurretPreset(m_TurretSubsystem, 90);
   private final TurretPreset m_TurretPresetMinus90 = new TurretPreset(m_TurretSubsystem, -90);
   private final TurretPreset m_TurretPreset0 = new TurretPreset(m_TurretSubsystem, 0);
+  private final TurretAim m_TurretAim = new TurretAim(m_CameraSubsystem, m_TurretSubsystem);//{public boolean isFinished(){return false;}};
 private final RunCommand m_DashWriter = new RunCommand(()-> WriteToDashboard()){public boolean runsWhenDisabled(){return true;}};
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -81,6 +83,7 @@ private final RunCommand m_DashWriter = new RunCommand(()-> WriteToDashboard()){
     IO.xbox_Y.whenPressed(m_TurretPreset0);
     IO.xbox_B.whenPressed(m_TurretPreset90);
     IO.xbox_X.whenPressed(m_TurretPresetMinus90);
+    IO.xbox_A.whileHeld(m_TurretAim);
     }
 
   public void WriteToDashboard(){
