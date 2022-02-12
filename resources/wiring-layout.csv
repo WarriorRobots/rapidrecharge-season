@@ -1,0 +1,17 @@
+PORT PDP,ID Pheonix,Subystem/Purpose,Controller,Motor,Encoder
+H0,00-F,Feed,TalonSRX,?,N/A
+H1,01-PL,PickUp-Lower,TalonSRX,?,?
+H2,02-Turret,Turret,TalonSRX,?,Yes,
+H3,03-PUU-90,UpperPickUp90deg,TalonSRX,?,Yes
+L4,04-PUU,PickUpUpper,TalonSRX,?,N/A
+L5,05-RS,RightShooterMotor,TalonFX,TalonFX,Integrated
+L6,06-LS,LeftShooterMotor,TalonFX,TalonFX,Integrated
+L7,,,,,
+L8,,,,,
+L9,,,,,
+L10,,,,,
+L11,,,,,
+H12,,,,,
+H13,,,,,
+H14,,,,,
+H15,,,,,
