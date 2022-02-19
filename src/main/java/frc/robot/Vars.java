@@ -11,6 +11,7 @@ public class Vars {
   public static final boolean TURRET_REVERSED = false;
   public static final boolean SHOOTER_LEFT_REVERSED = true;
   public static final boolean SHOOTER_RIGHT_REVERSED = false;
+  public static final boolean SHOOTER_BACK_INVERTED = false;
 
   // flipped concoders
   public static final boolean TURRET_ENCODER_REVERSED = false;
@@ -30,4 +31,5 @@ public class Vars {
   public static final double SHOOTER_FEED = 1; // percent (for hopper and feed to feed)
   public static final double SHOOTER_SLOW_FEED = 0.2; // percent (for hopper and feed to feed when the shooter is not rev-ed)
   public static final double SHOOTER_INTAKE_AGITATE = 0.25; // percent (to agitate balls with the intake)
+  public static final double SHOOTER_BACK_ESTIMATED_VOLTAGE = 0.3;
 }

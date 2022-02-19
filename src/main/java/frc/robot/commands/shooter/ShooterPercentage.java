@@ -12,15 +12,15 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterVoltage extends CommandBase {
+public class ShooterPercentage extends CommandBase {
   ShooterSubsystem m_shooter;
-  DoubleSupplier m_voltage;
+  DoubleSupplier m_percent;
   /**
    * Creates a new ShooterVoltage.
    */
-  public ShooterVoltage(ShooterSubsystem shooter, DoubleSupplier voltage) {
+  public ShooterPercentage(ShooterSubsystem shooter, DoubleSupplier percent) {
     m_shooter = shooter;
-    m_voltage = voltage;
+    m_percent = percent;
     addRequirements(m_shooter);
   }
 
@@ -32,7 +32,7 @@ public class ShooterVoltage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setVoltage(m_voltage.getAsDouble());
+    m_shooter.setPercentage(m_percent.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

@@ -9,4 +9,6 @@ public class RobotMap {
   //CAN
   public static final int ID_SHOOTER_LEFT = 2;
   public static final int ID_SHOOTER_RIGHT = 13;
+
+  public static final int ID_SHOOTER_BACK = 0; //XXX placeholder
 }

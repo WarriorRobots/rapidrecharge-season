@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.RobotMap;
 import frc.robot.Vars;
@@ -22,8 +24,9 @@ import frc.robot.Vars;
  */
 public class ShooterSubsystem extends SubsystemBase {
   
-  private WPI_TalonFX shooter_left;
-  private WPI_TalonFX slave_right;
+  private WPI_TalonFX m_shooter_left;
+  private WPI_TalonFX m_slave_right;
+  private WPI_TalonSRX m_back_motor;
   
   /** Number of encoder clicks per every revolution of the encoder */
   static final int CLICKS_PER_REV = 2048; // https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html#sensor-resolution
@@ -41,25 +44,30 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem()
   {
     //TODO change values
-    shooter_left = new WPI_TalonFX(RobotMap.ID_SHOOTER_LEFT);
+    m_shooter_left = new WPI_TalonFX(RobotMap.ID_SHOOTER_LEFT);
+    m_shooter_left.setInverted(Vars.SHOOTER_LEFT_REVERSED);
+    m_shooter_left.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
+    m_shooter_left.config_kF(Constants.PRIMARY_PID, ESTIMATED_VOLTAGE*1023/NATIVE_ESTIMATED_VELOCITY, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
+    m_shooter_left.config_kP(Constants.PRIMARY_PID, Vars.SHOOTER_KP, Constants.MS_TIMEOUT);
     
-    shooter_left.setInverted(Vars.SHOOTER_LEFT_REVERSED);
-    shooter_left.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
-    shooter_left.config_kF(Constants.PRIMARY_PID, ESTIMATED_VOLTAGE*1023/NATIVE_ESTIMATED_VELOCITY, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
-    shooter_left.config_kP(Constants.PRIMARY_PID, Vars.SHOOTER_KP, Constants.MS_TIMEOUT);
-    
-    slave_right = new WPI_TalonFX(RobotMap.ID_SHOOTER_RIGHT);
-    slave_right.follow(shooter_left);
-    slave_right.setInverted(Vars.SHOOTER_RIGHT_REVERSED);
-   }
+    m_slave_right = new WPI_TalonFX(RobotMap.ID_SHOOTER_RIGHT);
+    m_slave_right.follow(m_shooter_left);
+    m_slave_right.setInverted(Vars.SHOOTER_RIGHT_REVERSED);
+  
+    m_back_motor = new WPI_TalonSRX(RobotMap.ID_SHOOTER_BACK);
+    m_back_motor.setInverted(Vars.SHOOTER_BACK_INVERTED);
+    m_back_motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
+    m_back_motor.config_kP(Constants.PRIMARY_PID, value, Constants.MS_TIMEOUT)
+  }
+
 
   /**
    * Run the shooter motor at a percent from -1 to 1.
    * @param voltage Percent from -1 to 1.
    */
-  public void setVoltage(double voltage)
+  public void setPercentage(double voltage)
   {
-    shooter_left.set(ControlMode.PercentOutput, voltage);
+    m_shooter_left.set(ControlMode.PercentOutput, voltage);
   }
 
   /**
@@ -68,7 +76,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public void setRPM(double rpm)
   {
-    shooter_left.set(ControlMode.Velocity, toNative(rpm));
+    m_shooter_left.set(ControlMode.Velocity, toNative(rpm));
   }
 
   /**
@@ -76,7 +84,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public double getGain()
   {
-    return shooter_left.getMotorOutputPercent();
+    return m_shooter_left.getMotorOutputPercent();
   }
 
   /**
@@ -85,21 +93,21 @@ public class ShooterSubsystem extends SubsystemBase {
   public double getRPM()
   {
     // (native / 100ms) * (600ms / m) * (rev/native) = rev / m
-    return toRPM(shooter_left.getSelectedSensorVelocity());
+    return toRPM(m_shooter_left.getSelectedSensorVelocity());
   }
 
   /**
    * @return the raw encoder value.
    */
   public double getEnc() {
-    return shooter_left.getSelectedSensorPosition();
+    return m_shooter_left.getSelectedSensorPosition();
   }
 
   /**
    * @return the velocity of the motor in 
    */
   public double getEncVelocity() {
-    return shooter_left.getSelectedSensorVelocity();
+    return m_shooter_left.getSelectedSensorVelocity();
   }
 
   /**
@@ -123,7 +131,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void stop() {
-    shooter_left.stopMotor();
+    m_shooter_left.stopMotor();
   }
 
   @Override
