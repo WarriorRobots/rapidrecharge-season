@@ -12,4 +12,11 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {}
+
+public final class Constants {
+
+  public static final int PRIMARY_PID = 0; // primary pid ids
+  public static final int AUXILARY_PID = 1; // auxilary pid ids
+  public static final int MS_TIMEOUT = 10; // 10 ms before a talon config fails
+
+}

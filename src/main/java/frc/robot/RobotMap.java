@@ -5,4 +5,8 @@ public class RobotMap {
   public static final int ID_FRONTRIGHT = 1;
   public static final int ID_REARLEFT = 15;
   public static final int ID_REARRIGHT = 2;
+
+  //CAN
+  public static final int ID_SHOOTER_LEFT = 2;
+  public static final int ID_SHOOTER_RIGHT = 13;
 }
