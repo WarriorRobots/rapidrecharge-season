@@ -32,6 +32,7 @@ public class RobotContainer {
   private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
   private final CameraChangePipeline m_TrackingCameraChangePipeline = new CameraChangePipeline(m_CameraSubsystem, CameraSubsystem.Tracking_Pipline);
   private final CameraChangePipeline m_DriverCameraChangePipeline = new CameraChangePipeline(m_CameraSubsystem, CameraSubsystem.Drive_Pipline);
+  // TODO robot should be able to shoot balls high using values from the dashboard; see: https://github.com/WarriorRobots/dummyRobot2022/blob/aeeb984605764853f1215d135f280ca5627459ee/src/main/java/frc/robot/RobotContainer.java#L36
   private final Linear m_linear = new Linear(m_drivetrain);
 
   /** The container for the robot. Conj
@@ -56,6 +57,8 @@ public class RobotContainer {
     // Changes to Tracking Josh POV when Pressed
     IO.leftJoystick_11.whenPressed(m_TrackingCameraChangePipeline);
     IO.leftJoystick_12.whileHeld(m_linear);
+
+    // TODO a button should turn on the shooter
   }
 
   /**

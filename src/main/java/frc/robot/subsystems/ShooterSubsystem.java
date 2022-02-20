@@ -57,67 +57,105 @@ public class ShooterSubsystem extends SubsystemBase {
     m_back_motor = new WPI_TalonSRX(RobotMap.ID_SHOOTER_BACK);
     m_back_motor.setInverted(Vars.SHOOTER_BACK_INVERTED);
     m_back_motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
-    m_back_motor.config_kP(Constants.PRIMARY_PID, value, Constants.MS_TIMEOUT)
+    // XXX mimic formula above
+    m_back_motor.config_kP(Constants.PRIMARY_PID, 0, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
   }
 
 
   /**
    * Run the shooter motor at a percent from -1 to 1.
-   * @param voltage Percent from -1 to 1.
+   * @param front Percent from -1 to 1.
+   * @param back Percent from -1 to 1.
    */
-  public void setPercentage(double voltage)
+  public void setPercentage(double front, double back)
   {
-    m_shooter_left.set(ControlMode.PercentOutput, voltage);
+    m_shooter_left.set(ControlMode.PercentOutput, front);
+    // TODO should set back motor
   }
 
   /**
    * Run the shooter motor at an RPM.
-   * @param rpm RPM of the shooter flywheel. (Not the motor or encoder.)
+   * @param front RPM of the shooter flywheel. (Not the motor or encoder.)
+   * @param back RPM of the shooter back wheel. (Not the motor or encoder.)
    */
-  public void setRPM(double rpm)
+  public void setRPM(double front, double back)
   {
-    m_shooter_left.set(ControlMode.Velocity, toNative(rpm));
+    m_shooter_left.set(ControlMode.Velocity, toNative_Front(front));
+    // TODO should set back motor
   }
 
   /**
-   * @return The percent the talon is commanding to the motor.
+   * Get the percent the talon is commanding to the front motors.
+   * @return Percentage from -1 to 1.
    */
-  public double getGain()
+  public double getGainFront()
   {
     return m_shooter_left.getMotorOutputPercent();
   }
 
   /**
-   * @return The RPM of the shooter flywheel. (Not the motor or encoder.)
+   * Get the percent the talon is commanding to the back motor.
+   * @return Percentage from -1 to 1.
    */
-  public double getRPM()
+  public double getGainBack()
+  {
+    return 0; // TODO
+  }
+
+
+  /**
+   * @return the RPM of the shooter flywheel. (Not the motor or encoder.)
+   */
+  public double getRPMFront()
   {
     // (native / 100ms) * (600ms / m) * (rev/native) = rev / m
-    return toRPM(m_shooter_left.getSelectedSensorVelocity());
+    return toRPM_Front(m_shooter_left.getSelectedSensorVelocity());
   }
 
   /**
-   * @return the raw encoder value.
+   * @return the RPM of the shooter back wheel. (Not the motor or encoder.)
    */
-  public double getEnc() {
+  public double getRPMBack()
+  {
+    return 0; // TODO
+  }
+
+  /**
+   * Get the raw encoder value of the front motor
+   * @return native units
+   */
+  public double getEncFront()
+  {
     return m_shooter_left.getSelectedSensorPosition();
   }
 
   /**
-   * @return the velocity of the motor in 
+   * Get the raw velocity of the front motor
+   * @return Native units / 100ms
    */
-  public double getEncVelocity() {
+  public double getEncVelocityFront()
+  {
     return m_shooter_left.getSelectedSensorVelocity();
   }
 
   /**
-   * Converts from native units per 100ms to RPM.
+   * Converts from native units per 100ms to RPM for the front wheel.
    * @param native_units Native units / 100ms
    * @return RPM
    */
-  public static double toRPM(double native_units)
+  public static double toRPM_Front(double native_units)
   { 
     return ((native_units * 600) / CLICKS_PER_REV);
+  }
+
+  /**
+   * Converts from native units per 100ms to RPM for the front wheel.
+   * @param native_units Native units / 100ms
+   * @return RPM
+   */
+  public static double toRPM_Back(double native_units)
+  {
+    return 0; // TODO
   }
   
   /**
@@ -125,18 +163,30 @@ public class ShooterSubsystem extends SubsystemBase {
    * @param rpm RPM
    * @return Native units / 100ms
    */
-  public static double toNative(double rpm)
+  public static double toNative_Front(double rpm)
   { 
     return ((rpm / 600) * CLICKS_PER_REV);
   }
 
-  public void stop() {
+  /**
+   * Converts from RPM to native units per 100ms.
+   * @param rpm RPM
+   * @return Native units / 100ms
+   */
+  public static double toNative_Back(double rpm)
+  {
+    return 0; // TODO
+  }
+
+  public void stop()
+  {
     m_shooter_left.stopMotor();
+    // TODO should stop back motor
   }
 
   @Override
-  public void periodic() {
-
+  public void periodic()
+  {
   }
 
 }
