@@ -11,4 +11,5 @@ public class RobotMap {
   public static final int ID_SHOOTER_RIGHT = 13;
 
   public static final int ID_SHOOTER_BACK = 0; //XXX placeholder
+  public static final int ID_TURRET = 5;
 }

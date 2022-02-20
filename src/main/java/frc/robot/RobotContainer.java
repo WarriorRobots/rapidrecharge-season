@@ -4,17 +4,27 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TurretAim;
 import frc.robot.commands.camera.CameraChangePipeline;
 import frc.robot.commands.drive.Linear;
 import frc.robot.commands.drive.TankDrive;
+import frc.robot.commands.turret.TurretPreset;
+import frc.robot.commands.turret.TurretRotate;
+import frc.robot.commands.turret.TurretUnsafeRotate;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
-//import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,17 +33,35 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-
+  private ShuffleboardTab tab = Shuffleboard.getTab("Turret");
+  private NetworkTableEntry TurretClicks=
+     tab.add("Turret Clicks", 0)
+        .getEntry();
+        private NetworkTableEntry TurretDeg=
+     tab.add("Turret Degrees", 0)
+        .getEntry();
   // The robot's subsystems and commands are defined here...
   protected static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   protected static final CameraSubsystem m_CameraSubsystem = new CameraSubsystem();
+  protected static final TurretSubsystem m_TurretSubsystem = new TurretSubsystem();
 
 
   private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
+  private final Linear m_linear = new Linear(m_drivetrain);
+
   private final CameraChangePipeline m_TrackingCameraChangePipeline = new CameraChangePipeline(m_CameraSubsystem, CameraSubsystem.Tracking_Pipline);
   private final CameraChangePipeline m_DriverCameraChangePipeline = new CameraChangePipeline(m_CameraSubsystem, CameraSubsystem.Drive_Pipline);
+
   // TODO robot should be able to shoot balls high using values from the dashboard; see: https://github.com/WarriorRobots/dummyRobot2022/blob/aeeb984605764853f1215d135f280ca5627459ee/src/main/java/frc/robot/RobotContainer.java#L36
-  private final Linear m_linear = new Linear(m_drivetrain);
+
+  private final TurretRotate m_TurretRotate = new TurretRotate(m_TurretSubsystem, ()->IO.getXBoxLeftX());
+  private final TurretUnsafeRotate m_TurretUnsafeRotate = new TurretUnsafeRotate(m_TurretSubsystem, ()->IO.getXBoxLeftY());
+  private final TurretPreset m_TurretPreset90 = new TurretPreset(m_TurretSubsystem, 90);
+  private final TurretPreset m_TurretPresetMinus90 = new TurretPreset(m_TurretSubsystem, -90);
+  private final TurretPreset m_TurretPreset0 = new TurretPreset(m_TurretSubsystem, 0);
+  private final TurretAim m_TurretAim = new TurretAim(m_CameraSubsystem, m_TurretSubsystem);//{public boolean isFinished(){return false;}};
+
+  private final RunCommand m_DashWriter = new RunCommand(()-> WriteToDashboard()){public boolean runsWhenDisabled(){return true;}};
 
   /** The container for the robot. Conj
    * tains subsystems, OI devices, and commands. */
@@ -42,6 +70,10 @@ public class RobotContainer {
     configureButtonBindings();
 
     CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_tankDrive);
+    
+    
+    
+    CommandScheduler.getInstance().schedule(m_DashWriter);
     
   }
 
@@ -59,6 +91,17 @@ public class RobotContainer {
     IO.leftJoystick_12.whileHeld(m_linear);
 
     // TODO a button should turn on the shooter
+
+    IO.xbox_RB.whileHeld(m_TurretUnsafeRotate);
+    IO.xbox_Y.whenPressed(m_TurretPreset0);
+    IO.xbox_B.whenPressed(m_TurretPreset90);
+    IO.xbox_X.whenPressed(m_TurretPresetMinus90);
+    IO.xbox_A.whileHeld(m_TurretAim);
+  }
+
+  public void WriteToDashboard(){
+    TurretClicks.setDouble(m_TurretSubsystem.getClicks());
+    TurretDeg.setDouble(m_TurretSubsystem.getRotationDegrees());
   }
 
   /**
