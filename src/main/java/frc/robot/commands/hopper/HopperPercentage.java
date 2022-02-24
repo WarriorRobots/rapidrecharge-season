@@ -11,9 +11,15 @@ import frc.robot.subsystems.HopperSubsystem;
 
 public class HopperPercentage extends CommandBase {
   /** Creates a new HopperPercentage. */
+  private HopperSubsystem m_hopper;
+  private DoubleSupplier m_belt_top, m_belt_bottom;
+
   public HopperPercentage(HopperSubsystem hopper, DoubleSupplier top, DoubleSupplier bottom) {
-    // TODO
-    // Use addRequirements() here to declare subsystem dependencies.
+    m_hopper = hopper;
+    m_belt_top = top;
+    m_belt_bottom = bottom;
+    addRequirements(this.m_hopper);
+
   }
 
   // Called when the command is initially scheduled.
@@ -23,13 +29,13 @@ public class HopperPercentage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO give the hopper the values of the suppliers
+    m_hopper.setPercentage(m_belt_top.getAsDouble(), m_belt_bottom.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // TODO stop the hopper
+    m_hopper.stop();
   }
 
   // Returns true when the command should end.

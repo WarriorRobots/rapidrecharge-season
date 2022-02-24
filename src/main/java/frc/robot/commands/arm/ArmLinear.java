@@ -11,9 +11,14 @@ import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmLinear extends CommandBase {
   /** Creates a new ArmLinear. */
+  private ArmSubsystem m_arm;
+  private DoubleSupplier m_percentage;
+
   public ArmLinear(ArmSubsystem arm, DoubleSupplier percentage) {
-    // TODO
     // Use addRequirements() here to declare subsystem dependencies.
+    m_arm = arm;
+    m_percentage = percentage;
+    addRequirements(this.m_arm);
   }
 
   // Called when the command is initially scheduled.
@@ -23,13 +28,13 @@ public class ArmLinear extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO give the arm the value of the supplier
+    m_arm.setPercentage(m_percentage.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // TODO rotate the arm to wherever it is when this method is called (use setAngleUnbounded())
+    m_arm.setAngleUnbounded(m_arm.getPosition());
   }
 
   // Returns true when the command should end.

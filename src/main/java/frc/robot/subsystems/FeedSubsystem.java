@@ -4,13 +4,22 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 
 public class FeedSubsystem extends SubsystemBase {
   /** Creates a new FeedSubsystem. */
+  private WPI_TalonSRX m_feed;
+  private DigitalInput m_infraredSensor;
+
   public FeedSubsystem() {
-    // TODO Feed subsystem has 1 WPI_TalonSRX
-    // TODO Feed has an infrared sensor; see: https://github.com/WarriorRobots/infiniterecharge-season/blob/d32cc45dbcdcf51c9a6d12789ab94d90367efd9a/src/main/java/frc/robot/subsystems/FeedSubsystem.java#L32
+    //TODO change IDs
+    m_feed = new WPI_TalonSRX(RobotMap.ID_FEED);
+    m_infraredSensor = new DigitalInput(RobotMap.ID_FEED_INFRARED);
   }
 
   /**
@@ -19,7 +28,7 @@ public class FeedSubsystem extends SubsystemBase {
    */
   public void setPercentage(double percent)
   {
-    // TODO set percentage of the feed
+    m_feed.set(ControlMode.PercentOutput, percent);
   }
 
   /**
@@ -27,7 +36,7 @@ public class FeedSubsystem extends SubsystemBase {
    */
   public boolean containsBall()
   {
-    return false; // TODO
+    return !m_infraredSensor.get(); // infrared reads false when it sees a ball
   }
 
   /**
@@ -35,7 +44,7 @@ public class FeedSubsystem extends SubsystemBase {
    */
   public void stop()
   {
-    // TODO
+    m_feed.stopMotor();
   }
 
   @Override

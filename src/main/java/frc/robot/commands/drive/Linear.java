@@ -10,8 +10,9 @@ import frc.robot.Vars;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class Linear extends CommandBase {
-  DrivetrainSubsystem m_drive;
- private PIDController pidAngle;
+  /** Creates a new AutoStraight. */
+  private DrivetrainSubsystem m_drive;
+  private PIDController pidAngle;
 
 
 

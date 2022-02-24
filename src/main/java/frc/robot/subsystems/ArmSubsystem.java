@@ -4,14 +4,31 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.RobotMap;
+import frc.robot.Vars;
 
 public class ArmSubsystem extends SubsystemBase {
   /** Creates a new ArmSubsystem. */
+  
+  private WPI_TalonSRX m_arm;
+  private DigitalInput m_hallEffect;
+
   public ArmSubsystem() {
-    // TODO Arm subsystem has 1 WPI_TalonSRX 
-    // TODO The Talon needs to be configured to have a feedback sensor and kP
-    // TODO Arm has a Hall Effect Sensor; see: https://github.com/WarriorRobots/infiniterecharge-season/blob/d32cc45dbcdcf51c9a6d12789ab94d90367efd9a/src/main/java/frc/robot/subsystems/ArmSubsystem.java#L46
+
+    // TODO Change ID
+    m_arm = new WPI_TalonSRX(RobotMap.ID_ARM);
+
+    // TODO Change sensors?
+    m_arm.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
+
+    m_hallEffect = new DigitalInput(RobotMap.ID_HALLEFFECT);
   }
 
   /**
@@ -21,7 +38,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void setPercentage(double percent)
   {
-    // TODO
+    m_arm.set(ControlMode.PercentOutput, percent);
   }
 
   /**
@@ -31,7 +48,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void setAngleUnbounded(double degrees)
   {
-    // TODO (tip: finish toClicks() first)
+    m_arm.set(ControlMode.Position, toNative(degrees));
   }
 
   /**
@@ -40,8 +57,17 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void setAngleBounded(double degrees)
   {
-    // TODO (tip: finish toClicks() first)
-  }
+    //TODO change min/max angles
+    m_arm.set(ControlMode.Position, toNative(degrees));
+    if (degrees < Vars.ARM_MINIMUM_ANGLE) {
+      m_arm.set(ControlMode.Position, toNative(Vars.ARM_MINIMUM_ANGLE));
+      System.out.println("Arm moving to " + degrees + ", cutting short to prevent crash!");
+    } else if (degrees > Vars.ARM_MINIMUM_ANGLE) {
+      m_arm.set(ControlMode.Position, toNative(Vars.ARM_MAXIMUM_ANGLE));
+      System.out.println("Arm moving to " + degrees + ", cutting short to prevent crash!");
+    } else {
+      m_arm.set(ControlMode.Position, toNative(degrees));
+    }  }
 
   /** 
    * Return the encoder value of the arm.
@@ -49,7 +75,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public double getEnc()
   {
-    return 0; // TODO
+    return m_arm.getSelectedSensorPosition();
   }
 
   /**
@@ -58,7 +84,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public double getPosition()
   {
-    return 0; // TODO
+    return toDegrees(m_arm.getSelectedSensorPosition());
   }
 
   /**
@@ -68,7 +94,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public double toDegrees(double native_units)
   {
-    return 0; // TODO
+    return (double) native_units / Vars.CLICKS_PER_REV * 360.0;
   }
 
   /**
@@ -78,7 +104,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public double toNative(double degrees)
   {
-    return 0; // TODO
+    return (int) Math.round(degrees * Vars.CLICKS_PER_REV / 360.0);
   }
 
   /**
@@ -86,7 +112,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public boolean getHallEffect()
   {
-    return false; // TODO
+    return !m_hallEffect.get(); // hall effect sensor reads false when the arm is at it's physical zero
   }
 
   /**
@@ -94,7 +120,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void reset()
   {
-    // TODO
+    m_arm.setSelectedSensorPosition(0);
   }
 
   /**
@@ -103,7 +129,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void setDegrees(double degrees)
   {
-    // TODO (note: this should convert the degrees to native units and set the encoder similar to reset())
+    m_arm.setSelectedSensorPosition(toNative(degrees));
   }
 
   /**
@@ -111,13 +137,17 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void stop()
   {
-    // TODO
+    m_arm.stopMotor();
   }
 
   @Override
   public void periodic()
   {
+
     // This method will be called once per scheduler run
-    // TODO when the hall effect is triggered, reset the arm encoder
+    if (getHallEffect()) {
+      reset();
+    }
+
   }
 }

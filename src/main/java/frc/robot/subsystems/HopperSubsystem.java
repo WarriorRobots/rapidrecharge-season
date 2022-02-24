@@ -4,12 +4,22 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 
 public class HopperSubsystem extends SubsystemBase {
   /** Creates a new HopperSubsystem. */
+
+  private WPI_TalonSRX m_belt_top;
+  private WPI_TalonSRX m_belt_bottom;
+
   public HopperSubsystem() {
-    // TODO Hopper Subsystem has two WPI_TalonSRX's (one for the top belts and one for the bottom)
+    // TODO Change IDs
+    m_belt_top = new WPI_TalonSRX(RobotMap.ID_BELT_TOP);
+    m_belt_bottom = new WPI_TalonSRX(RobotMap.ID_BELT_BOTTOM);
   }
 
   /**
@@ -19,7 +29,8 @@ public class HopperSubsystem extends SubsystemBase {
    */
   public void setPercentage(double top, double bottom)
   {
-    // TODO
+    m_belt_top.set(ControlMode.PercentOutput, top);
+    m_belt_bottom.set(ControlMode.PercentOutput, bottom);
   }
 
   /**
@@ -27,7 +38,8 @@ public class HopperSubsystem extends SubsystemBase {
    */
   public void stop()
   {
-    // TODO
+    m_belt_top.stopMotor();
+    m_belt_bottom.stopMotor();
   }
 
   @Override

@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class TurretUnsafeRotate extends CommandBase {
-    
-  TurretSubsystem m_turret;
-  DoubleSupplier m_input;
+  /** Creates a new TurretUnsafeRotate. */
+  private TurretSubsystem m_turret;
+  private DoubleSupplier m_input;
 
   /**
    * Rotate the turret linearly by use a supplier.

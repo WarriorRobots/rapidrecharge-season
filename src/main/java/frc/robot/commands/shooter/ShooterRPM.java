@@ -17,16 +17,14 @@ public class ShooterRPM extends CommandBase {
    * Creates a new ShooterRPM.
    */
   ShooterSubsystem m_shooter;
-  DoubleSupplier m_rpm;
-  // TODO
+  DoubleSupplier m_front_rpm, m_back_rpm;
 
   public ShooterRPM(ShooterSubsystem shooter, DoubleSupplier front_rpm, DoubleSupplier back_rpm) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooter;
-    m_rpm = front_rpm;
-    // TODO
+    m_front_rpm = front_rpm;
+    m_back_rpm = back_rpm;
     addRequirements(this.m_shooter);
-
   }
 
   // Called when the command is initially scheduled.
@@ -36,8 +34,7 @@ public class ShooterRPM extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO
-    // m_shooter.setRPM(m_rpm.getAsDouble());
+    m_shooter.setRPM(m_front_rpm.getAsDouble(), m_front_rpm.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

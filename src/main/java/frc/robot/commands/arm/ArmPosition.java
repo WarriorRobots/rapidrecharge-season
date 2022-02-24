@@ -5,13 +5,19 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Vars;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmPosition extends CommandBase {
   /** Creates a new ArmPosition. */
+  private ArmSubsystem m_arm;
+  private double m_degrees;
+
   public ArmPosition(ArmSubsystem arm, double degrees) {
-    // TODO
-    // Use addRequirements() here to declare subsystem dependencies.
+    // Use addRequirements() here to declare subsystem dependencies.  
+    m_arm = arm;
+    m_degrees = degrees;
+    addRequirements(m_arm);
   }
 
   // Called when the command is initially scheduled.
@@ -21,7 +27,7 @@ public class ArmPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO command the arm to the position (use setAngleBounded())
+    m_arm.setAngleBounded(m_degrees);
   }
 
   // Called once the command ends or is interrupted.
@@ -31,6 +37,7 @@ public class ArmPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false; // TODO this command is finished when the arm is in the correct location (plus minus some tolerance)
+    //TODO change tolerance
+    return Math.abs(m_arm.getPosition() - m_degrees) < Vars.ARM_TOLERANCE;
   }
 }

@@ -19,9 +19,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-  WPI_VictorSPX m_frontLeft, m_rearLeft, m_frontRight, m_rearRight;
-  MotorControllerGroup m_left, m_right;
-  DifferentialDrive m_drive;
+  /** Creates a new DrivetrainSubsystem. */
+  private WPI_VictorSPX m_frontLeft, m_rearLeft, m_frontRight, m_rearRight;
+  private MotorControllerGroup m_left, m_right;
+  private DifferentialDrive m_drive;
   private AHRS navx;
   
   /** Creates a new DriveTrain. */

@@ -11,13 +11,18 @@ import frc.robot.subsystems.ArmSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ArmStabilize extends InstantCommand {
+    /** Creates a new ArmStabilize. */
+  private ArmSubsystem m_arm;
+
   public ArmStabilize(ArmSubsystem arm) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_arm = arm;
+    addRequirements(m_arm);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // TODO rotate the arm to wherever it is when this method is called (use setAngleUnbounded())
+    m_arm.setAngleUnbounded(m_arm.getPosition());
   }
 }

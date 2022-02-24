@@ -44,6 +44,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem()
   {
     //TODO change values
+    //TODO change sensors?
     m_shooter_left = new WPI_TalonFX(RobotMap.ID_SHOOTER_LEFT);
     m_shooter_left.setInverted(Vars.SHOOTER_LEFT_REVERSED);
     m_shooter_left.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
@@ -57,7 +58,7 @@ public class ShooterSubsystem extends SubsystemBase {
     m_back_motor = new WPI_TalonSRX(RobotMap.ID_SHOOTER_BACK);
     m_back_motor.setInverted(Vars.SHOOTER_BACK_INVERTED);
     m_back_motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
-    // XXX mimic formula above
+    m_back_motor.config_kF(Constants.PRIMARY_PID, ESTIMATED_VOLTAGE*1023/NATIVE_ESTIMATED_VELOCITY, Constants.MS_TIMEOUT);
     m_back_motor.config_kP(Constants.PRIMARY_PID, 0, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
   }
 
@@ -70,7 +71,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void setPercentage(double front, double back)
   {
     m_shooter_left.set(ControlMode.PercentOutput, front);
-    // TODO should set back motor
+    m_back_motor.set(ControlMode.PercentOutput, back);
   }
 
   /**
@@ -81,7 +82,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void setRPM(double front, double back)
   {
     m_shooter_left.set(ControlMode.Velocity, toNative_Front(front));
-    // TODO should set back motor
+    m_back_motor.set(ControlMode.Velocity, toNative_Back(back));
   }
 
   /**
@@ -99,7 +100,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public double getGainBack()
   {
-    return 0; // TODO
+    return m_back_motor.getMotorOutputPercent();
   }
 
 
@@ -117,7 +118,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public double getRPMBack()
   {
-    return 0; // TODO
+    return toRPM_Back(m_back_motor.getSelectedSensorVelocity());
   }
 
   /**
@@ -155,7 +156,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public static double toRPM_Back(double native_units)
   {
-    return 0; // TODO
+    return ((native_units * 600) / CLICKS_PER_REV);
   }
   
   /**
@@ -175,13 +176,13 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public static double toNative_Back(double rpm)
   {
-    return 0; // TODO
+    return ((rpm / 600) * CLICKS_PER_REV);
   }
 
   public void stop()
   {
     m_shooter_left.stopMotor();
-    // TODO should stop back motor
+    m_back_motor.stopMotor();
   }
 
   @Override

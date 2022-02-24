@@ -13,17 +13,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterPercentage extends CommandBase {
-  ShooterSubsystem m_shooter;
-  DoubleSupplier m_percent;
-  // TODO
+  private ShooterSubsystem m_shooter;
+  private DoubleSupplier m_front_percent, m_back_percent;
 
   /**
    * Creates a new ShooterVoltage.
    */
   public ShooterPercentage(ShooterSubsystem shooter, DoubleSupplier front_percent, DoubleSupplier back_percent) {
     m_shooter = shooter;
-    m_percent = front_percent;
-    // TODO
+    m_front_percent = front_percent;
+    m_back_percent = back_percent;
     addRequirements(m_shooter);
   }
 
@@ -35,8 +34,7 @@ public class ShooterPercentage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO
-    // m_shooter.setPercentage(m_percent.getAsDouble());
+    m_shooter.setPercentage(m_front_percent.getAsDouble(), m_back_percent.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

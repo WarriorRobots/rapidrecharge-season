@@ -32,4 +32,12 @@ public class Vars {
   public static final double SHOOTER_SLOW_FEED = 0.2; // percent (for hopper and feed to feed when the shooter is not rev-ed)
   public static final double SHOOTER_INTAKE_AGITATE = 0.25; // percent (to agitate balls with the intake)
   public static final double SHOOTER_BACK_ESTIMATED_VOLTAGE = 0.3;
+
+  //Arms
+  public static final double ARM_MINIMUM_ANGLE = -5; // degrees
+  public static final double ARM_MAXIMUM_ANGLE = 265; // degrees
+  public static final double ARM_TOLERANCE = 3; // degrees  
+
+  //Units
+  public static final double CLICKS_PER_REV = 4096.0;
 }

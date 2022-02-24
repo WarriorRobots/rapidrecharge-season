@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Vars;
@@ -10,9 +10,10 @@ import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class TurretAim extends CommandBase {
-  CameraSubsystem m_Camera;
-  TurretSubsystem m_Turret;
   /** Creates a new TurretAim. */
+  private CameraSubsystem m_Camera;
+  private TurretSubsystem m_Turret;
+
   public TurretAim(CameraSubsystem Camera,TurretSubsystem Turret) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Camera = Camera;
