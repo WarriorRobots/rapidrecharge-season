@@ -24,4 +24,7 @@ public class RobotMap {
   //Feed
   public static final int ID_FEED = 0;
   public static final int ID_FEED_INFRARED = 0;
+
+  //Pneumatics
+  public static final int ID_PCM = 0;
 }
