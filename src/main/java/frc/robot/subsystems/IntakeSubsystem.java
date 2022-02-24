@@ -10,20 +10,20 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
-public class HopperSubsystem extends SubsystemBase {
-  /** Creates a new HopperSubsystem. */
+public class IntakeSubsystem extends SubsystemBase {
+  /** Creates a new IntakeSubsystem. */
 
   private WPI_TalonSRX m_belt_top;
   private WPI_TalonSRX m_belt_bottom;
 
-  public HopperSubsystem() {
+  public IntakeSubsystem() {
     // TODO Change IDs
     m_belt_top = new WPI_TalonSRX(RobotMap.ID_BELT_TOP);
     m_belt_bottom = new WPI_TalonSRX(RobotMap.ID_BELT_BOTTOM);
   }
 
   /**
-   * Run the Hopper at a percentage.
+   * Run the Intake at a percentage.
    * @param top Percent -1.0 to 1.0
    * @param bottom Percent -1.0 to 1.0
    */
@@ -34,7 +34,7 @@ public class HopperSubsystem extends SubsystemBase {
   }
 
   /**
-   * Stops the Hopper motors.
+   * Stops the Intake motors.
    */
   public void stop()
   {

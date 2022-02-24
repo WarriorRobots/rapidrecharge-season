@@ -2,23 +2,23 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.hopper;
+package frc.robot.commands.intake;
 
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class HopperPercentage extends CommandBase {
-  /** Creates a new HopperPercentage. */
-  private HopperSubsystem m_hopper;
+public class IntakePercentage extends CommandBase {
+  /** Creates a new IntakePercentage. */
+  private IntakeSubsystem m_intake;
   private DoubleSupplier m_belt_top, m_belt_bottom;
 
-  public HopperPercentage(HopperSubsystem hopper, DoubleSupplier top, DoubleSupplier bottom) {
-    m_hopper = hopper;
+  public IntakePercentage(IntakeSubsystem intake, DoubleSupplier top, DoubleSupplier bottom) {
+    m_intake = intake;
     m_belt_top = top;
     m_belt_bottom = bottom;
-    addRequirements(this.m_hopper);
+    addRequirements(this.m_intake);
 
   }
 
@@ -29,13 +29,13 @@ public class HopperPercentage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_hopper.setPercentage(m_belt_top.getAsDouble(), m_belt_bottom.getAsDouble());
+    m_intake.setPercentage(m_belt_top.getAsDouble(), m_belt_bottom.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_hopper.stop();
+    m_intake.stop();
   }
 
   // Returns true when the command should end.
