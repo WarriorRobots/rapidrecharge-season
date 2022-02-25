@@ -27,12 +27,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
   
   /** Creates a new DriveTrain. */
   public DrivetrainSubsystem() {
-    m_frontLeft = new WPI_VictorSPX(RobotMap.ID_FRONTLEFT);
-    m_rearLeft = new WPI_VictorSPX(RobotMap.ID_REARLEFT);
+    m_frontLeft = new WPI_VictorSPX(RobotMap.ID_LEFT_FRONT);
+    m_rearLeft = new WPI_VictorSPX(RobotMap.ID_LEFT_REAR);
     m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
  
-    m_frontRight = new WPI_VictorSPX(RobotMap.ID_FRONTRIGHT);
-    m_rearRight = new WPI_VictorSPX(RobotMap.ID_REARRIGHT);
+    m_frontRight = new WPI_VictorSPX(RobotMap.ID_RIGHT_FRONT);
+    m_rearRight = new WPI_VictorSPX(RobotMap.ID_RIGH_TREAR);
     m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
  
     m_left.setInverted(Vars.LEFT_DRIVE_INVERTED);

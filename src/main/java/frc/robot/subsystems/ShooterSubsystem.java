@@ -43,7 +43,6 @@ public class ShooterSubsystem extends SubsystemBase {
 	 */
   public ShooterSubsystem()
   {
-    //TODO change values
     //TODO change sensors?
     m_shooter_left = new WPI_TalonFX(RobotMap.ID_SHOOTER_LEFT);
     m_shooter_left.setInverted(Vars.SHOOTER_LEFT_REVERSED);
@@ -55,7 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
     m_slave_right.follow(m_shooter_left);
     m_slave_right.setInverted(Vars.SHOOTER_RIGHT_REVERSED);
   
-    m_back_motor = new WPI_TalonSRX(RobotMap.ID_SHOOTER_BACK);
+    m_back_motor = new WPI_TalonSRX(RobotMap.ID_SHOOTER_KICKER);
     m_back_motor.setInverted(Vars.SHOOTER_BACK_INVERTED);
     m_back_motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
     m_back_motor.config_kF(Constants.PRIMARY_PID, ESTIMATED_VOLTAGE*1023/NATIVE_ESTIMATED_VELOCITY, Constants.MS_TIMEOUT);

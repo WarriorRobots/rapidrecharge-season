@@ -28,7 +28,7 @@ public class ArmSubsystem extends SubsystemBase {
     // TODO Change sensors?
     m_arm.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
 
-    m_hallEffect = new DigitalInput(RobotMap.ID_HALLEFFECT);
+    m_hallEffect = new DigitalInput(RobotMap.ID_ARM_HALLEFFECT);
   }
 
   /**
