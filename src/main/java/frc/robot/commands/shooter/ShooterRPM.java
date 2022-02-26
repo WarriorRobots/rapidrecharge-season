@@ -35,6 +35,7 @@ public class ShooterRPM extends CommandBase {
   @Override
   public void execute() {
     m_shooter.setRPM(m_front_rpm.getAsDouble(), m_front_rpm.getAsDouble());
+    
   }
 
   // Called once the command ends or is interrupted.

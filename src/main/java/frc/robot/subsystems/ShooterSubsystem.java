@@ -179,6 +179,10 @@ public class ShooterSubsystem extends SubsystemBase {
     return ((rpm / 600) * CLICKS_PER_REV);
   }
 
+  public static double getCommandedRPM(double rpm){
+      return rpm;
+  }
+
   public void stop()
   {
     m_shooter_left.stopMotor();

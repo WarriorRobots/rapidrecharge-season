@@ -23,6 +23,8 @@ public class Vars {
   public static final double TURRET_KP = 10;
 
   //TODO change values
+  public static final double INTAKE_PERCENT = 1;
+
   //shooter
   public static final double SHOOTER_DEFAULT = 0; //rpm
   public static final double SHOOTER_TOLERANCE = 200; // +rpm
