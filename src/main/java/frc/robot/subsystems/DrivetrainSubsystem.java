@@ -32,7 +32,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
  
     m_frontRight = new WPI_VictorSPX(RobotMap.ID_RIGHT_FRONT);
-    m_rearRight = new WPI_VictorSPX(RobotMap.ID_RIGH_TREAR);
+    m_rearRight = new WPI_VictorSPX(RobotMap.ID_RIGHT_REAR);
     m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
  
     m_left.setInverted(Vars.LEFT_DRIVE_INVERTED);

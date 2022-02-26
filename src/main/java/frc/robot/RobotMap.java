@@ -19,7 +19,7 @@ public class RobotMap {
   public static final int ID_FEED = 11;
   public static final int ID_TURRET = 12;
   public static final int ID_SHOOTER_RIGHT = 13;
-  public static final int ID_RIGH_TREAR = 14;
+  public static final int ID_RIGHT_REAR = 14;
   public static final int ID_RIGHT_FRONT = 15;
 
   // Pneumatics

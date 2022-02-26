@@ -18,4 +18,18 @@ public final class Constants {
   public static final int AUXILARY_PID = 1; // auxilary pid ids
   public static final int MS_TIMEOUT = 10; // 10 ms before a talon config fails
 
+  //Limelight2
+  public static final double PIXELS_H = 320;
+  public static final double PIXELS_V = 240;
+	public static final double RAD_H = 1.04;
+	public static final double RAD_V = 0.867;
+	public static final double PPR_H = PIXELS_H / RAD_H; // Pixels per Radian
+	public static final double PPR_V = PIXELS_V / RAD_V; // Pixels per Radian
+
+  //Field Constants (May be Incomplete) 
+  public static final double BAR1 = 48.75; 
+  public static final double BAR2 = 60.25; 
+  public static final double BAR3 = 75.625; 
+  public static final double BAR4 = 91; 
+  public static final double VISION_TAPE = 101.625; //Height of vision tape off floor
 }
