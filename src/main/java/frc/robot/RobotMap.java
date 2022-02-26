@@ -5,12 +5,12 @@ package frc.robot;
  */
 public class RobotMap {
   // CAN
-  public static final int ID_LEFT_FRONT = 0;
-  public static final int ID_LEFT_REAR = 1;
+  public static final int ID_LEFT_REAR = 0;
+  public static final int ID_LEFT_FRONT = 1;
   public static final int ID_SHOOTER_LEFT = 2;
   public static final int ID_SHOOTER_KICKER = 3;
-  public static final int ID_PICKUP_LOWER = 4;
-  public static final int ID_ARM = 5;
+  public static final int ID_ARM = 4;
+  public static final int ID_PICKUP_LOWER = 5;
   // public static final int ID_06 = 6;
   // The Limelight isn't a device with an ID, if it did, it would be 07
   // public static final int ID_08 = 8;
