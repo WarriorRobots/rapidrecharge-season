@@ -21,11 +21,7 @@ public class ArmSubsystem extends SubsystemBase {
   private DigitalInput m_hallEffect;
 
   public ArmSubsystem() {
-
-    // TODO Change ID
     m_arm = new WPI_TalonSRX(RobotMap.ID_ARM);
-
-    // TODO Change sensors?
     m_arm.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
 
     m_hallEffect = new DigitalInput(RobotMap.ID_ARM_HALLEFFECT);
@@ -58,7 +54,6 @@ public class ArmSubsystem extends SubsystemBase {
   public void setAngleBounded(double degrees)
   {
     //TODO change min/max angles
-    m_arm.set(ControlMode.Position, toNative(degrees));
     if (degrees < Vars.ARM_MINIMUM_ANGLE) {
       m_arm.set(ControlMode.Position, toNative(Vars.ARM_MINIMUM_ANGLE));
       System.out.println("Arm moving to " + degrees + ", cutting short to prevent crash!");
