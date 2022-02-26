@@ -18,6 +18,10 @@ public final class Constants {
   public static final int AUXILARY_PID = 1; // auxilary pid ids
   public static final int MS_TIMEOUT = 10; // 10 ms before a talon config fails
 
+  //Sensor resolution see: https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html#sensor-resolution
+  public static final double CLICKS_PER_REV_QUADRATURE = 4096.0;
+  public static final double CLICKS_PER_REV_INTEGRATED = 2048.0; 
+
   //Limelight2
   public static final double PIXELS_H = 320;
   public static final double PIXELS_V = 240;

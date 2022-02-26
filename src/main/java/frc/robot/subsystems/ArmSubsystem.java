@@ -89,7 +89,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public double toDegrees(double native_units)
   {
-    return (double) native_units / Vars.CLICKS_PER_REV * 360.0;
+    return (double) native_units / Constants.CLICKS_PER_REV_QUADRATURE * 360.0;
   }
 
   /**
@@ -99,7 +99,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public double toNative(double degrees)
   {
-    return (int) Math.round(degrees * Vars.CLICKS_PER_REV / 360.0);
+    return (int) Math.round(degrees * Constants.CLICKS_PER_REV_QUADRATURE / 360.0);
   }
 
   /**

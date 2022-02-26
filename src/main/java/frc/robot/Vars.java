@@ -26,6 +26,10 @@ public class Vars {
   public static final double INTAKE_PERCENT = 1;
 
   //shooter
+  public static final double SHOOTER_BACK_CLICKS_PER_REV = 4096.0;
+  public static final double SHOOTER_FRONT_CLICKS_PER_REV = 4096.0; //TODO check
+  /** output rotations per input rotations */
+  public static final double SHOOTER_FRONT_GEARING = 4.0/5.0; 
   public static final double SHOOTER_DEFAULT = 0; //rpm
   public static final double SHOOTER_TOLERANCE = 200; // +rpm
   public static final double SHOOTER_KP = 0.15;
@@ -33,13 +37,21 @@ public class Vars {
   public static final double SHOOTER_FEED = 1; // percent (for hopper and feed to feed)
   public static final double SHOOTER_SLOW_FEED = 0.2; // percent (for hopper and feed to feed when the shooter is not rev-ed)
   public static final double SHOOTER_INTAKE_AGITATE = 0.25; // percent (to agitate balls with the intake)
-  public static final double SHOOTER_BACK_ESTIMATED_VOLTAGE = 0.3;
 
   //Arms
   public static final double ARM_MINIMUM_ANGLE = -5; // degrees
   public static final double ARM_MAXIMUM_ANGLE = 265; // degrees
   public static final double ARM_TOLERANCE = 3; // degrees  
 
-  //Units
-  public static final double CLICKS_PER_REV = 4096.0;
+  /** Typical motor output as percent */
+  public static final double SHOOTER_FRONT_ESTIMATED_VOLTAGE = 0; // TODO move this to Vars
+  /** Velocity of shooter in native units per 100ms at typical motor output (at the encoder) */
+  public static final int SHOOTER_FRONT_NATIVE_ESTIMATED_VELOCITY = 0; // TODO move this to Vars
+  
+  /** Typical motor output as percent */
+  public static final double SHOOTER_BACK_ESTIMATED_VOLTAGE = 0; // TODO move this to Vars
+  /** Velocity of shooter in native units per 100ms at typical motor output (at the encoder) */
+  public static final int SHOOTER_BACK_NATIVE_ESTIMATED_VELOCITY = 0; // TODO move this to Vars
+
+  
 }
