@@ -17,7 +17,6 @@ public class FeedSubsystem extends SubsystemBase {
   private DigitalInput m_infraredSensor;
 
   public FeedSubsystem() {
-    //TODO change IDs
     m_feed = new WPI_TalonSRX(RobotMap.ID_FEED);
     m_infraredSensor = new DigitalInput(RobotMap.ID_FEED_INFRARED);
   }

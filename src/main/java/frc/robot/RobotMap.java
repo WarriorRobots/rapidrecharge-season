@@ -1,27 +1,31 @@
 package frc.robot;
 
+/**
+ * All device IDs belong here. (Eg. Motor controllers, sensors, pneumatics, etc.)
+ */
 public class RobotMap {
-  public static final int ID_FRONTLEFT = 14;
-  public static final int ID_FRONTRIGHT = 1;
-  public static final int ID_REARLEFT = 15;
-  public static final int ID_REARRIGHT = 2;
-
-  //CAN
+  // CAN
+  public static final int ID_LEFT_FRONT = 0;
+  public static final int ID_LEFT_REAR = 1;
   public static final int ID_SHOOTER_LEFT = 2;
+  public static final int ID_SHOOTER_KICKER = 3;
+  public static final int ID_PICKUP_LOWER = 4;
+  public static final int ID_ARM = 5;
+  // public static final int ID_06 = 6;
+  // The Limelight isn't a device with an ID, if it did, it would be 07
+  // public static final int ID_08 = 8;
+  // public static final int ID_09 = 9;
+  public static final int ID_PICKUP_UPPER = 10;
+  public static final int ID_FEED = 11;
+  public static final int ID_TURRET = 12;
   public static final int ID_SHOOTER_RIGHT = 13;
+  public static final int ID_RIGH_TREAR = 14;
+  public static final int ID_RIGHT_FRONT = 15;
 
-  public static final int ID_SHOOTER_BACK = 0; //XXX placeholder
-  public static final int ID_TURRET = 5;
+  // Pneumatics
+  public static final int ID_PCM = 0;
 
-  //Intake
-  public static final int ID_BELT_TOP = 0;
-  public static final int ID_BELT_BOTTOM = 0;
-
-  //Arm
-  public static final int ID_ARM = 0;
-  public static final int ID_HALLEFFECT = 0;
-
-  //Feed
-  public static final int ID_FEED = 0;
+  // DIO
   public static final int ID_FEED_INFRARED = 0;
+  public static final int ID_ARM_HALLEFFECT = 9;
 }

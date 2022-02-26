@@ -17,9 +17,8 @@ public class IntakeSubsystem extends SubsystemBase {
   private WPI_TalonSRX m_belt_bottom;
 
   public IntakeSubsystem() {
-    // TODO Change IDs
-    m_belt_top = new WPI_TalonSRX(RobotMap.ID_BELT_TOP);
-    m_belt_bottom = new WPI_TalonSRX(RobotMap.ID_BELT_BOTTOM);
+    m_belt_top = new WPI_TalonSRX(RobotMap.ID_PICKUP_UPPER);
+    m_belt_bottom = new WPI_TalonSRX(RobotMap.ID_PICKUP_LOWER);
   }
 
   /**
