@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.Vars;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
@@ -18,7 +19,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public IntakeSubsystem() {
     m_belt_top = new WPI_TalonSRX(RobotMap.ID_PICKUP_UPPER);
+    m_belt_top.setInverted(Vars.INTAKE_TOP_REVERSED);
     m_belt_bottom = new WPI_TalonSRX(RobotMap.ID_PICKUP_LOWER);
+    m_belt_bottom.setInverted(Vars.INTAKE_BOTTOM_REVERSED);
   }
 
   /**

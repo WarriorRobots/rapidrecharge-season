@@ -12,9 +12,9 @@ import frc.robot.subsystems.FeedSubsystem;
 public class FeedPercentage extends CommandBase {
   /** Creates a new FeedPercentage. */
   private FeedSubsystem m_feed;
-  private DoubleSupplier m_percent;
+  private Double m_percent;
 
-  public FeedPercentage(FeedSubsystem feed, DoubleSupplier percent) {
+  public FeedPercentage(FeedSubsystem feed, Double percent) {
     // Use addRequirements() here to declare subsystem dependencies.    
     m_feed = feed;
     m_percent = percent;
@@ -28,7 +28,7 @@ public class FeedPercentage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feed.setPercentage(m_percent.getAsDouble());
+    m_feed.setPercentage(m_percent);
   }
 
   // Called once the command ends or is interrupted.

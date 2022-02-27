@@ -18,7 +18,7 @@ public class FeedSubsystem extends SubsystemBase {
 
   public FeedSubsystem() {
     m_feed = new WPI_TalonSRX(RobotMap.ID_FEED);
-    m_infraredSensor = new DigitalInput(RobotMap.ID_FEED_INFRARED);
+   //m_infraredSensor = new DigitalInput(RobotMap.ID_FEED_INFRARED);
   }
 
   /**
@@ -35,7 +35,8 @@ public class FeedSubsystem extends SubsystemBase {
    */
   public boolean containsBall()
   {
-    return !m_infraredSensor.get(); // infrared reads false when it sees a ball
+    //return !m_infraredSensor.get(); // infrared reads false when it sees a ball
+    return false;
   }
 
   /**

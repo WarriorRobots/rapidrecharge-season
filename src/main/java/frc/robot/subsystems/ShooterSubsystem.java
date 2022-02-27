@@ -30,7 +30,6 @@ public class ShooterSubsystem extends SubsystemBase {
   
   // TODO the below variables should be sparated into one for the front and one for the back motor
 
-
   /**
    * Instantiates new subsystem; make ONLY ONE.
 	 * <p>
@@ -174,9 +173,6 @@ public class ShooterSubsystem extends SubsystemBase {
     return ((rpm / 600) * Constants.CLICKS_PER_REV_QUADRATURE);
   }
 
-  public static double getCommandedRPM(double rpm){
-      return rpm;
-  }
 
   public void stop()
   {

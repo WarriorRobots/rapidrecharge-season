@@ -22,8 +22,10 @@ public class ArmSubsystem extends SubsystemBase {
 
   public ArmSubsystem() {
     m_arm = new WPI_TalonSRX(RobotMap.ID_ARM);
-    m_arm.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
-
+    m_arm.setInverted(Vars.ARM_REVERSED);
+    // m_arm.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
+    // m_arm.setSensorPhase(Vars.ARM_ENCODER_REVERSED);
+    // m_arm.config_kP(Constants.PRIMARY_PID, Vars.ARM_P, Constants.MS_TIMEOUT);
     m_hallEffect = new DigitalInput(RobotMap.ID_ARM_HALLEFFECT);
   }
 

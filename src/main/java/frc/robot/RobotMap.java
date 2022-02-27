@@ -27,5 +27,5 @@ public class RobotMap {
 
   // DIO
   public static final int ID_FEED_INFRARED = 0;
-  public static final int ID_ARM_HALLEFFECT = 9;
+  public static final int ID_ARM_HALLEFFECT = 0;
 }

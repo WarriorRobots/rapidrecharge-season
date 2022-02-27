@@ -14,25 +14,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.Vars;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DrivetrainSubsystem. */
-  private WPI_VictorSPX m_frontLeft, m_rearLeft, m_frontRight, m_rearRight;
+  private WPI_TalonFX m_frontLeft, m_rearLeft, m_frontRight, m_rearRight;
   private MotorControllerGroup m_left, m_right;
   private DifferentialDrive m_drive;
   private AHRS navx;
-  
+ 
   /** Creates a new DriveTrain. */
   public DrivetrainSubsystem() {
-    m_frontLeft = new WPI_VictorSPX(RobotMap.ID_LEFT_FRONT);
-    m_rearLeft = new WPI_VictorSPX(RobotMap.ID_LEFT_REAR);
+    m_frontLeft = new WPI_TalonFX(RobotMap.ID_LEFT_FRONT);
+    m_rearLeft = new WPI_TalonFX(RobotMap.ID_LEFT_REAR);
     m_left = new MotorControllerGroup(m_frontLeft, m_rearLeft);
  
-    m_frontRight = new WPI_VictorSPX(RobotMap.ID_RIGHT_FRONT);
-    m_rearRight = new WPI_VictorSPX(RobotMap.ID_RIGHT_REAR);
+    m_frontRight = new WPI_TalonFX(RobotMap.ID_RIGHT_FRONT);
+    m_rearRight = new WPI_TalonFX(RobotMap.ID_RIGHT_REAR);
     m_right = new MotorControllerGroup(m_frontRight, m_rearRight);
  
     m_left.setInverted(Vars.LEFT_DRIVE_INVERTED);
