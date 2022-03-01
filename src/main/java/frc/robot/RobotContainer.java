@@ -12,12 +12,14 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.arm.ArmLinear;
 import frc.robot.commands.arm.ArmPosition;
 import frc.robot.commands.camera.CameraChangePipeline;
-import frc.robot.commands.drive.Linear;
+//import frc.robot.commands.drive.Linear;
 import frc.robot.commands.drive.TankDrive;
 import frc.robot.commands.feed.FeedPercentage;
 import frc.robot.commands.intake.IntakeBall;
 import frc.robot.commands.intake.IntakePercentage;
+import frc.robot.commands.shooter.ShooterFeed;
 import frc.robot.commands.shooter.ShooterPercentage;
+import frc.robot.commands.shooter.ShooterPrep;
 import frc.robot.commands.shooter.ShooterRPM;
 import frc.robot.commands.turret.TurretAim;
 import frc.robot.commands.turret.TurretPreset;
@@ -33,6 +35,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -76,7 +79,12 @@ public class RobotContainer {
           private NetworkTableEntry ShooterBackPercentage =
       tab1.add("Shooter Back Percent Input", 0)
           .getEntry();
-          
+          private NetworkTableEntry InfraredSensor =
+          tab1.add("Ball Detection",0)
+          .getEntry();
+          private NetworkTableEntry HallEffect =
+          tab1.add("HallEffect Detection",0)
+          .getEntry();
    
 
   
@@ -92,7 +100,16 @@ public class RobotContainer {
 
 // Drivetrain
   private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
-  private final Linear m_linear = new Linear(m_drivetrain);
+  //private final Linear m_linear = new Linear(m_drivetrain);
+  private final SequentialCommandGroup m_shooterSequence = new SequentialCommandGroup(
+    new ShooterPrep(m_IntakeSubsystem, m_FeedSubsystem),
+    new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem){public void end(boolean interrupted){/* This is empty is to not stop the motor from rev-ing*/}}
+  ){public void end(boolean interrupted){m_IntakeSubsystem.stop();;m_FeedSubsystem.stop();}}; // This is to stop the hopper and feed if the command is stopped however not stop the shooter, that is handled by UnRev
+  /** Clears the shooter and runs the shooter at an rpm for the shooter to then be fed */
+  private final SequentialCommandGroup m_revTrigger = new SequentialCommandGroup(
+    new ShooterPrep(m_IntakeSubsystem, m_FeedSubsystem),
+    new ShooterRPM(m_ShooterSubsystem,()->FrontRPM.getDouble(0),()->BackSpinRPMINPUT.getDouble(0) ){public void end(boolean interrupted){/* This is empty is to not stop the motor from rev-ing*/}}
+  );
 // Camera
   private final CameraChangePipeline m_TrackingCameraChangePipeline = new CameraChangePipeline(m_CameraSubsystem, CameraSubsystem.Tracking_Pipline);
   private final CameraChangePipeline m_DriverCameraChangePipeline = new CameraChangePipeline(m_CameraSubsystem, CameraSubsystem.Drive_Pipline);
@@ -120,10 +137,10 @@ public class RobotContainer {
   // Intake
   private final IntakeBall m_IntakeBallForward = new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem,1.0);
   private final IntakeBall m_IntakeBallBack = new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, -1.0);
-  private final IntakePercentage m_IntakePercentage = new IntakePercentage(m_IntakeSubsystem,()->IntakeTopInput.getDouble(0), ()->IntakeBottomInput.getDouble(0));
+  private final IntakePercentage m_IntakePercentage = new IntakePercentage(m_IntakeSubsystem,-1.0, 1.0);
   // Shooter
    private final ShooterRPM m_ShooterRPM = new ShooterRPM(m_ShooterSubsystem,()-> FrontRPM.getDouble(0),()->BackSpinRPMINPUT.getDouble(0));
-   private final ShooterPercentage m_ShooterPercent = new ShooterPercentage(m_ShooterSubsystem, ()->ShooterFrontPercentage.getDouble(.25), ()->ShooterBackPercentage.getDouble(0.25));
+   private final ShooterPercentage m_ShooterPercent = new ShooterPercentage(m_ShooterSubsystem, -0.50, 0.50);
 
 
   
@@ -154,13 +171,14 @@ public class RobotContainer {
     // IO.leftJoystick_12.whileHeld(m_linear);
     IO.xbox_Y.whileHeld(m_ArmLinear);
     IO.xbox_RT.whileHeld(m_ShooterPercent);
-    IO.xbox_LT.whileHeld(m_IntakeBallForward);
+    IO.xbox_LT.whileHeld(m_IntakePercentage);
     IO.xbox_LB.whileHeld(m_IntakeBallBack);
     IO.xbox_RB.whileHeld(m_FeedPercentage);
     IO.xbox_A.whileHeld(m_ArmPosition0);
     IO.xbox_B.whileHeld(m_ArmPosition45);
     IO.xbox_X.whileHeld(m_ArmPosition90);
     IO.xbox_SELECT.whileHeld(m_FeedPercentageBack);
+    IO.rightJoystick_1.whileHeld(m_shooterSequence,false);
 
     
     
@@ -180,7 +198,8 @@ public class RobotContainer {
     TurretDeg.setDouble(m_TurretSubsystem.getRotationDegrees());
     PhysicalRPM.setDouble(m_ShooterSubsystem.getRPMFront());
     BackSpinRPM.setDouble(m_ShooterSubsystem.getRPMBack());
-
+    InfraredSensor.setBoolean(m_FeedSubsystem.containsBall());
+    HallEffect.setBoolean(m_ArmSubsytem.getHallEffect());
         
   }
 

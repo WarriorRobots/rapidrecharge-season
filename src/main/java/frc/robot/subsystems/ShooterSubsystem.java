@@ -53,7 +53,7 @@ public class ShooterSubsystem extends SubsystemBase {
     m_back_motor.setInverted(Vars.SHOOTER_BACK_INVERTED);
     m_back_motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
     m_back_motor.config_kF(Constants.PRIMARY_PID, Vars.SHOOTER_BACK_ESTIMATED_VOLTAGE*1023/Vars.SHOOTER_BACK_NATIVE_ESTIMATED_VELOCITY, Constants.MS_TIMEOUT);
-    m_back_motor.config_kP(Constants.PRIMARY_PID, 0, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
+    m_back_motor.config_kP(Constants.PRIMARY_PID, Vars.BACKSPIN_KP, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
   }
 
 

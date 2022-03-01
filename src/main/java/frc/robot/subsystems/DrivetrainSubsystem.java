@@ -17,14 +17,16 @@ import frc.robot.Vars;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
+
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DrivetrainSubsystem. */
   private WPI_TalonFX m_frontLeft, m_rearLeft, m_frontRight, m_rearRight;
   private MotorControllerGroup m_left, m_right;
   private DifferentialDrive m_drive;
-  private AHRS navx;
+  //private AHRS navx;
+  
  
   /** Creates a new DriveTrain. */
   public DrivetrainSubsystem() {
@@ -40,7 +42,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     m_right.setInverted(Vars.RIGHT_DRIVE_INVERTED);
 
     m_drive = new DifferentialDrive(m_left, m_right);
-    navx = new AHRS(I2C.Port.kMXP);
+    // navx = new AHRS(I2C.Port.kMXP);
   }
 
   public void tankDrive(double left, double right) {
@@ -53,9 +55,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public void stop(){
     m_drive.stopMotor();
   }
-  public double getAngle() {
-    return navx.getAngle();
-	}
+  // public double getAngle() {
+  //    return navx.getAngle();
+	//  }
 
 
   @Override
