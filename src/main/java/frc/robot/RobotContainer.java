@@ -9,15 +9,20 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.commands.arm.ArmPosition;
 import frc.robot.commands.camera.CameraChangePipeline;
 import frc.robot.commands.drive.Linear;
 import frc.robot.commands.drive.TankDrive;
+import frc.robot.commands.shooter.ShooterPrep;
 import frc.robot.commands.turret.TurretAim;
 import frc.robot.commands.turret.TurretPreset;
 import frc.robot.commands.turret.TurretRotate;
 import frc.robot.commands.turret.TurretUnsafeRotate;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.FeedSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -31,6 +36,8 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private static IntakeSubsystem IntakeSubsystem;
+  private static FeedSubsystem FeedSubsystem;
   private ShuffleboardTab tab = Shuffleboard.getTab("Turret");
   private NetworkTableEntry TurretClicks=
      tab.add("Turret Clicks", 0)
@@ -42,6 +49,8 @@ public class RobotContainer {
   protected static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   protected static final CameraSubsystem m_CameraSubsystem = new CameraSubsystem();
   protected static final TurretSubsystem m_TurretSubsystem = new TurretSubsystem();
+  protected static final ArmSubsystem m_ArmPosition = new ArmSubsystem();
+  protected static final ShooterPrep m_ShooterSubsystem = new ShooterPrep(IntakeSubsystem, FeedSubsystem);
 
 
   private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
@@ -55,9 +64,12 @@ public class RobotContainer {
   private final TurretRotate m_TurretRotate = new TurretRotate(m_TurretSubsystem, ()->IO.getXBoxLeftX());
   private final TurretUnsafeRotate m_TurretUnsafeRotate = new TurretUnsafeRotate(m_TurretSubsystem, ()->IO.getXBoxLeftY());
   private final TurretPreset m_TurretPreset90 = new TurretPreset(m_TurretSubsystem, 90);
-  private final TurretPreset m_TurretPresetMinus90 = new TurretPreset(m_TurretSubsystem, -90);
+  private final TurretPreset m_TurretPreset270 = new TurretPreset(m_TurretSubsystem, 270);
   private final TurretPreset m_TurretPreset0 = new TurretPreset(m_TurretSubsystem, 0);
-  private final TurretAim m_TurretAim = new TurretAim(m_CameraSubsystem, m_TurretSubsystem);//{public boolean isFinished(){return false;}};
+  private final ShooterPrep m_ShooterOn = new ShooterPrep(IntakeSubsystem, FeedSubsystem);
+  private final TurretPreset m_TurretPreset180 = new TurretPreset(m_TurretSubsystem, 180);
+  private final ArmPosition m_Arm0 = new ArmPosition(m_ArmPosition, 0);
+  private final TurretAim m_TurretAutoAim = new TurretAim(m_CameraSubsystem, m_TurretSubsystem);//{public boolean isFinished(){return false;}};
 
   private final RunCommand m_DashWriter = new RunCommand(()-> WriteToDashboard()){public boolean runsWhenDisabled(){return true;}};
 
@@ -86,15 +98,18 @@ public class RobotContainer {
     IO.leftJoystick_10.whenPressed(m_DriverCameraChangePipeline);
     // Changes to Tracking Josh POV when Pressed
     IO.leftJoystick_11.whenPressed(m_TrackingCameraChangePipeline);
-    IO.leftJoystick_12.whileHeld(m_linear);
-
-    // TODO a button should turn on the shooter
-
-    IO.xbox_RB.whileHeld(m_TurretUnsafeRotate);
-    IO.xbox_Y.whenPressed(m_TurretPreset0);
-    IO.xbox_B.whenPressed(m_TurretPreset90);
-    IO.xbox_X.whenPressed(m_TurretPresetMinus90);
-    IO.xbox_A.whileHeld(m_TurretAim);
+    //IO.leftJoystick_12.whileHeld(m_linear); What is this button for?
+    //Preps the shooter
+    IO.leftJoystick_9.whenPressed(m_ShooterOn);
+  
+    //IO.xbox_RB.whileHeld(m_TurretUnsafeRotate); What is this button for?
+    IO.xboxUp.whenPressed(m_TurretPreset0);
+    IO.xboxDown.whenPressed(m_TurretPreset180);
+    IO.xboxLeft.whenPressed(m_TurretPreset90);
+    IO.xboxRight.whenPressed(m_TurretPreset270);
+    //IO.xbox_A.whileHeld(m_TurretAutoAim); What is this button for?
+    IO.xbox_Y.whenPressed(m_Arm0);
+    
   }
 
   public void WriteToDashboard(){
