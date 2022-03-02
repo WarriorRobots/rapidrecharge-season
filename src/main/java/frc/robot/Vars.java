@@ -6,8 +6,8 @@ public class Vars {
     public static final double LINEAR_ANGLE_P = 0;
 
   // flipped motors
-  public static final boolean LEFT_DRIVE_INVERTED = false;
-  public static final boolean RIGHT_DRIVE_INVERTED = true;
+  public static final boolean LEFT_DRIVE_REVERSED = false;
+  public static final boolean RIGHT_DRIVE_REVERSED = true;
   public static final boolean TURRET_REVERSED = false;
   public static final boolean SHOOTER_LEFT_REVERSED = true;
   public static final boolean SHOOTER_RIGHT_REVERSED = false;
