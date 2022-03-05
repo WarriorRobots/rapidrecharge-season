@@ -6,14 +6,17 @@ package frc.robot.commands.Climb;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 
 
 public class Climb extends CommandBase {
   private ShooterSubsystem m_shooter;
+  private TurretSubsystem m_turret;
   /** Creates a new Climb. */
   public Climb() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
+    addRequirements(m_turret);
   }
 
   // Called when the command is initially scheduled.

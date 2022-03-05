@@ -34,13 +34,72 @@ public class ClimbSubsystem extends SubsystemBase {
     }
     else if (position > Vars.CLIMB_MAXIMUM) {
       m_extension.set(ControlMode.Position, toClicks(Vars.CLIMB_MAXIMUM));
-    } else {
+    } 
+    else {
       m_extension.set(ControlMode.Position, toClicks(position));
     }
   }
   private double toClicks(int climbMinimum) {
     return 0;
   }
+ 
+  /**
+   * Get the encoder of the winch.
+   * @return Number of clicks on the encoder
+   */
+  public double getEnc() {
+    return m_extension.getSelectedSensorPosition();
+  }
+
+  /**
+   * Get the position of the physical climb.
+   * @return Displacement of the climb upwards in inches.
+   */
+  public double getPosition() {
+    return toInches(m_extension.getSelectedSensorPosition());
+  }
+
+  /**
+   * Convert inches of movement of the climb into clicks of movement of the motor.
+   * @param inches Number of inches of upwards motion of the climb.
+   * @return Number of clicks of rotation of the motor.
+   */
+  public double toClicks(double inches) {
+    return (inches / Math.PI / Vars.CLIMB_TRACK_DIAMETER / Vars.CLIMB_GEARING * Vars.CLIMB_CLICKS_PER_REV);
+  }
+/**
+   * Convert clicks of movement of the motor into inches of movement of the climb.
+   * @param clicks Number of clicks of rotation of the motor.
+   * @return Number of Clicks of rotation of the motor.
+   */
+  public double toInches(double clicks) {
+    return clicks / Vars.CLIMB_CLICKS_PER_REV * Vars.CLIMB_GEARING * Math.PI * Vars.CLIMB_TRACK_DIAMETER;
+  }
+
+  /**
+   * Set the angle of climb. <p>
+   * @param value A {@link DoubleSolenoid.Value}
+   */
+  public void setAngle(ClimbState state){
+    m_angle.set(state.getValue());
+  }
+  /**
+   * kOff -> None/stop <p>
+   * kReverse -> Arm down <p>
+   * kForward -> Arm Up <p>
+   */
+  public static enum ClimbState {
+    stop(DoubleSolenoid.Value.kOff),
+    armdown(DoubleSolenoid.Value.kReverse),
+    armup(DoubleSolenoid.Value.kForward);
+    public DoubleSolenoid.Value value;
+    ClimbState(DoubleSolenoid.Value value) {
+      this.value = value;
+    }
+    public DoubleSolenoid.Value getValue() {
+      return value;
+    }
+  } 
 
   @Override
   public void periodic() {
