@@ -29,6 +29,7 @@ public class Vars {
 
   //TODO change values
   public static final double INTAKE_PERCENT = 1;
+  public static final double FEED_REVERSED_PERCENT = -1;
   /** output rotations per input rotations */
   public static final double SHOOTER_FRONT_GEARING = 40.0/54.0; // output rotations / input rotations
   public static final double SHOOTER_TOLERANCE = 200; // +rpm
@@ -47,6 +48,7 @@ public class Vars {
   public static final double ARM_P = 0.75;
   public static final double ARM_ANGLE_PICKUP = 135;
   public static final double ARM_ZERO_VOLTAGE = -0.2;
+  public static final double ARM_IN = 0;
 
 
   // Estimated Shooter Output

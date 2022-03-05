@@ -15,14 +15,15 @@ public class IntakeBall extends CommandBase {
   /** Creates a new IntakeBall. */
   IntakeSubsystem m_IntakeSubsystem;
   FeedSubsystem m_feedSubsystem;
-  double m_value;
-  public IntakeBall(IntakeSubsystem intake, FeedSubsystem feed, double value) {
+  double m_intakeValue, m_feedValue;
+  public IntakeBall(IntakeSubsystem intake, FeedSubsystem feed, double intakeValue, double feedValue) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_IntakeSubsystem = intake;
     addRequirements(m_IntakeSubsystem);
     m_feedSubsystem = feed;
     addRequirements(m_feedSubsystem);
-    m_value = value;
+    m_intakeValue = intakeValue;
+    m_feedValue = feedValue;
 
   }
 
@@ -33,12 +34,13 @@ public class IntakeBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_IntakeSubsystem.setPercentage(m_value, m_value);
-    // if(!m_feedSubsystem.containsBall()){
-      // m_feedSubsystem.setPercentage(m_value);
-    // }else{
-      // m_feedSubsystem.stop();
-    // }
+    
+    m_IntakeSubsystem.setPercentage(m_intakeValue, m_intakeValue);
+     if(!m_feedSubsystem.containsBall()){
+       m_feedSubsystem.setPercentage(m_feedValue);
+     }else{
+       m_feedSubsystem.stop();
+   }
   }
 
   // Called once the command ends or is interrupted.

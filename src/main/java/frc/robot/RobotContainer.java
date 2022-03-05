@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.commands.arm.ArmHoldPosition;
 import frc.robot.commands.arm.ArmLinear;
 import frc.robot.commands.arm.ArmPosition;
 import frc.robot.commands.arm.ArmStabilize;
@@ -167,7 +168,39 @@ public class RobotContainer {
   private final ArmPosition m_ArmPositionIntake = new ArmPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP);
   private final ArmZero m_ArmZero = new ArmZero(m_ArmSubsytem);
   private final ArmStabilize m_ArmStabilize = new ArmStabilize(m_ArmSubsytem);
-  // private final SequentialCommandGroup ArmZeroSeq = new SequentialCommandGroup()
+   /**
+   * Runs once at the start of teleop
+   * @param enable Set to true if the robot was just enabled
+   * (there are scenarios where this could be false, eg moving from auto to teleop)
+   */
+  public void startup(boolean enable) {
+
+    if (enable) {
+      // run the commands that only occur when the enable button was just pressed
+     // new ArmZero(m_ArmSubsytem).schedule(); // XXX change to stabilize when auto has a zero build into it
+    }
+
+    // run the commands for startup
+
+  }
+  private final ParallelCommandGroup m_IntakeSequence = new ParallelCommandGroup(
+    new ArmHoldPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP),
+    new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE)
+  );
+  private final SequentialCommandGroup m_UNJAMShooter = new SequentialCommandGroup(
+    new ArmPosition(m_ArmSubsytem, Vars.ARM_IN),
+    new ParallelCommandGroup(
+      new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT),
+      new IntakePercentage(m_IntakeSubsystem, Vars.FEED_REVERSED_PERCENT, Vars.FEED_REVERSED_PERCENT)
+    )
+  );
+  private final SequentialCommandGroup m_UNJAMintake = new SequentialCommandGroup(
+    new ArmPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP),
+    new ParallelCommandGroup(
+      new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT),
+      new IntakePercentage(m_IntakeSubsystem, Vars.FEED_REVERSED_PERCENT, Vars.FEED_REVERSED_PERCENT)
+    )
+  );
   // XXX Zero arm command (should move linearly to find the hall effect)
   
   // Write to DashBoard
@@ -178,7 +211,7 @@ public class RobotContainer {
   // Intake
   private final IntakePercentage m_IntakePercentage = new IntakePercentage(m_IntakeSubsystem, Vars.INTAKE_PERCENT, Vars.INTAKE_PERCENT);
   private final IntakePercentage m_IntakePercentageBack = new IntakePercentage(m_IntakeSubsystem, -Vars.INTAKE_PERCENT, -Vars.INTAKE_PERCENT);
-  private final IntakeBall m_IntakeBall = new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, Vars.INTAKE_PERCENT);
+  private final IntakeBall m_IntakeBall = new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE);
   // Shooter
    private final ShooterRPM m_ShooterRPM = new ShooterRPM(m_ShooterSubsystem,()-> FrontRPM.getDouble(0),()->BackSpinRPMINPUT.getDouble(0));
    private final ShooterPercentage m_ShooterPercent = new ShooterPercentage(m_ShooterSubsystem, ()->ShooterFrontPercentage.getDouble(0), ()->ShooterBackPercentage.getDouble(0));
@@ -241,15 +274,17 @@ public class RobotContainer {
     IO.rightJoystick_4.whileHeld(m_TurretAim);
     IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(m_ArmStabilize));
     
-    IO.xbox_LB.whileHeld(m_FeedPercentageBack.alongWith(m_IntakePercentageBack));
-    IO.xbox_RB.whileHeld(m_ArmPositionIntake.andThen(m_IntakeBall)).whenReleased(m_ArmPosition0);
-
-
+    
+    IO.xbox_RB.whileHeld(m_IntakeSequence);
+    // Arm Xbox Buttons
+    IO.xboxUp.whileHeld(m_ArmPosition0);
+    IO.xboxDown.whileHeld(m_ArmPositionIntake);
+    // xbOX UNJAM BUTTONS
+    IO.xbox_RT.whileHeld(m_UNJAMShooter);
+    IO.xbox_LT.whileHeld(m_UNJAMintake);
 
      IO.xbox_L_JOYSTICK.whileHeld(m_ArmLinear);
     // XXX Arm to positions requires magnet on arm
-    IO.leftJoystick_6.whenPressed(m_ArmPosition0);
-    IO.leftJoystick_4.whenPressed(m_ArmPositionIntake);
 
     IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
     IO.xbox_Y.whenPressed(m_TurretPreset0);
