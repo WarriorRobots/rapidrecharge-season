@@ -20,6 +20,7 @@ import frc.robot.commands.drive.TankDrive;
 import frc.robot.commands.feed.FeedPercentage;
 import frc.robot.commands.intake.IntakeBall;
 import frc.robot.commands.intake.IntakePercentage;
+import frc.robot.commands.shooter.AimShootFeed;
 import frc.robot.commands.shooter.ShooterFeed;
 import frc.robot.commands.shooter.ShooterPercentage;
 import frc.robot.commands.shooter.ShooterPrep;
@@ -107,18 +108,28 @@ public class RobotContainer {
   //   new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem, ()->FrontRPM.getDouble(0), ()->BackSpinRPMINPUT.getDouble(0)){public void end(boolean interrupted){/* This is empty is to not stop the motor from rev-ing*/}}
   // ){public void end(boolean interrupted){m_IntakeSubsystem.stop();;m_FeedSubsystem.stop();}};
 
-  private final SequentialCommandGroup m_ShooterAimAndShoot = new SequentialCommandGroup(
-    new TurretAim(m_CameraSubsystem, m_TurretSubsystem),
-    new ParallelCommandGroup(
-      new TurretAim(m_CameraSubsystem, m_TurretSubsystem).perpetually(),
-      new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_ESTIMATED_RPM)){public void end(boolean interrupted){/* m_ShooterStop will be called to stop the shooter */
-        m_IntakeSubsystem
+  // private final SequentialCommandGroup m_ShooterAimAndShoot = new SequentialCommandGroup(
+  //   new TurretAim(m_CameraSubsystem, m_TurretSubsystem),
+  //   new ParallelCommandGroup(
+  //     new TurretAim(m_CameraSubsystem, m_TurretSubsystem).perpetually(),
+  //     new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_ESTIMATED_RPM)){public void end(boolean interrupted){/* m_ShooterStop will be called to stop the shooter */
+  //       m_IntakeSubsystem
         
-        .stop();
-        m_FeedSubsystem.stop();
-      }}
-    )
-  );
+  //       .stop();
+  //       m_FeedSubsystem.stop();
+  //     }}
+  //   )
+  // );
+
+  private final AimShootFeed m_ShooterAimAndShoot = new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_ESTIMATED_RPM)){
+    public void end(boolean interrupted) {
+      /* m_ShooterStop will be called to stop the shooter */
+      m_IntakeSubsystem.stop();
+      m_FeedSubsystem.stop();
+      m_CameraSubsystem.ChangePipeline(CameraSubsystem.Drive_Pipline);
+    }
+  };
+
   private final ParallelCommandGroup m_ShooterPrep = new ParallelCommandGroup(
     new TurretAim(m_CameraSubsystem, m_TurretSubsystem).perpetually(),
     new ShooterRPM(m_ShooterSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_ESTIMATED_RPM)){public void end(boolean interrupted){/* m_ShooterStop will be called to stop the shooter */}},
@@ -126,7 +137,7 @@ public class RobotContainer {
   );
   private final InstantCommand m_ShooterStop = new InstantCommand(()->m_ShooterSubsystem.stop(), m_ShooterSubsystem);
   //private final SequentialCommandGroup m_Shooter
-  //#endregion // This is to stop the hopper and feed if the command is stopped however not stop the shooter, that is handled by UnRev
+  
   /** Clears the shooter and runs the shooter at an rpm for the shooter to then be fed */
   // private final SequentialCommandGroup m_ShootAndFeed = new SequentialCommandGroup(
   //   new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem, ()->FrontRPM.getDouble(0), ()->BackSpinRPMINPUT.getDouble(0)),
@@ -171,7 +182,7 @@ public class RobotContainer {
   // Shooter
    private final ShooterRPM m_ShooterRPM = new ShooterRPM(m_ShooterSubsystem,()-> FrontRPM.getDouble(0),()->BackSpinRPMINPUT.getDouble(0));
    private final ShooterPercentage m_ShooterPercent = new ShooterPercentage(m_ShooterSubsystem, ()->ShooterFrontPercentage.getDouble(0), ()->ShooterBackPercentage.getDouble(0));
-
+  
 
   
 
@@ -231,7 +242,7 @@ public class RobotContainer {
     IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(m_ArmStabilize));
     
     IO.xbox_LB.whileHeld(m_FeedPercentageBack.alongWith(m_IntakePercentageBack));
-    IO.xbox_RB.whileHeld(m_IntakeBall);
+    IO.xbox_RB.whileHeld(m_ArmPositionIntake.andThen(m_IntakeBall)).whenReleased(m_ArmPosition0);
 
 
 
