@@ -14,12 +14,12 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterPercentage extends CommandBase {
   private ShooterSubsystem m_shooter;
-  private double m_front_percent, m_back_percent;
+  private DoubleSupplier m_front_percent, m_back_percent;
 
   /**
    * Creates a new ShooterVoltage.
    */
-  public ShooterPercentage(ShooterSubsystem shooter, double front_percent, double back_percent) {
+  public ShooterPercentage(ShooterSubsystem shooter, DoubleSupplier front_percent, DoubleSupplier back_percent) {
     m_shooter = shooter;
     m_front_percent = front_percent;
     m_back_percent = back_percent;
@@ -34,7 +34,7 @@ public class ShooterPercentage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setPercentage(m_front_percent, m_back_percent);
+    m_shooter.setPercentage(m_front_percent.getAsDouble(), m_back_percent.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

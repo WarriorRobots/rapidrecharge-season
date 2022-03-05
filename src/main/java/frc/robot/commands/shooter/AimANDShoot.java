@@ -10,13 +10,13 @@ import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class AimANDShoota extends CommandBase {
+public class AimANDShoot extends CommandBase {
   ShooterSubsystem m_shooter;
   TurretSubsystem m_turret;
   CameraSubsystem m_camera;
 
   /** Creates a new AimANDShoota. */
-  public AimANDShoota(ShooterSubsystem shooter, TurretSubsystem turret, CameraSubsystem camera) {
+  public AimANDShoot(ShooterSubsystem shooter, TurretSubsystem turret, CameraSubsystem camera) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooter;
     addRequirements(m_shooter);

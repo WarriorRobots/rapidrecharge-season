@@ -22,7 +22,7 @@ public class IntakeSubsystem extends SubsystemBase {
     m_belt_top = new WPI_TalonSRX(RobotMap.ID_PICKUP_UPPER);
     m_belt_top.setInverted(Vars.INTAKE_TOP_REVERSED);
     m_belt_bottom = new WPI_TalonSRX(RobotMap.ID_PICKUP_LOWER);
-    m_belt_bottom.setInverted(Vars.INTAKE_TOP_REVERSED);
+    m_belt_bottom.setInverted(Vars.INTAKE_BOTTOM_REVERSED);
   }
 
   /**

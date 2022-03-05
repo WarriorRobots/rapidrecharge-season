@@ -4,7 +4,10 @@
 
 package frc.robot.commands.shooter;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Vars;
 import frc.robot.subsystems.FeedSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -14,7 +17,8 @@ public class ShooterFeed extends CommandBase {
   ShooterSubsystem m_shooter;
   IntakeSubsystem m_intake;
   FeedSubsystem m_feed;
-  public ShooterFeed(ShooterSubsystem shooter, IntakeSubsystem intake, FeedSubsystem feed) {
+  DoubleSupplier m_ShooterRPM, m_SHOOTERRPMBACK;
+  public ShooterFeed(ShooterSubsystem shooter, IntakeSubsystem intake, FeedSubsystem feed, DoubleSupplier ShooterRPMFRONT, DoubleSupplier SHOOTERRPMBACK) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooter;
     addRequirements(m_shooter);
@@ -22,6 +26,8 @@ public class ShooterFeed extends CommandBase {
     addRequirements(m_intake);
     m_feed = feed;
     addRequirements(m_feed);
+    m_ShooterRPM = ShooterRPMFRONT;
+    m_SHOOTERRPMBACK = SHOOTERRPMBACK;
   }
 
   // Called when the command is initially scheduled.
@@ -31,13 +37,32 @@ public class ShooterFeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   //XXX todo now
-   // if(Math.abs(m_shooter.getRPMFront()-m_shooter.get))
+   
+    if(Math.abs(m_shooter.getRPMFront()-m_ShooterRPM.getAsDouble()) < Vars.SHOOTER_TOLERANCE){
+      m_intake.setPercentage(Vars.SHOOTER_FEED, Vars.SHOOTER_FEED);
+      m_feed.setPercentage(Vars.SHOOTER_FEED);
+    }else{
+      if(!m_feed.containsBall()){
+        m_intake.setPercentage(Vars.SHOOTER_SLOW_FEED, Vars.SHOOTER_SLOW_FEED);
+        m_feed.setPercentage(Vars.SHOOTER_SLOW_FEED);
+      }else{
+        m_intake.stop();
+        m_feed.stop();
+      }
+    }
+    m_shooter.setRPM(m_ShooterRPM.getAsDouble(), m_SHOOTERRPMBACK.getAsDouble());
   }
+
+
+
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_shooter.stop();
+    m_intake.stop();
+    m_feed.stop();
+  }
 
   // Returns true when the command should end.
   @Override

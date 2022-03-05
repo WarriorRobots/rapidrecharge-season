@@ -4,6 +4,8 @@
 
 package frc.robot.commands.shooter;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.FeedSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -14,12 +16,12 @@ import frc.robot.subsystems.ShooterSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShooterSequence extends SequentialCommandGroup {
   /** Creates a new ShooterSequence. */
-  public ShooterSequence(ShooterSubsystem shooter, IntakeSubsystem intake, FeedSubsystem feed) {
+  public ShooterSequence(ShooterSubsystem shooter, IntakeSubsystem intake, FeedSubsystem feed, DoubleSupplier FrontRPM, DoubleSupplier BackRPM) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ShooterPrep(intake, feed),
-      new ShooterFeed(shooter, intake, feed)
+      new ShooterFeed(shooter, intake, feed, FrontRPM, BackRPM)
 
     );
   }

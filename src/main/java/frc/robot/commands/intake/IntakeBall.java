@@ -34,11 +34,11 @@ public class IntakeBall extends CommandBase {
   @Override
   public void execute() {
     m_IntakeSubsystem.setPercentage(m_value, m_value);
-    if(!m_feedSubsystem.containsBall()){
-      m_IntakeSubsystem.setPercentage(m_value, m_value);
-    }else{
-      m_feedSubsystem.stop();
-    }
+    // if(!m_feedSubsystem.containsBall()){
+      // m_feedSubsystem.setPercentage(m_value);
+    // }else{
+      // m_feedSubsystem.stop();
+    // }
   }
 
   // Called once the command ends or is interrupted.

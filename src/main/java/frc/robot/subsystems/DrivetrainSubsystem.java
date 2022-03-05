@@ -17,7 +17,6 @@ import frc.robot.Vars;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-//import com.kauailabs.navx.frc.AHRS;
 
 
 public class DrivetrainSubsystem extends SubsystemBase {

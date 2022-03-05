@@ -23,9 +23,9 @@ public class ArmSubsystem extends SubsystemBase {
   public ArmSubsystem() {
     m_arm = new WPI_TalonSRX(RobotMap.ID_ARM);
     m_arm.setInverted(Vars.ARM_REVERSED);
-    // m_arm.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
-    // m_arm.setSensorPhase(Vars.ARM_ENCODER_REVERSED);
-    // m_arm.config_kP(Constants.PRIMARY_PID, Vars.ARM_P, Constants.MS_TIMEOUT);
+    m_arm.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
+    m_arm.setSensorPhase(Vars.ARM_ENCODER_REVERSED);
+    m_arm.config_kP(Constants.PRIMARY_PID, Vars.ARM_P, Constants.MS_TIMEOUT);
     m_hallEffect = new DigitalInput(RobotMap.ID_ARM_HALLEFFECT);
   }
 
@@ -55,16 +55,16 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void setAngleBounded(double degrees)
   {
-    //TODO change min/max angles
     if (degrees < Vars.ARM_MINIMUM_ANGLE) {
       m_arm.set(ControlMode.Position, toNative(Vars.ARM_MINIMUM_ANGLE));
       System.out.println("Arm moving to " + degrees + ", cutting short to prevent crash!");
-    } else if (degrees > Vars.ARM_MINIMUM_ANGLE) {
+    } else if (degrees > Vars.ARM_MAXIMUM_ANGLE) {
       m_arm.set(ControlMode.Position, toNative(Vars.ARM_MAXIMUM_ANGLE));
       System.out.println("Arm moving to " + degrees + ", cutting short to prevent crash!");
     } else {
       m_arm.set(ControlMode.Position, toNative(degrees));
-    }  }
+    }
+  }
 
   /** 
    * Return the encoder value of the arm.
@@ -85,13 +85,22 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   /**
+   * Return the gain of the arm
+   * @return Percentage -1.0 to 1.0
+   */
+  public double getGain()
+  {
+    return m_arm.getMotorOutputPercent();
+  }
+
+  /**
    * Convert from native units to degrees
    * @param native_units native units
    * @return degrees
    */
   public double toDegrees(double native_units)
   {
-    return (double) native_units / Constants.CLICKS_PER_REV_QUADRATURE * 360.0;
+    return (double) native_units * Vars.ARM_GEARING / Constants.CLICKS_PER_REV_QUADRATURE * 360.0;
   }
 
   /**
@@ -101,7 +110,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public double toNative(double degrees)
   {
-    return (int) Math.round(degrees * Constants.CLICKS_PER_REV_QUADRATURE / 360.0);
+    return (int) Math.round(degrees / Vars.ARM_GEARING * Constants.CLICKS_PER_REV_QUADRATURE / 360.0);
   }
 
   /**
