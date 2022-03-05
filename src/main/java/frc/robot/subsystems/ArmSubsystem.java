@@ -77,7 +77,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   /**
    * Return the position of the arm.
-   * @return degrees
+   * @return In degrees
    */
   public double getPosition()
   {

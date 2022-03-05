@@ -40,15 +40,15 @@ public class Vars {
   public static final double SHOOTER_SLOW_FEED = 0.2; // percent (for hopper and feed to feed when the shooter is not rev-ed)
    public static final double SHOOTER_SLOW_INTAKE = 0.2;
   //Arms
-  public static final double ARM_GEARING = 1.0/4.05; // output rotations / input rotations // XXX check this number
+  public static final double ARM_GEARING = 36.0/54.0; // output rotations / input rotations // XXX updated Arm
 
   public static final double ARM_MINIMUM_ANGLE = -1; // degrees
-  public static final double ARM_MAXIMUM_ANGLE = 140; // degrees
+  public static final double ARM_MAXIMUM_ANGLE = 123; // degrees
   public static final double ARM_TOLERANCE = 3; // degrees
   public static final double ARM_P = 0.75;
-  public static final double ARM_ANGLE_PICKUP = 135;
+  public static final double ARM_ANGLE_PICKUP = 120;
   public static final double ARM_ZERO_VOLTAGE = -0.2;
-  public static final double ARM_IN = 0;
+  public static final double ARM_IN = 5;
 
 
   // Estimated Shooter Output
