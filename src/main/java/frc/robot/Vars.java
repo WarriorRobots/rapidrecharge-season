@@ -1,5 +1,9 @@
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.util.sendable.Sendable;
+
 public class Vars {
 
   //TODO change values
@@ -12,6 +16,7 @@ public class Vars {
   public static final boolean SHOOTER_LEFT_REVERSED = true;
   public static final boolean SHOOTER_RIGHT_REVERSED = false;
   public static final boolean SHOOTER_BACK_INVERTED = false;
+  public static final boolean SHOOTER_FRONT_INVERTED = false;
 
   // flipped concoders
   public static final boolean TURRET_ENCODER_REVERSED = false;
@@ -52,6 +57,15 @@ public class Vars {
   public static final double SHOOTER_BACK_ESTIMATED_VOLTAGE = 0; // TODO move this to Vars
   /** Velocity of shooter in native units per 100ms at typical motor output (at the encoder) */
   public static final int SHOOTER_BACK_NATIVE_ESTIMATED_VELOCITY = 0; // TODO move this to Vars
+
+public static final double SHOOTER_FRONT_ESTIMATED_RPM = 500;
+
+public static final double SHOOTER_BACK_ESTIMATED_RPM = 500;
+
+public static final double SHOOTER_FRONT_ESTIMATED_PERCENTAGE = 50;
+public static final double SHOOTER_BACK_ESTIMATED_PERCENTAGE = 50;
+
+
 
   
 }
