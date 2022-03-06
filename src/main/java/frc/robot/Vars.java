@@ -30,6 +30,7 @@ public class Vars {
   //TODO change values
   public static final double INTAKE_PERCENT = 1;
   public static final double FEED_REVERSED_PERCENT = -1;
+  public static final double FEED_REVERSED_PERCENT_SLOW = -0.2;
   /** output rotations per input rotations */
   public static final double SHOOTER_FRONT_GEARING = 40.0/54.0; // output rotations / input rotations
   public static final double SHOOTER_TOLERANCE = 200; // +rpm
@@ -39,6 +40,7 @@ public class Vars {
   public static final double SHOOTER_FEED = 1; // percent (for hopper and feed to feed)
   public static final double SHOOTER_SLOW_FEED = 0.2; // percent (for hopper and feed to feed when the shooter is not rev-ed)
    public static final double SHOOTER_SLOW_INTAKE = 0.2;
+   public static final double SHOOTER_BACK_FEED_TIME = 0.25; // seconds
   //Arms
   public static final double ARM_GEARING = 36.0/54.0; // output rotations / input rotations // XXX updated Arm
 
@@ -53,14 +55,18 @@ public class Vars {
 
   // Estimated Shooter Output
   /**Front shoote estimated RPM */
-    public static final double SHOOTER_FRONT_ESTIMATED_RPM = 4180;
+    public static final double SHOOTER_FRONT_DEFAULT_RPM = 3200;
   /**Back SHooter  Estimated RPM */
-    public static final double SHOOTER_BACK_ESTIMATED_RPM = 3220;
+    public static final double SHOOTER_BACK_DEFAULT_RPM = 6000;
 
   /** Typical motor output as percent */
   public static final double SHOOTER_FRONT_ESTIMATED_PERCENTAGE =  0.88;
+  public static final double SHOOTER_FRONT_REVERSE = -0.3;
+  public static final double SHOOTER_BACK_REVERSE = -0.3;
+    public static final double SHOOTER_FRONT_ESTIMATED_RPM = 4180;
+    public static final double SHOOTER_BACK_ESTIMATED_RPM = 3220;
   /** Velocity of shooter in native units per 100ms at typical motor output (at the encoder) */
-  public static final int SHOOTER_FRONT_NATIVE_ESTIMATED_VELOCITY = (int)(SHOOTER_FRONT_ESTIMATED_RPM / SHOOTER_FRONT_GEARING / 600 * Constants.CLICKS_PER_REV_INTEGRATED);
+  public static final int SHOOTER_FRONT_NATIVE_ESTIMATED_VELOCITY = (int)(SHOOTER_BACK_ESTIMATED_RPM / SHOOTER_FRONT_GEARING / 600 * Constants.CLICKS_PER_REV_INTEGRATED);
   // the above uses the gearing because the RPM is of the flywheel where as the calculated native velocity is of the motor 
   
   /** Typical motor output as percent */

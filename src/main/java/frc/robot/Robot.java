@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     m_justEnabled = true;
+    m_robotContainer.getStopAll().schedule();
   }
 
   @Override
@@ -60,7 +61,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    // m_robotContainer.startup(m_justEnabled);
+    m_robotContainer.startup(m_justEnabled);
     m_justEnabled = false;
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -84,7 +85,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    // m_robotContainer.startup(m_justEnabled);
+    m_robotContainer.startup(m_justEnabled);
     m_justEnabled = false;
   }
 
@@ -96,6 +97,9 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    m_robotContainer.startup(m_justEnabled);
+    m_justEnabled = false;
+  
   }
 
   /** This function is called periodically during test mode. */

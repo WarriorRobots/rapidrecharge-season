@@ -42,9 +42,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -62,7 +64,7 @@ public class RobotContainer {
         .getEntry();
   private ShuffleboardTab shootertab = Shuffleboard.getTab("Shoot");
     private NetworkTableEntry FrontRPM=
-        shootertab.add("FShootInput", Vars.SHOOTER_FRONT_ESTIMATED_RPM)
+        shootertab.add("FShootInput", Vars.SHOOTER_FRONT_DEFAULT_RPM)
           .getEntry();
     private NetworkTableEntry PhysicalRPM=
         shootertab.add("FrontRPMOut",0)
@@ -71,7 +73,7 @@ public class RobotContainer {
     shootertab.add("BShootOutput",0)
         .getEntry();
     private NetworkTableEntry BackSpinRPMINPUT =
-      shootertab.add("BShootInput",Vars.SHOOTER_BACK_ESTIMATED_RPM)
+      shootertab.add("BShootInput",Vars.SHOOTER_BACK_DEFAULT_RPM)
             .getEntry();
   //  private NetworkTableEntry FeedPercent =
   //     tab1.add("Feed Percentage", 0)
@@ -122,21 +124,25 @@ public class RobotContainer {
   //   )
   // );
 
-  private final AimShootFeed m_ShooterAimAndShoot = new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_ESTIMATED_RPM)){
-    public void end(boolean interrupted) {
-      /* m_ShooterStop will be called to stop the shooter */
-      m_IntakeSubsystem.stop();
-      m_FeedSubsystem.stop();
-      m_CameraSubsystem.ChangePipeline(CameraSubsystem.Drive_Pipline);
-    }
-  };
+  // private final AimShootFeed m_ShooterAimAndShoot = new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_ESTIMATED_RPM));
+  private final ShooterFeed m_ShootAndFeed = new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM));
+    
+  private final SequentialCommandGroup m_ShooterButton = new SequentialCommandGroup(
+    new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME), new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW)),
+    new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM))
+  );
+  private final SequentialCommandGroup m_ShooterButtonLeft= new SequentialCommandGroup(
+    new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME), new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW)),
+    new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM))
+  );
+    
 
   private final ParallelCommandGroup m_ShooterPrep = new ParallelCommandGroup(
     new TurretAim(m_CameraSubsystem, m_TurretSubsystem).perpetually(),
-    new ShooterRPM(m_ShooterSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_ESTIMATED_RPM)){public void end(boolean interrupted){/* m_ShooterStop will be called to stop the shooter */}},
+    new ShooterRPM(m_ShooterSubsystem, ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM), ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM)){public void end(boolean interrupted){/* m_ShooterStop will be called to stop the shooter */}},
     new ShooterPrep(m_IntakeSubsystem, m_FeedSubsystem)
   );
-  private final InstantCommand m_ShooterStop = new InstantCommand(()->m_ShooterSubsystem.stop(), m_ShooterSubsystem);
+  // private final InstantCommand m_ShooterStop = new InstantCommand(()->m_ShooterSubsystem.stop(), m_ShooterSubsystem);
   //private final SequentialCommandGroup m_Shooter
   
   /** Clears the shooter and runs the shooter at an rpm for the shooter to then be fed */
@@ -165,9 +171,11 @@ public class RobotContainer {
   private final ArmLinear m_ArmLinear = new ArmLinear(m_ArmSubsytem, ()->IO.getXBoxLeftY());
   private final ArmPosition m_ArmPosition0= new ArmPosition(m_ArmSubsytem, 0);
   private final ArmPosition m_ArmPosition90 = new ArmPosition(m_ArmSubsytem, 90);
+  private final ArmPosition m_ArmPositionIN = new ArmPosition(m_ArmSubsytem, Vars.ARM_IN);
   private final ArmPosition m_ArmPositionIntake = new ArmPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP);
   private final ArmZero m_ArmZero = new ArmZero(m_ArmSubsytem);
   private final ArmStabilize m_ArmStabilize = new ArmStabilize(m_ArmSubsytem);
+
    /**
    * Runs once at the start of teleop
    * @param enable Set to true if the robot was just enabled
@@ -177,23 +185,24 @@ public class RobotContainer {
 
     if (enable) {
       // run the commands that only occur when the enable button was just pressed
-     // new ArmZero(m_ArmSubsytem).schedule(); // XXX change to stabilize when auto has a zero build into it
+      // WHen robot enabled arm shouldnt go anywhere; Reason for "ArmStabilize"
+      new ArmStabilize(m_ArmSubsytem).schedule();
     }
 
     // run the commands for startup
 
   }
+  
   private final ParallelCommandGroup m_IntakeSequence = new ParallelCommandGroup(
     new ArmHoldPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP),
     new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE)
   );
-  private final SequentialCommandGroup m_UNJAMShooter = new SequentialCommandGroup(
-    new ArmPosition(m_ArmSubsytem, Vars.ARM_IN),
-    new ParallelCommandGroup(
-      new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT),
-      new IntakePercentage(m_IntakeSubsystem, Vars.FEED_REVERSED_PERCENT, Vars.FEED_REVERSED_PERCENT)
-    )
+  private final ParallelCommandGroup m_DriverIntakeSequence = new ParallelCommandGroup(
+    new ArmHoldPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP),
+    new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE)
   );
+  
+
   private final SequentialCommandGroup m_UNJAMintake = new SequentialCommandGroup(
     new ArmPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP),
     new ParallelCommandGroup(
@@ -214,7 +223,8 @@ public class RobotContainer {
   private final IntakeBall m_IntakeBall = new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE);
   // Shooter
    private final ShooterRPM m_ShooterRPM = new ShooterRPM(m_ShooterSubsystem,()-> FrontRPM.getDouble(0),()->BackSpinRPMINPUT.getDouble(0));
-   private final ShooterPercentage m_ShooterPercent = new ShooterPercentage(m_ShooterSubsystem, ()->ShooterFrontPercentage.getDouble(0), ()->ShooterBackPercentage.getDouble(0));
+   private final ShooterPercentage m_ShooterReverse = new ShooterPercentage(m_ShooterSubsystem, ()->Vars.SHOOTER_FRONT_REVERSE, ()->Vars.SHOOTER_BACK_REVERSE);
+
   
 
   
@@ -266,31 +276,33 @@ public class RobotContainer {
     
     // XXX check for driverstation update
 
-    IO.rightJoystick_1.whileHeld(m_ShooterAimAndShoot);
-    IO.rightJoystick_2.and(IO.rightJoystick_1.negate()).whenActive(m_ShooterPrep);
-    IO.rightJoystick_2.negate().and(IO.rightJoystick_1.negate()).whileActiveOnce(m_ShooterStop);
+    IO.rightJoystick_1.whileHeld(m_ShooterButton);
+    IO.rightJoystick_2.whileHeld(m_DriverIntakeSequence).whenReleased(m_ArmPosition0);
+    // IO.rightJoystick_2.and(IO.rightJoystick_1.negate()).whenActive(m_ShooterPrep);
+    // IO.rightJoystick_2.negate().and(IO.rightJoystick_1.negate()).whileActiveOnce(m_ShooterStop);
     // IO.rightJoystick_2.whileHeld(m_ShooterPercent);
     IO.rightJoystick_3.whileHeld(m_ShooterRPM.alongWith(m_FeedPercentage));
     IO.rightJoystick_4.whileHeld(m_TurretAim);
     IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(m_ArmStabilize));
+    IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
     
     
-    IO.xbox_RB.whileHeld(m_IntakeSequence);
+    IO.xbox_RB.whileHeld(m_IntakeSequence).whenReleased(m_ArmPosition0);
     // Arm Xbox Buttons
     IO.xboxUp.whileHeld(m_ArmPosition0);
-    IO.xboxDown.whileHeld(m_ArmPositionIntake);
+    //IO.xboxDown.whileHeld(m_ArmPositionIntake);
     // xbOX UNJAM BUTTONS
-    IO.xbox_RT.whileHeld(m_UNJAMShooter);
-    IO.xbox_LT.whileHeld(m_UNJAMintake);
+    IO.xbox_RT.whileHeld(m_ShooterReverse);
+    IO.xbox_LT.whileHeld(m_UNJAMintake).whenReleased(m_ArmPosition0);
 
      IO.xbox_L_JOYSTICK.whileHeld(m_ArmLinear);
     // XXX Arm to positions requires magnet on arm
 
     IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
     IO.xbox_Y.whenPressed(m_TurretPreset0);
-    IO.xbox_X.whenPressed(m_TurretPresetMinus50);
-    IO.xbox_B.whenPressed(m_TurretPreset90);
-    IO.xbox_A.whenPressed(m_TurretPreset180);
+    IO.xbox_X.whenPressed(m_ArmPositionIN);
+    IO.xbox_B.whenPressed(m_TurretPreset180);
+    IO.xbox_A.whenPressed(m_ArmPositionIntake);
     //IO.leftJoystick_9.whileHeld(m_TurretAim);
 
     // XXX check limelight with turret
@@ -317,5 +329,23 @@ public class RobotContainer {
     return new CommandBase(){
       
     };
+  }
+  /**
+   * Stops all the devices on the robot.
+   * Used when the robot disables to not allow any processes to keep running.
+   * (E.G. if the auto is stopped and the shooter is not told to stop, it is told to stop here.)
+   * @return
+   */
+  public Command getStopAll() {
+    return new InstantCommand( () -> {
+        m_drivetrain.stop();
+        m_ShooterSubsystem.stop();
+        m_ShooterSubsystem.stop();
+        m_FeedSubsystem.stop();
+        m_ArmSubsytem.stop();
+        m_IntakeSubsystem.stop();
+       // m_climb.stopWinch();
+      }
+    ) {public boolean runsWhenDisabled(){return true;}};
   }
 }

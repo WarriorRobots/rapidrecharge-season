@@ -26,7 +26,7 @@ public class ArmHoldPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Arm.toDegrees(m_ArmPosition);
+    m_Arm.setAngleBounded(m_ArmPosition);
   }
 
   // Called once the command ends or is interrupted.
