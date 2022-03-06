@@ -21,6 +21,10 @@ public class Vars {
   public static final boolean TURRET_ENCODER_REVERSED = false;
   public static final boolean ARM_ENCODER_REVERSED = false;
 
+  // pixycam signatures; set in the tuning tab of pixy, see: https://docs.pixycam.com/wiki/doku.php?id=wiki:v1:signature_tuning_pane
+  public static final int PIXY_SIGNATURE_BLUE = 0;
+  public static final int PIXY_SIGNATURE_RED = 1;
+
   // turret
   public static final double TURRET_MAX_ROTATION = 210 ; // degrees clockwise, clockwise bound // TODO ask josh about this value
   public static final double TURRET_MIN_ROTATION = -50; // degrees clockwise, counterclockwise bound

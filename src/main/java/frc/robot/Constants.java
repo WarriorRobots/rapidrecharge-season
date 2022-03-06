@@ -35,6 +35,10 @@ public final class Constants {
   public static final double Camera_ELEVATION = 0; //in
   public static final double Camera_TILT = 35.4; //deg
 
+  //PixyCam
+  public static final double PIXY_FOV_HORIZ = 70; // horizontal FOV in degrees
+  public static final double PIXY_FOV_VERT = 47; // vertical FOV in degrees
+
   //Field Constants (May be Incomplete) 
   public static final double BAR1 = 48.75; 
   public static final double BAR2 = 60.25; 
