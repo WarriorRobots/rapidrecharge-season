@@ -41,7 +41,7 @@ public class ShooterSubsystem extends SubsystemBase {
     //TODO change sensors?
     m_shooter_left = new WPI_TalonFX(RobotMap.ID_SHOOTER_LEFT);
     m_shooter_left.setInverted(Vars.SHOOTER_LEFT_REVERSED);
-    m_shooter_left.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
+    m_shooter_left.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT); //XXX problem with this line:w
     m_shooter_left.config_kF(Constants.PRIMARY_PID, Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE*1023/Vars.SHOOTER_FRONT_NATIVE_ESTIMATED_VELOCITY, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
     m_shooter_left.config_kP(Constants.PRIMARY_PID, Vars.SHOOTER_FRONT_KP, Constants.MS_TIMEOUT);
     

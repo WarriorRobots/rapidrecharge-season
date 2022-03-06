@@ -82,9 +82,9 @@ public class RobotContainer {
   // private NetworkTableEntry IntakeTopInput =
   // tab1.add("Intake Top Input", 0)
   // .getEntry();
-  private NetworkTableEntry ShooterFrontPercentage = shootertab.add("SFPInput", Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE)
+  private NetworkTableEntry ShooterFrontPercentage = shootertab.add("ShooterFrontPercentInput", Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE)
       .getEntry();
-  private NetworkTableEntry ShooterBackPercentage = shootertab.add("SBPInput", Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE)
+  private NetworkTableEntry ShooterBackPercentage = shootertab.add("ShooterBackPercentInput", Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE)
       .getEntry();
   private ShuffleboardTab armtab = Shuffleboard.getTab("Arm");
 
@@ -150,18 +150,18 @@ public class RobotContainer {
           () -> FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM),
           () -> BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM)));
 
-  private final SequentialCommandGroup m_ShooterButtonLeft = new SequentialCommandGroup(
-      new ParallelCommandGroup(
-        // the arm should move away from the shooter...
-        new ArmMakeRoom(m_ArmSubsytem),
-        // while making sure there are no balls touching the shooter...
-        new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
-            new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW))
-      ),
-      // and then shoot and feed
-      new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem,
-          () -> FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM),
-          () -> BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM)));
+  // private final SequentialCommandGroup m_ShooterButtonLeft = new SequentialCommandGroup(
+  //     new ParallelCommandGroup(
+  //       // the arm should move away from the shooter...
+  //       new ArmMakeRoom(m_ArmSubsytem),
+  //       // while making sure there are no balls touching the shooter...
+  //       new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
+  //           new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW))
+  //     ),
+  //     // and then shoot and feed
+  //     new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem,
+  //         () -> FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM),
+  //         () -> BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM)));
 
   private final ParallelCommandGroup m_ShooterPrep = new ParallelCommandGroup(
       new TurretAim(m_CameraSubsystem, m_TurretSubsystem).perpetually(),
@@ -278,6 +278,7 @@ public class RobotContainer {
       () -> BackSpinRPMINPUT.getDouble(0));
   private final ShooterPercentage m_ShooterReverse = new ShooterPercentage(m_ShooterSubsystem,
       () -> Vars.SHOOTER_FRONT_REVERSE, () -> Vars.SHOOTER_BACK_REVERSE);
+  private final ShooterPercentage m_ShooterDebugPercent = new ShooterPercentage(m_ShooterSubsystem, ()->ShooterFrontPercentage.getDouble(0), ()->ShooterBackPercentage.getDouble(0));
 
   /**
    * The container for the robot. Conj
@@ -333,7 +334,9 @@ public class RobotContainer {
     IO.rightJoystick_3.whileHeld(m_ShooterRPM.alongWith(m_FeedPercentage));
     IO.rightJoystick_4.whileHeld(m_TurretAim);
     IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(m_ArmStabilize));
-    IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
+    //IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
+    //IO.leftJoystick_7.whileHeld(m_ShooterDebugPercent);
+
 
     IO.xbox_RB.whileHeld(m_IntakeSequence).whenReleased(m_ArmPosition0);
     // Arm Xbox Buttons
