@@ -79,4 +79,10 @@ public class Vars {
   public static final int SHOOTER_BACK_NATIVE_ESTIMATED_VELOCITY = (int)(SHOOTER_BACK_ESTIMATED_RPM / 600 * Constants.CLICKS_PER_REV_QUADRATURE);
 
 
+  public static final double PIXY_PID_ANGLE_KP = 0;
+  public static final double PIXY_PID_ANGLE_KI = 0;
+  public static final double PIXY_PID_ANGLE_KD = 0;
+  public static final double PIXY_PID_FORWARD_KP = 0;
+  public static final double PIXY_PID_FORWARD_KI = 0;
+  public static final double PIXY_PID_FORWARD_KD = 0;
 }
