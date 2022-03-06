@@ -51,13 +51,16 @@ public class Vars {
   public static final double ARM_ANGLE_PICKUP = 120;
   public static final double ARM_ZERO_VOLTAGE = -0.2;
   public static final double ARM_IN = 5;
+  public static final double ARM_AWAY = 10;
+
+
 
 
   // Estimated Shooter Output
   /**Front shoote estimated RPM */
-    public static final double SHOOTER_FRONT_DEFAULT_RPM = 2300;
+    public static final double SHOOTER_FRONT_DEFAULT_RPM = 2400;
   /**Back SHooter  Estimated RPM */
-    public static final double SHOOTER_BACK_DEFAULT_RPM = 6000;
+    public static final double SHOOTER_BACK_DEFAULT_RPM = 7500;
 
   /** Typical motor output as percent */
   public static final double SHOOTER_FRONT_ESTIMATED_PERCENTAGE =  0.50;

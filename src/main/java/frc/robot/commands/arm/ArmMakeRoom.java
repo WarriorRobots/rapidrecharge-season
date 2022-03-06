@@ -23,13 +23,13 @@ public class ArmMakeRoom extends CommandBase {
   @Override
   public void initialize() {
     // when the arm is closer than the ARM_IN position, it is too close to the shooter
-    if (m_arm.getPosition() < Vars.ARM_IN) m_arm.setAngleBounded(Vars.ARM_IN);
+    if (m_arm.getPosition() < Vars.ARM_AWAY) m_arm.setAngleBounded(Vars.ARM_AWAY);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     // check if the arm position is past the negative tolerance of the arm in
-    return m_arm.getPosition() > Vars.ARM_IN - Vars.ARM_TOLERANCE;
+    return m_arm.getPosition() > Vars.ARM_AWAY - Vars.ARM_TOLERANCE;
   }
 }
