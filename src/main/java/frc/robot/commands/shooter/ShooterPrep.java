@@ -13,7 +13,7 @@ public class ShooterPrep extends CommandBase {
   IntakeSubsystem m_intake;
   FeedSubsystem m_feed;
 
-  /** Creates a new ShooterPrep. */
+  /** Puts a ball next to the shooter to prepare the shooter. */
   public ShooterPrep(IntakeSubsystem intake, FeedSubsystem feed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_intake = intake;
@@ -30,8 +30,8 @@ public class ShooterPrep extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setPercentage(Vars.INTAKE_PERCENT, Vars.INTAKE_PERCENT);
-    m_feed.setPercentage(Vars.INTAKE_PERCENT);
+    m_intake.setPercentage(Vars.SHOOTER_SLOW_INTAKE, Vars.SHOOTER_SLOW_INTAKE);
+    m_feed.setPercentage(Vars.SHOOTER_SLOW_FEED);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +44,6 @@ public class ShooterPrep extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_feed.containsBall();
+    return m_feed.containsBall();
   }
 }

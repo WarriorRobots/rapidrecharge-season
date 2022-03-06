@@ -30,14 +30,6 @@ public class ShooterSubsystem extends SubsystemBase {
   
   // TODO the below variables should be sparated into one for the front and one for the back motor
 
-  /** Number of encoder clicks per every revolution of the encoder */
-  // TODO Move this to vars
-  static final int CLICKS_PER_REV = 2048; // https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html#sensor-resolution
-  /** Typical motor output as percent */
-  static final double ESTIMATED_VOLTAGE = .83; // TODO move this to Vars
-  /** Velocity of shooter in native units per 100ms at typical motor output (at the encoder) */
-  static final int NATIVE_ESTIMATED_VELOCITY = 18600; // TODO move this to Vars
-  
   /**
    * Instantiates new subsystem; make ONLY ONE.
 	 * <p>
@@ -49,9 +41,9 @@ public class ShooterSubsystem extends SubsystemBase {
     //TODO change sensors?
     m_shooter_left = new WPI_TalonFX(RobotMap.ID_SHOOTER_LEFT);
     m_shooter_left.setInverted(Vars.SHOOTER_LEFT_REVERSED);
-    m_shooter_left.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
-    m_shooter_left.config_kF(Constants.PRIMARY_PID, ESTIMATED_VOLTAGE*1023/NATIVE_ESTIMATED_VELOCITY, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
-    m_shooter_left.config_kP(Constants.PRIMARY_PID, Vars.SHOOTER_KP, Constants.MS_TIMEOUT);
+    m_shooter_left.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT); //XXX problem with this line:w
+    m_shooter_left.config_kF(Constants.PRIMARY_PID, Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE*1023/Vars.SHOOTER_FRONT_NATIVE_ESTIMATED_VELOCITY, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
+    m_shooter_left.config_kP(Constants.PRIMARY_PID, Vars.SHOOTER_FRONT_KP, Constants.MS_TIMEOUT);
     
     m_slave_right = new WPI_TalonFX(RobotMap.ID_SHOOTER_RIGHT);
     m_slave_right.follow(m_shooter_left);
@@ -60,8 +52,8 @@ public class ShooterSubsystem extends SubsystemBase {
     m_back_motor = new WPI_TalonSRX(RobotMap.ID_SHOOTER_KICKER);
     m_back_motor.setInverted(Vars.SHOOTER_BACK_INVERTED);
     m_back_motor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
-    m_back_motor.config_kF(Constants.PRIMARY_PID, /*XXX These should NOT share the same variables as the above */ ESTIMATED_VOLTAGE*1023/NATIVE_ESTIMATED_VELOCITY, Constants.MS_TIMEOUT);
-    m_back_motor.config_kP(Constants.PRIMARY_PID, 0, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
+    m_back_motor.config_kF(Constants.PRIMARY_PID, Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE*1023/Vars.SHOOTER_BACK_NATIVE_ESTIMATED_VELOCITY, Constants.MS_TIMEOUT);
+    m_back_motor.config_kP(Constants.PRIMARY_PID, Vars.SHOOTER_BACKSPIN_KP, Constants.MS_TIMEOUT); // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#calculating-velocity-feed-forward-gain-kf
   }
 
 
@@ -148,8 +140,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public static double toRPM_Front(double native_units)
   { 
-    // XXX this math should include gear ratios
-    return ((native_units * 600) / CLICKS_PER_REV);
+    return ((native_units * 600 * Vars.SHOOTER_FRONT_GEARING) / Constants.CLICKS_PER_REV_INTEGRATED);
   }
 
   /**
@@ -159,8 +150,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public static double toRPM_Back(double native_units)
   {
-    // XXX this math should include gear ratios
-    return ((native_units * 600) / CLICKS_PER_REV);
+    return ((native_units * 600) / Constants.CLICKS_PER_REV_QUADRATURE);
   }
   
   /**
@@ -170,8 +160,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public static double toNative_Front(double rpm)
   { 
-    // XXX this math should include gear ratios
-    return ((rpm / 600) * CLICKS_PER_REV);
+    return ((rpm / 600 / Vars.SHOOTER_FRONT_GEARING) * Constants.CLICKS_PER_REV_INTEGRATED);
   }
 
   /**
@@ -181,13 +170,9 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public static double toNative_Back(double rpm)
   {
-    // XXX this math should include gear ratios
-    return ((rpm / 600) * CLICKS_PER_REV);
+    return ((rpm / 600) * Constants.CLICKS_PER_REV_QUADRATURE);
   }
 
-  public static double getCommandedRPM(double rpm){
-      return rpm;
-  }
 
   public void stop()
   {

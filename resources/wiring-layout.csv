@@ -1,10 +1,10 @@
 PORT PDP,ID Pheonix,Subystem/Purpose,Controller,Motor,Encoder
-H0,00-LF,LeftFront,TalonFX,Falcon500,Integrated
-H1,01-LR,LeftRear,TalonFX,Falcon500,Integrated
+H0,00-LR,LeftRear,TalonFX,Falcon500,Integrated
+H1,01-LF,LeftFront,TalonFX,Falcon500,Integrated
 H2,02-LS,LeftShooter,TalonFX,Falcon500,Integrated
 H3,03-KS,KickerShooter,TalonSRX,BAG,Quadrature
-L4,04-LP,LowerPickup,TalonSRX,BAG,-
-L5,05-AR,ArmRotate,TalonSRX,BAG,Quadrature
+L4,04-AR,ArmRotate,TalonSRX,BAG,Quadrature
+L5,05-LP,LowerPickup,TalonSRX,BAG,-
 L6,,,,,
 L7,,LimeLight,,,
 L8,,,,,

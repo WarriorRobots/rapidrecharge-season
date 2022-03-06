@@ -12,9 +12,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class IntakePercentage extends CommandBase {
   /** Creates a new IntakePercentage. */
   private IntakeSubsystem m_intake;
-  private DoubleSupplier m_belt_top, m_belt_bottom;
+  private double m_belt_top, m_belt_bottom;
 
-  public IntakePercentage(IntakeSubsystem intake, DoubleSupplier top, DoubleSupplier bottom) {
+  public IntakePercentage(IntakeSubsystem intake, double top, Double bottom) {
     m_intake = intake;
     m_belt_top = top;
     m_belt_bottom = bottom;
@@ -29,7 +29,7 @@ public class IntakePercentage extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setPercentage(m_belt_top.getAsDouble(), m_belt_bottom.getAsDouble());
+    m_intake.setPercentage(m_belt_top, m_belt_bottom);
   }
 
   // Called once the command ends or is interrupted.

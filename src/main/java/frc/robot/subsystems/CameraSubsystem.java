@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class CameraSubsystem extends SubsystemBase {
@@ -29,7 +30,7 @@ public class CameraSubsystem extends SubsystemBase {
 // Initialize Network Table
   private NetworkTable CameraTable;
 // Set Tracking Pipline to 1
-  public static final int Tracking_Pipline = 1;
+  public static final int Tracking_Pipline = 0;
    // Driver POV
    public static final int Drive_Pipline = 0;
 
@@ -57,6 +58,22 @@ public class CameraSubsystem extends SubsystemBase {
   }
   public void ChangePipeline(int pipe){
     CameraTable.getEntry("pipeline").setDouble(pipe);
+  }
+
+  public double getTargetDistance() {
+    if(!TargetExists()) return -1;
+
+    double numerator = Constants.Target_ELEVATION - Constants.Camera_ELEVATION;
+    double radians = 
+      Math.toRadians(
+        Constants.Camera_TILT + CameraTable.getEntry(TARGET_Y).getDouble(0)
+      );
+    double denominator = Math.tan(radians);
+
+    double distance = numerator / denominator;
+    return distance;
+    // Angle of the camera to the tower = Angle of the camera on the robot + the Angle the robot Sees
+    // Distance= Height of the Tower - Height of the Robot / Tan(Angle of the Camera to the Tower)
   }
 
   @Override

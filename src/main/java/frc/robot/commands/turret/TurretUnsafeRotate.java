@@ -3,7 +3,7 @@ package frc.robot.commands.turret;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
-
+@Deprecated
 public class TurretUnsafeRotate extends CommandBase {
   /** Creates a new TurretUnsafeRotate. */
   private TurretSubsystem m_turret;

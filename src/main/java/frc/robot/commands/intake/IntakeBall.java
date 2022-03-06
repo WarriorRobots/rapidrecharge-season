@@ -4,6 +4,8 @@
 
 package frc.robot.commands.intake;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Vars;
 import frc.robot.subsystems.FeedSubsystem;
@@ -13,12 +15,15 @@ public class IntakeBall extends CommandBase {
   /** Creates a new IntakeBall. */
   IntakeSubsystem m_IntakeSubsystem;
   FeedSubsystem m_feedSubsystem;
-  public IntakeBall(IntakeSubsystem intake, FeedSubsystem feed) {
+  double m_intakeValue, m_feedValue;
+  public IntakeBall(IntakeSubsystem intake, FeedSubsystem feed, double intakeValue, double feedValue) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_IntakeSubsystem = intake;
     addRequirements(m_IntakeSubsystem);
     m_feedSubsystem = feed;
     addRequirements(m_feedSubsystem);
+    m_intakeValue = intakeValue;
+    m_feedValue = feedValue;
 
   }
 
@@ -29,12 +34,13 @@ public class IntakeBall extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_IntakeSubsystem.setPercentage(Vars.INTAKE_PERCENT, Vars.INTAKE_PERCENT);
-    if(!m_feedSubsystem.containsBall()){
-      m_IntakeSubsystem.setPercentage(Vars.INTAKE_PERCENT, Vars.INTAKE_PERCENT);
-    }else{
-      m_feedSubsystem.stop();
-    }
+    
+    m_IntakeSubsystem.setPercentage(m_intakeValue, m_intakeValue);
+     if(!m_feedSubsystem.containsBall()){
+       m_feedSubsystem.setPercentage(m_feedValue);
+     }else{
+       m_feedSubsystem.stop();
+   }
   }
 
   // Called once the command ends or is interrupted.
