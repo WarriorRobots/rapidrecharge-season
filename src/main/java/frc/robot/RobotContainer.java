@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.arm.ArmHoldPosition;
 import frc.robot.commands.arm.ArmLinear;
+import frc.robot.commands.arm.ArmMakeRoom;
 import frc.robot.commands.arm.ArmPosition;
 import frc.robot.commands.arm.ArmStabilize;
 import frc.robot.commands.arm.ArmZero;
@@ -137,14 +138,27 @@ public class RobotContainer {
       () -> BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM));
 
   private final SequentialCommandGroup m_ShooterButton = new SequentialCommandGroup(
-      new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
-          new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW)),
+      new ParallelCommandGroup(
+        // the arm should move away from the shooter...
+        new ArmMakeRoom(m_ArmSubsytem),
+        // while making sure there are no balls touching the shooter...
+        new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
+            new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW))
+      ),
+      // and then shoot and feed while aiming
       new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem,
           () -> FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM),
           () -> BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM)));
+
   private final SequentialCommandGroup m_ShooterButtonLeft = new SequentialCommandGroup(
-      new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
-          new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW)),
+      new ParallelCommandGroup(
+        // the arm should move away from the shooter...
+        new ArmMakeRoom(m_ArmSubsytem),
+        // while making sure there are no balls touching the shooter...
+        new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
+            new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW))
+      ),
+      // and then shoot and feed
       new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem,
           () -> FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM),
           () -> BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM)));
