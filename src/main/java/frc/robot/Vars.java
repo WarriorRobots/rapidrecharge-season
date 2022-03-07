@@ -60,4 +60,9 @@ public class Vars {
   public static final int CLIMB_TRACK_DIAMETER = 55; //TODO adjust at some point
   public static final int CLIMB_GEARING = 26; //TODO adjust at some point
   public static final int CLIMB_CLICKS_PER_REV = 300; //TODO adjust at some point
+
+  public static final double CLIMB_KP = 0.01; //TODO adjust at somepoint
+  public static final double CLIMB_KI = 0; //TODO adjust at somepoint
+  public static final double CLIMB_KD = 0; //TODO adjust at somepoint
+  public static final double CLIMB_TOLERANCE = 1; //+- inches
 }

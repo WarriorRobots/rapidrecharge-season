@@ -5,24 +5,27 @@
 package frc.robot.commands.Climb;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.TurretSubsystem;
 
-
-public class Climb extends CommandBase {
-  private ShooterSubsystem m_shooter;
+public class ClimbSetTurret extends CommandBase {
   private TurretSubsystem m_turret;
-  /** Creates a new Climb. */
-  public Climb() {
+  /** Creates a new ClimbSetTurret. */
+  public ClimbSetTurret(TurretSubsystem turret) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooter);
-    addRequirements(m_turret);
+    addRequirements(turret);
+    m_turret = turret;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    //Determine whether position is closer to 180 or 0
+    m_turret.bound(m_turret.getRotationDegrees());
+    if (Math.abs(m_turret.getRotationDegrees()) < 90) {
+      RobotContainer.m_TurretPreset0;
+    }
+    else if (Math.abs(m_turret.getRotationDegrees()) > 90) {}
   }
 
   // Called every time the scheduler runs while the command is scheduled.

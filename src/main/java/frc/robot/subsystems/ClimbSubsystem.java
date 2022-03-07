@@ -5,11 +5,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.Vars;
 
@@ -20,15 +22,25 @@ public class ClimbSubsystem extends SubsystemBase {
   public ClimbSubsystem() {
     m_extension = new WPI_TalonFX(RobotMap.ID_CLIMB_MOTOR);
     m_extension.setInverted(Vars.CLIMB_MOTOR_REVERSED);
-    
+    m_extension.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
+    m_extension.config_kP(Constants.PRIMARY_PID, Vars.CLIMB_KP, Constants.MS_TIMEOUT);
+    m_extension.config_kI(Constants.PRIMARY_PID, Vars.CLIMB_KI, Constants.MS_TIMEOUT);
+    m_extension.config_kD(Constants.PRIMARY_PID, Vars.CLIMB_KD, Constants.MS_TIMEOUT);
     m_angle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ID_EXTENSION, RobotMap.ID_RECALL);
   }
 
   /**
+   * Linearly moves climb WITHOUT SAFETY
+   * @param percent -1.0 to 1.0
+   */
+  public void LinearClimb(double percent){
+    m_extension.set(ControlMode.PercentOutput, percent);
+  }
+  /**
    * Give a position for the climb to go to.
    * @param position Desired position of the physical climb in inches upwards.
    */
-  public void ClimbExtend(int position) {
+  public void ClimbExtend(double position) {
     if (position < Vars.CLIMB_MINIMUM){
       m_extension.set(ControlMode.Position, toClicks(Vars.CLIMB_MINIMUM));
     }
@@ -39,10 +51,7 @@ public class ClimbSubsystem extends SubsystemBase {
       m_extension.set(ControlMode.Position, toClicks(position));
     }
   }
-  private double toClicks(int climbMinimum) {
-    return 0;
-  }
- 
+
   /**
    * Get the encoder of the winch.
    * @return Number of clicks on the encoder
