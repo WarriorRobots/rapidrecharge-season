@@ -72,6 +72,7 @@ public class CameraSubsystem extends SubsystemBase {
 
     double distance = numerator / denominator;
     return distance;
+    // See calculation on page 26 of programming notebook
     // Angle of the camera to the tower = Angle of the camera on the robot + the Angle the robot Sees
     // Distance= Height of the Tower - Height of the Robot / Tan(Angle of the Camera to the Tower)
   }

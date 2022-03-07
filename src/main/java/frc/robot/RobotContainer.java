@@ -297,6 +297,7 @@ public class RobotContainer {
     armtab.addNumber("Arm Position", () -> m_ArmSubsytem.getPosition());
     armtab.addNumber("Arm Gain", () -> m_ArmSubsytem.getGain());
     turrettab.addNumber("Turret Gain", () -> m_TurretSubsystem.getTurretGain());
+    shootertab.addNumber("Limelight Distance", () -> m_CameraSubsystem.getTargetDistance());
   }
 
   /**
