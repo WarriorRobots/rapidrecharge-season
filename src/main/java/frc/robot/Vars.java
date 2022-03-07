@@ -16,6 +16,7 @@ public class Vars {
   public static final boolean FEED_REVERSED = false;
   public static final boolean INTAKE_TOP_REVERSED = false;
   public static final boolean INTAKE_BOTTOM_REVERSED = true;
+  public static final boolean CLIMB_MOTOR_REVERSED = false;
   
   // flipped concoders
   public static final boolean TURRET_ENCODER_REVERSED = false;
@@ -73,6 +74,7 @@ public class Vars {
   public static final double SHOOTER_BACK_ESTIMATED_PERCENTAGE = 0.40;
   /** Velocity of shooter in native units per 100ms at typical motor output (at the encoder) */
   public static final int SHOOTER_BACK_NATIVE_ESTIMATED_VELOCITY = (int)(SHOOTER_BACK_ESTIMATED_RPM / 600 * Constants.CLICKS_PER_REV_QUADRATURE);
+
   
   public static final int CLIMB_MINIMUM = 30; //TODO Adjust as some point
   public static final int CLIMB_MAXIMUM = 60; //TODO Adjust as some point
