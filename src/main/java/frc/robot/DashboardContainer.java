@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.cscore.HttpCamera;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -22,6 +23,7 @@ public class DashboardContainer {
   private static DashboardContainer instance = null;
 
   private SendableChooser<Integer> verbosityChooser = new SendableChooser<Integer>();
+  private NetworkTableEntry FrontRPMInput, BackRPMInput, FrontPercentInput, BackPercentInput;
 
   // This constructor is private because it is a singleton
   private DashboardContainer() {}
@@ -110,8 +112,31 @@ public class DashboardContainer {
     verbosityChooser.addOption("Programmer", 4);
     verbosityChooser.addOption("Programmer Debug", 5);
     driver.add("Verbosity",verbosityChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 3).withSize(2, 1);
+    
+    FrontRPMInput = driver.add("Front Shooter RPM Input", Vars.SHOOTER_FRONT_DEFAULT_RPM).getEntry();
+    BackRPMInput = driver.add("Back Shooter RPM Input", Vars.SHOOTER_BACK_DEFAULT_RPM).getEntry();
+    FrontPercentInput = driver.add("Front Shooter Percent Input", Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE).getEntry();
+    BackPercentInput = driver.add("Back Shooter Percent Input", Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE).getEntry();
+    driver.addNumber("Xbox left Y", () -> IO.getXBoxLeftY());
+    driver.addNumber("Xbox right X", () -> IO.getXBoxRightX());
+    driver.addNumber("Joystick Right Y", () -> IO.getRightY());
   }
-
+  public double FrontRPMInput()
+  {
+    return FrontRPMInput.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM);
+  }
+  public double BackRPMInput()
+  {
+    return FrontRPMInput.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM);
+  }
+  public double FrontPercentInput()
+  {
+    return FrontRPMInput.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE);
+  }
+  public double BackPercentInput()
+  {
+    return FrontRPMInput.getDouble(Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE);
+  }
   /**
    * Gets the verbosity level of the robot: <p>
    * 1 - Driver Info <p>
