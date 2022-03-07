@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.Vars;
 
 public class FeedSubsystem extends SubsystemBase {
   /** Creates a new FeedSubsystem. */
@@ -18,7 +19,8 @@ public class FeedSubsystem extends SubsystemBase {
 
   public FeedSubsystem() {
     m_feed = new WPI_TalonSRX(RobotMap.ID_FEED);
-    m_infraredSensor = new DigitalInput(RobotMap.ID_FEED_INFRARED);
+    m_feed.setInverted(Vars.FEED_REVERSED);
+   m_infraredSensor = new DigitalInput(RobotMap.ID_FEED_INFRARED);
   }
 
   /**
@@ -36,6 +38,7 @@ public class FeedSubsystem extends SubsystemBase {
   public boolean containsBall()
   {
     return !m_infraredSensor.get(); // infrared reads false when it sees a ball
+    
   }
 
   /**

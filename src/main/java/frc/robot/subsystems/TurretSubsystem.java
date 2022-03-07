@@ -14,7 +14,6 @@ import frc.robot.Vars;
 public class TurretSubsystem extends SubsystemBase {
   private WPI_TalonSRX turret;   
 
-  public static final double CLICKS_PER_REV = 4096;
 
   public TurretSubsystem () {
     turret = new WPI_TalonSRX(RobotMap.ID_TURRET);
@@ -31,7 +30,28 @@ public class TurretSubsystem extends SubsystemBase {
    * @param voltage Decimal percentage from -1 to 1. 1 is clockwise.
    */
   public void rotateNoSafety(double voltage) {
-    turret.set(voltage);
+    turret.set(ControlMode.PercentOutput, voltage);
+  }
+
+  /**
+   * Give the turret a voltage to rotate.
+   * @param percent Decimal percentage from -1 to 1. 1 is clockwise.
+   */
+  public void rotateSafety(double percent)
+  {
+    double position = getRotationDegrees();
+    if (position<Vars.TURRET_MIN_ROTATION) // counterclockwise bound
+    {
+      turret.set(ControlMode.PercentOutput, (percent<0) ? 0 : percent);
+    }
+    else if (position>Vars.TURRET_MAX_ROTATION) // clockwise bound
+    {
+      turret.set(ControlMode.PercentOutput, (0<percent) ? 0 : percent);
+    }
+    else
+    {
+      turret.set(ControlMode.PercentOutput, percent);
+    }
   }
 
   /**
@@ -40,17 +60,18 @@ public class TurretSubsystem extends SubsystemBase {
    * @param position Double representing where the robot is rotated in degrees
    */  
   public void rotateToPosition(double position) {
-    if (position<Vars.MIN_ROTATION) {
-      turret.set(ControlMode.Position, toClicks(Vars.MIN_ROTATION));
+    if (position<Vars.TURRET_MIN_ROTATION) {
+      turret.set(ControlMode.Position, toClicks(Vars.TURRET_MIN_ROTATION));
     }
-    else if (position>Vars.MAX_ROTATION) {
-      turret.set(ControlMode.Position, toClicks(Vars.MAX_ROTATION));
+    else if (position>Vars.TURRET_MAX_ROTATION) {
+      turret.set(ControlMode.Position, toClicks(Vars.TURRET_MAX_ROTATION));
     }
     else {
       turret.set(ControlMode.Position, toClicks(position));
     }
   }
 
+  
   /**
    * Rotates the turret to the point closest to the position while being constrained to to the min and max degrees.
    * If it needs to, it will rotate the other direction to get to it's commanded position.
@@ -58,13 +79,19 @@ public class TurretSubsystem extends SubsystemBase {
   public void rotateBounded(double position){
     // if the turret is trying to rotate over it's min or max, it should rotate around the other direction
     // this is done by knowing the current count of full rotations and perserving that but bounding the position
-    if (position < Vars.MIN_ROTATION || position > Vars.MAX_ROTATION) {
+    if (position < Vars.TURRET_MIN_ROTATION || position > Vars.TURRET_MAX_ROTATION) {
       int count = (int) ( position/360 ); // count of rotations made
       position = bound(position) + 360 * count;
     }
     rotateToPosition(position);
   }
-
+  /**
+   * 
+   * @return The Gain of The turret Motor
+   */
+  public double getTurretGain(){
+    return turret.getMotorOutputPercent();
+  }
   /**
    * Stops the turret motor.
    */  
@@ -72,20 +99,21 @@ public class TurretSubsystem extends SubsystemBase {
     turret.stopMotor();
   }
   
+  
   /** 
    * Gets the rotation of the turret based on encoder value
    * 
    * @return Degree rotation of turret. (+degree is clockwise)
    */
   public double getRotationDegrees() {
-    return turret.getSelectedSensorPosition() / CLICKS_PER_REV * 360.0;
+    return turret.getSelectedSensorPosition() / Constants.CLICKS_PER_REV_QUADRATURE * 360.0;
   }
 
   /** 
    * Converts betweens degrees and encoder clicks.
    */  
   public int toClicks(double degrees) {
-    return (int) Math.round(degrees * CLICKS_PER_REV / 360.0);
+    return (int) Math.round(degrees * Constants.CLICKS_PER_REV_QUADRATURE / 360.0);
   }
 
   public double getClicks(){
@@ -96,7 +124,7 @@ public class TurretSubsystem extends SubsystemBase {
    * Converts betweens encoder clicks and degrees.
    */  
   public double toDegrees(double clicks) {
-    return clicks/CLICKS_PER_REV * 360.0;
+    return clicks/Constants.CLICKS_PER_REV_QUADRATURE * 360.0;
   }
 
   /**

@@ -37,7 +37,6 @@ public class ArmPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //TODO change tolerance
     return Math.abs(m_arm.getPosition() - m_degrees) < Vars.ARM_TOLERANCE;
   }
 }
