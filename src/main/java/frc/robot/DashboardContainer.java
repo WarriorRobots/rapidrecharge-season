@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * A singleton tool to interface to the dashboard.
@@ -124,4 +125,40 @@ public class DashboardContainer {
     // if there is a null value, then choose verbosity of 1 so something does not crash elsewhere
     return (verbosityChooser.getSelected() != null) ? verbosityChooser.getSelected() : 1;
   }
+public void putDashboard(){
+  switch (getVerbosity())
+  {
+    case 5:
+      SmartDashboard.putNumber("Turret/Gain", RobotContainer.m_TurretSubsystem.getTurretGain());
+      SmartDashboard.putNumber("Shooter/EncoderVelocity", RobotContainer.m_ShooterSubsystem.getEncVelocityFront());
+      SmartDashboard.putNumber("Shooter/Encoder", RobotContainer.m_ShooterSubsystem.getEncFront());
+      SmartDashboard.putNumber("Arm/Encoder", RobotContainer.m_ArmSubsytem.getEnc());
+      SmartDashboard.putNumber("Turret/Clicks", RobotContainer.m_TurretSubsystem.getClicks());
+    case 4:
+      SmartDashboard.putNumber("Shooter/FrontGain", RobotContainer.m_ShooterSubsystem.getGainFront());
+      SmartDashboard.putNumber("Shooter/BackGain", RobotContainer.m_ShooterSubsystem.getGainBack());
+      SmartDashboard.putNumber("Arm/Gain", RobotContainer.m_ArmSubsytem.getGain());
+    case 3:
+      SmartDashboard.putNumber("Camera/TargetX", RobotContainer.m_CameraSubsystem.GetTargetX());
+      SmartDashboard.putNumber("Camera/TargetY", RobotContainer.m_CameraSubsystem.GetTargetY());
+      SmartDashboard.putNumber("Camera/TargetWidth", RobotContainer.m_CameraSubsystem.getTargetWidth());
+      SmartDashboard.putNumber("Camera/TargetHeight", RobotContainer.m_CameraSubsystem.getTargetHeight());
+    case 2:
+      SmartDashboard.putNumber("Turret/Degrees", RobotContainer.m_TurretSubsystem.getRotationDegrees());
+      SmartDashboard.putBoolean("Camera/TargetExists", RobotContainer.m_CameraSubsystem.TargetExists());
+      SmartDashboard.putNumber("Camera/TargetDistance", RobotContainer.m_CameraSubsystem.getTargetDistance());
+      SmartDashboard.putBoolean("Arm/HallEffect", RobotContainer.m_ArmSubsytem.getHallEffect());
+      SmartDashboard.putNumber("Arm/Position", RobotContainer.m_ArmSubsytem.getPosition());
+    case 1:
+      SmartDashboard.putNumber("Shooter/FrontRPM", RobotContainer.m_ShooterSubsystem.getRPMFront());
+      SmartDashboard.putNumber("Shooter/BackRPM", RobotContainer.m_ShooterSubsystem.getRPMBack());
+      SmartDashboard.putBoolean("Feed/ContainsBall", RobotContainer.m_FeedSubsystem.containsBall());
+      break;
+    case 0:
+    default:
+      break;
+  }
+
+}
+
 }

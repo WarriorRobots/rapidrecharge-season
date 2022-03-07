@@ -198,9 +198,7 @@ public class RobotContainer {
   private final CameraChangePipeline m_DriverCameraChangePipeline = new CameraChangePipeline(m_CameraSubsystem,
       CameraSubsystem.Drive_Pipline);
 
-  // TODO robot should be able to shoot balls high using values from the
-  // dashboard; see:
-  // https://github.com/WarriorRobots/dummyRobot2022/blob/aeeb984605764853f1215d135f280ca5627459ee/src/main/java/frc/robot/RobotContainer.java#L36
+  // TODO robot should be able to shoot balls high using values from the dashboard; see: https://github.com/WarriorRobots/dummyRobot2022/blob/aeeb984605764853f1215d135f280ca5627459ee/src/main/java/frc/robot/RobotContainer.java#L36
 
   // Turret
   private final TurretRotate m_TurretRotate = new TurretRotate(m_TurretSubsystem, () -> IO.getXBoxRightX());
