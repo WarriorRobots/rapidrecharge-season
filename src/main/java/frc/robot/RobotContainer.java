@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.Climb.ClimbMagic;
+import frc.robot.commands.Climb.ClimbPiston;
 import frc.robot.commands.camera.CameraChangePipeline;
 import frc.robot.commands.drive.Linear;
 import frc.robot.commands.drive.TankDrive;
@@ -21,6 +22,7 @@ import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
+import frc.robot.subsystems.ClimbSubsystem.ClimbState;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -63,6 +65,8 @@ public class RobotContainer {
   private final TurretAim m_TurretAim = new TurretAim(m_CameraSubsystem, m_TurretSubsystem);//{public boolean isFinished(){return false;}};
 
   private final ClimbMagic m_ClimbDown = new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_DOWN);
+  private final ClimbPiston m_ClimbAngled = new ClimbPiston(m_ClimbSubsystem, ClimbState.armup);
+  private final ClimbPiston m_ClimbVertical = new ClimbPiston(m_ClimbSubsystem, ClimbState.armdown);
   private final ClimbMagic m_ClimbUp = new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_UP);
   private final RunCommand m_DashWriter = new RunCommand(()-> WriteToDashboard()){public boolean runsWhenDisabled(){return true;}};
 
@@ -87,6 +91,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    IO.xboxLeft.whenPressed(m_ClimbVertical);
+    IO.xboxUp.whenPressed(m_ClimbUp);
+    IO.xboxDown.whenPressed(m_ClimbDown);
+    IO.xboxRight.whenPressed(m_ClimbAngled);
     // Changes pipline to driver POV when pressed 
     IO.leftJoystick_10.whenPressed(m_DriverCameraChangePipeline);
     // Changes to Tracking Josh POV when Pressed
@@ -100,8 +108,6 @@ public class RobotContainer {
     IO.xbox_B.whenPressed(m_TurretPreset90);
     IO.xbox_X.whenPressed(m_TurretPresetMinus90);
     IO.xbox_A.whileHeld(m_TurretAim);
-    IO.xboxUp.whenPressed(m_ClimbUp);
-    IO.xboxDown.whenPressed(m_ClimbDown);
   }
 
   public void WriteToDashboard(){
