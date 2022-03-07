@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -18,15 +19,23 @@ import frc.robot.Vars;
 public class ClimbSubsystem extends SubsystemBase {
   /** Creates a new ClimbSubsystem. */
   private WPI_TalonFX m_extension;
-  private DoubleSolenoid m_angle;
+  private DoubleSolenoid m_anglearm1;
+  private DoubleSolenoid m_anglearm2;
   public ClimbSubsystem() {
     m_extension = new WPI_TalonFX(RobotMap.ID_CLIMB_MOTOR);
     m_extension.setInverted(Vars.CLIMB_MOTOR_REVERSED);
     m_extension.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
+    m_extension.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.MS_TIMEOUT);
+    m_extension.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.MS_TIMEOUT);
     m_extension.config_kP(Constants.PRIMARY_PID, Vars.CLIMB_KP, Constants.MS_TIMEOUT);
     m_extension.config_kI(Constants.PRIMARY_PID, Vars.CLIMB_KI, Constants.MS_TIMEOUT);
     m_extension.config_kD(Constants.PRIMARY_PID, Vars.CLIMB_KD, Constants.MS_TIMEOUT);
-    m_angle = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ID_EXTENSION, RobotMap.ID_RECALL);
+    m_extension.config_kF(Constants.PRIMARY_PID, Vars.CLIMB_KF, Constants.MS_TIMEOUT);
+    m_extension.configMotionCruiseVelocity(Vars.CLIMB_SPEED, Constants.MS_TIMEOUT);
+    m_extension.configMotionAcceleration(Vars.CLIMB_ACCELERATION, Constants.MS_TIMEOUT);
+    m_extension.configMotionSCurveStrength(Vars.SMOOTHING, Constants.MS_TIMEOUT);
+    m_anglearm1 = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ID_CLIMB_EXTENSION1, RobotMap.ID_CLIMB_RECALL1);
+    m_anglearm2 = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ID_CLIMB_EXTENSION2, RobotMap.ID_CLIMB_RECALL2);
   }
 
   /**
@@ -40,7 +49,7 @@ public class ClimbSubsystem extends SubsystemBase {
    * Give a position for the climb to go to.
    * @param position Desired position of the physical climb in inches upwards.
    */
-  public void ClimbExtend(double position) {
+  public void ClimbPID(double position) {
     if (position < Vars.CLIMB_MINIMUM){
       m_extension.set(ControlMode.Position, toClicks(Vars.CLIMB_MINIMUM));
     }
@@ -52,6 +61,17 @@ public class ClimbSubsystem extends SubsystemBase {
     }
   }
 
+  public void ClimbMagic(double position) {
+    if (position < Vars.CLIMB_MINIMUM){
+      m_extension.set(ControlMode.MotionMagic, toClicks(Vars.CLIMB_MINIMUM));
+    }
+    else if (position > Vars.CLIMB_MAXIMUM) {
+      m_extension.set(ControlMode.MotionMagic, toClicks(Vars.CLIMB_MAXIMUM));
+    } 
+    else {
+      m_extension.set(ControlMode.MotionMagic, toClicks(position));
+    }
+  }
   /**
    * Get the encoder of the winch.
    * @return Number of clicks on the encoder
@@ -90,7 +110,7 @@ public class ClimbSubsystem extends SubsystemBase {
    * @param value A {@link DoubleSolenoid.Value}
    */
   public void setAngle(ClimbState state){
-    m_angle.set(state.getValue());
+    m_anglearm1.set(state.getValue());
   }
   /**
    * kOff -> None/stop <p>

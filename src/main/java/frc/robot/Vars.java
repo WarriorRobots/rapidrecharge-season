@@ -64,5 +64,15 @@ public class Vars {
   public static final double CLIMB_KP = 0.01; //TODO adjust at somepoint
   public static final double CLIMB_KI = 0; //TODO adjust at somepoint
   public static final double CLIMB_KD = 0; //TODO adjust at somepoint
+  public static final double CLIMB_KF = 0; //TODO adjust at somepoint
   public static final double CLIMB_TOLERANCE = 1; //+- inches
+  public static final double CLIMB_SPEED = 3000; //Native units/100 ms TODO adjust at some point
+  public static final double CLIMB_ACCELERATION = 3000; //(Native units/100 ms)/sec TODO adjust
+
+  public static final int SMOOTHING = 0;
+
+  public static final double CLIMB_DOWN = 0;
+  public static final double CLIMB_UP = 100; //Inches TODO change later
+
+  public static final double PNEUMATIC_LOOP_COUNT = 5;
 }

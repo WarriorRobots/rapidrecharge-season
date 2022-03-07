@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.commands.Climb.ClimbMagic;
 import frc.robot.commands.camera.CameraChangePipeline;
 import frc.robot.commands.drive.Linear;
 import frc.robot.commands.drive.TankDrive;
@@ -17,6 +18,7 @@ import frc.robot.commands.turret.TurretPreset;
 import frc.robot.commands.turret.TurretRotate;
 import frc.robot.commands.turret.TurretUnsafeRotate;
 import frc.robot.subsystems.CameraSubsystem;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -42,6 +44,7 @@ public class RobotContainer {
   protected static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   protected static final CameraSubsystem m_CameraSubsystem = new CameraSubsystem();
   protected static final TurretSubsystem m_TurretSubsystem = new TurretSubsystem();
+  protected static final ClimbSubsystem m_ClimbSubsystem = new ClimbSubsystem();
 
 
   private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
@@ -59,6 +62,8 @@ public class RobotContainer {
   private final TurretPreset m_TurretPreset0 = new TurretPreset(m_TurretSubsystem, 0);
   private final TurretAim m_TurretAim = new TurretAim(m_CameraSubsystem, m_TurretSubsystem);//{public boolean isFinished(){return false;}};
 
+  private final ClimbMagic m_ClimbDown = new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_DOWN);
+  private final ClimbMagic m_ClimbUp = new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_UP);
   private final RunCommand m_DashWriter = new RunCommand(()-> WriteToDashboard()){public boolean runsWhenDisabled(){return true;}};
 
   /** The container for the robot. Conj
@@ -95,6 +100,8 @@ public class RobotContainer {
     IO.xbox_B.whenPressed(m_TurretPreset90);
     IO.xbox_X.whenPressed(m_TurretPresetMinus90);
     IO.xbox_A.whileHeld(m_TurretAim);
+    IO.xboxUp.whenPressed(m_ClimbUp);
+    IO.xboxDown.whenPressed(m_ClimbDown);
   }
 
   public void WriteToDashboard(){

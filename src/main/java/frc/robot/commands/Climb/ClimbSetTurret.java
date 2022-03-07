@@ -23,9 +23,11 @@ public class ClimbSetTurret extends CommandBase {
     //Determine whether position is closer to 180 or 0
     m_turret.bound(m_turret.getRotationDegrees());
     if (Math.abs(m_turret.getRotationDegrees()) < 90) {
-      RobotContainer.m_TurretPreset0;
+      m_turret.rotateBounded(0);
     }
-    else if (Math.abs(m_turret.getRotationDegrees()) > 90) {}
+    else {
+      m_turret.rotateBounded(180);
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

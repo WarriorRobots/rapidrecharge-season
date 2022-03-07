@@ -5,31 +5,24 @@
 package frc.robot.commands.Climb;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Vars;
 import frc.robot.subsystems.ClimbSubsystem;
 
-
-public class ClimbPID extends CommandBase {
+public class ClimbMagic extends CommandBase {
   private ClimbSubsystem m_climb;
   private double m_inches;
-  /** Creates a new Climb. */
-  /**
-   * 
+  /** Creates a new ClimbMagic. 
    * @param climb 
-   * @param inches Inches of climb travel (0 is when climb has not yet moved)
-   */
-  public ClimbPID(ClimbSubsystem climb, double inches) {
-    m_climb = climb;
-    m_inches = inches;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_climb);
-  }
+   * @param inches Inches of climb travel (0 is when climb has not yet moved) */
 
+ public ClimbMagic(ClimbSubsystem climb, double inches) {
+      m_climb = climb;
+      m_inches = inches;
+      // Use addRequirements() here to declare subsystem dependencies.
+      addRequirements(m_climb);
+    }
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -44,6 +37,6 @@ public class ClimbPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_climb.getPosition() - m_inches) < Vars.CLIMB_TOLERANCE;
+    return false;
   }
 }
