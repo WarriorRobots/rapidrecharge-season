@@ -24,6 +24,7 @@ public class DashboardContainer {
 
   private SendableChooser<Integer> verbosityChooser = new SendableChooser<Integer>();
   private NetworkTableEntry FrontRPMInput, BackRPMInput, FrontPercentInput, BackPercentInput;
+  private NetworkTableEntry FrontRPMOutput, BackRPMOutput, FeedContainsBall;
 
   // This constructor is private because it is a singleton
   private DashboardContainer() {}
@@ -94,6 +95,7 @@ public class DashboardContainer {
    */
   public void boot() {
     setupDriver();
+    setupConfig();
     AutoContainer.getInstance(); // this is to get the auto to do it's tab
     // config is handled in other code
   }
@@ -112,31 +114,45 @@ public class DashboardContainer {
     verbosityChooser.addOption("Programmer", 4);
     verbosityChooser.addOption("Programmer Debug", 5);
     driver.add("Verbosity",verbosityChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 3).withSize(2, 1);
+
+    FrontRPMOutput = driver.add("Front RPM", 0).withPosition(7, 0).getEntry();
+    BackRPMOutput = driver.add("Back RPM", 0).withPosition(7, 1).getEntry();
+    FeedContainsBall = driver.add("Feed Contains Ball", false).withPosition(7, 2).getEntry();
     
-    FrontRPMInput = driver.add("Front Shooter RPM Input", Vars.SHOOTER_FRONT_DEFAULT_RPM).getEntry();
-    BackRPMInput = driver.add("Back Shooter RPM Input", Vars.SHOOTER_BACK_DEFAULT_RPM).getEntry();
-    FrontPercentInput = driver.add("Front Shooter Percent Input", Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE).getEntry();
-    BackPercentInput = driver.add("Back Shooter Percent Input", Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE).getEntry();
-    driver.addNumber("Xbox left Y", () -> IO.getXBoxLeftY());
-    driver.addNumber("Xbox right X", () -> IO.getXBoxRightX());
-    driver.addNumber("Joystick Right Y", () -> IO.getRightY());
+    driver.addNumber("Xbox left Y", () -> IO.getXBoxLeftY()).withPosition(9, 0);
+    driver.addNumber("Xbox right X", () -> IO.getXBoxRightX()).withPosition(9, 1);
+    driver.addNumber("Joystick Right Y", () -> IO.getRightY()).withPosition(9, 2);
   }
+
+  private void setupConfig() {
+    ShuffleboardTab config = getTab(TabsIndex.kConfig);
+    
+    FrontRPMInput = config.add("Front Shooter RPM Input", Vars.SHOOTER_FRONT_DEFAULT_RPM).withPosition(0, 0).withSize(2, 1).getEntry();
+    BackRPMInput = config.add("Back Shooter RPM Input", Vars.SHOOTER_BACK_DEFAULT_RPM).withPosition(0, 1).withSize(2, 1).getEntry();
+    FrontPercentInput = config.add("Front Shooter Percent Input", Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE).withPosition(4, 0).withSize(2, 1).getEntry();
+    BackPercentInput = config.add("Back Shooter Percent Input", Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE).withPosition(4, 1).withSize(2, 1).getEntry();
+  }
+
   public double FrontRPMInput()
   {
     return FrontRPMInput.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM);
   }
+
   public double BackRPMInput()
   {
-    return FrontRPMInput.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM);
+    return BackRPMInput.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM);
   }
+
   public double FrontPercentInput()
   {
-    return FrontRPMInput.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE);
+    return FrontPercentInput.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE);
   }
+
   public double BackPercentInput()
   {
-    return FrontRPMInput.getDouble(Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE);
+    return BackPercentInput.getDouble(Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE);
   }
+
   /**
    * Gets the verbosity level of the robot: <p>
    * 1 - Driver Info <p>
@@ -175,15 +191,18 @@ public void putDashboard(){
       SmartDashboard.putBoolean("Arm/HallEffect", RobotContainer.m_ArmSubsytem.getHallEffect());
       SmartDashboard.putNumber("Arm/Position", RobotContainer.m_ArmSubsytem.getPosition());
     case 1:
-      SmartDashboard.putNumber("Shooter/FrontRPM", RobotContainer.m_ShooterSubsystem.getRPMFront());
-      SmartDashboard.putNumber("Shooter/BackRPM", RobotContainer.m_ShooterSubsystem.getRPMBack());
-      SmartDashboard.putBoolean("Feed/ContainsBall", RobotContainer.m_FeedSubsystem.containsBall());
+      FrontRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMFront());
+      BackRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMBack());
+      FeedContainsBall.setBoolean(RobotContainer.m_FeedSubsystem.containsBall());
+      // SmartDashboard.putNumber("Shooter/FrontRPM", RobotContainer.m_ShooterSubsystem.getRPMFront());
+      // SmartDashboard.putNumber("Shooter/BackRPM", RobotContainer.m_ShooterSubsystem.getRPMBack());
+      // SmartDashboard.putBoolean("Feed/ContainsBall", RobotContainer.m_FeedSubsystem.containsBall());
       break;
     case 0:
     default:
       break;
   }
 
-}
+  }
 
 }

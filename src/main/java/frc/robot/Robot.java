@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.DashboardContainer.TabsIndex;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -28,7 +29,11 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    // 
+    // refresh must be called after the robot container
+    // see the javadoc
+    DashboardContainer.getInstance().boot();
+    DashboardContainer.getInstance().setTab(TabsIndex.kAuto);
+
     m_justEnabled = true;
   }
 
@@ -64,6 +69,8 @@ public class Robot extends TimedRobot {
     m_robotContainer.startup(m_justEnabled);
     m_justEnabled = false;
 
+    DashboardContainer.getInstance().setTab(TabsIndex.kDriver);
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -85,6 +92,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    DashboardContainer.getInstance().setTab(TabsIndex.kDriver);
+
     m_robotContainer.startup(m_justEnabled);
     m_justEnabled = false;
   }
