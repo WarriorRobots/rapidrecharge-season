@@ -1,5 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
+
 public class Vars {
 
   //TODO change values
@@ -26,6 +29,8 @@ public class Vars {
   public static final double TURRET_MIN_ROTATION = -50; // degrees clockwise, counterclockwise bound
   public static final double TURRET_TOLERANCE = 2; // degrees
   public static final double TURRET_KP = 10;
+  public static final double TURRET_180 = 180;
+  public static final double TURRET_0 = 0;
 
   //TODO change values
   public static final double INTAKE_PERCENT = 1;
@@ -44,7 +49,6 @@ public class Vars {
    public static final double SHOOTER_BACK_FEED_TIME = 0.25; // seconds
   //Arms
   public static final double ARM_GEARING = 36.0/54.0; // output rotations / input rotations // XXX updated Arm
-
   public static final double ARM_MINIMUM_ANGLE = -1; // degrees
   public static final double ARM_MAXIMUM_ANGLE = 123; // degrees
   public static final double ARM_TOLERANCE = 3; // degrees
@@ -64,8 +68,8 @@ public class Vars {
   public static final double SHOOTER_FRONT_ESTIMATED_PERCENTAGE =  0.88;
   public static final double SHOOTER_FRONT_REVERSE = -0.3;
   public static final double SHOOTER_BACK_REVERSE = -0.3;
-    public static final double SHOOTER_FRONT_ESTIMATED_RPM = 4180;
-    public static final double SHOOTER_BACK_ESTIMATED_RPM = 3220;
+  public static final double SHOOTER_FRONT_ESTIMATED_RPM = 4180;
+  public static final double SHOOTER_BACK_ESTIMATED_RPM = 3220;
   /** Velocity of shooter in native units per 100ms at typical motor output (at the encoder) */
   public static final int SHOOTER_FRONT_NATIVE_ESTIMATED_VELOCITY = (int)(SHOOTER_BACK_ESTIMATED_RPM / SHOOTER_FRONT_GEARING / 600 * Constants.CLICKS_PER_REV_INTEGRATED);
   // the above uses the gearing because the RPM is of the flywheel where as the calculated native velocity is of the motor 
@@ -74,6 +78,46 @@ public class Vars {
   public static final double SHOOTER_BACK_ESTIMATED_PERCENTAGE = 0.40;
   /** Velocity of shooter in native units per 100ms at typical motor output (at the encoder) */
   public static final int SHOOTER_BACK_NATIVE_ESTIMATED_VELOCITY = (int)(SHOOTER_BACK_ESTIMATED_RPM / 600 * Constants.CLICKS_PER_REV_QUADRATURE);
+  // Auto
+  public static final double WHEEL_DIAMETER = 6; // inches
+  public static final double MAX_VELOCITY = 75; // inches/sec
+  public static final double MAX_ACCELERATION = 150; // inches/sec^2
+  /**
+   * Equivilant to 1/Gear Ratio.
+   * Use this to convert from 1 rotation of the motor to 1 rotation of the output shaft: input * GEARING = output.
+   */
+  public static final double DRIVETRAIN_GEARING = 1/10.91;
+   // auto
+   public static final double AUTO_SPEED_TOLERANCE = 0.1; // inches per sec
+   public static final double AUTO_LINEAR_TOLERANCE = 2; // inches
+   public static final double AUTO_LINEAR_P = 0.1;
+   public static final double AUTO_LINEAR_I = 0;
+   public static final double AUTO_LINEAR_D = 0;
+   public static final double AUTO_LINEAR_ANGLE_P = 0.02;
+   public static final double AUTO_ANGULAR_TOLERANCE = 2; // degrees
+   public static final double AUTO_ANGULAR_P = 0.01;
+   public static final double AUTO_ANGULAR_I = 0;
+   public static final double AUTO_ANGULAR_D = 0;
+   public static final double AUTO_WAIT_TO_SHOOT_TIME = 2;
+   public static final double AUTO_RUNNING_INTAKE = 10;
+   // public static final double DRIVE_MAX_M_PER_S =189.72441; // in/s //XXX find this
+   // public static final double DRIVE_MAX_M_PER_S_SQUARED = 1743; // in/s^2 //XXX find this value
+   public static final double AUTO_MAX_M_PER_S = 25; // in/s XXX ???
+   public static final double AUTO_MAX_M_PER_S_SQUARED = 10; // in/s^2 XXX ???
+ // Distances
+   public static final double AUTO_BACKUP_DISTANCE = -60; //in
+   public static final double AUTO_FORWARD_DISTANCE = 30; // in
+   public static final double AUTO_INTAKE_BALL_BACKWARD_DISTANCE = -36; // in
+   public static final double AUTO_INTAKE_BALL_FORWARD_DISTANCE= 36; // in
+   
+    // Pathing 
+  public static final double DRIVE_KS = 0.62263; // Volts
+  public static final double DRIVE_KV = 2.4428; // Volts * s/m
+  public static final double DRIVE_KA = 0.29807; // Volts * s^2/m
+  public static final double TRACK_WIDTH = Units.inchesToMeters(26.255); // meters
+  public static final double AUTO_PATH_KP = 3.2308;
+  public static final DifferentialDriveKinematics KINEMATICS =
+    new DifferentialDriveKinematics(TRACK_WIDTH);
 
 
   

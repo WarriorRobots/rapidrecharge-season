@@ -17,7 +17,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 // import frc.robot.commands.auto.RamseteContainer;
 // import frc.robot.commands.auto.trajectories.TLine;
 import frc.robot.DashboardContainer.TabsIndex;
-
+import frc.robot.commands.auto.AutoBack;
+import frc.robot.commands.auto.AutoShootBack;
+import frc.robot.commands.auto.AutoShootBackIntake;
+import frc.robot.commands.auto.AutoShootBackIntakeShoot;
 /**
  * A singleton tool to handle the auto selection.
  */
@@ -47,16 +50,10 @@ public class AutoContainer {
     //     RobotContainer.m_arm,
     //     RobotContainer.m_intake
     // ));
-    // chooser.addOption("WIP! AutoSteal", new AutoSteal(
-    //     RobotContainer.m_drivetrain,
-    //     RobotContainer.m_shooter,
-    //     RobotContainer.m_turret,
-    //     RobotContainer.m_camera,
-    //     RobotContainer.m_feed,
-    //     RobotContainer.m_hopper,
-    //     RobotContainer.m_arm,
-    //     RobotContainer.m_intake
-    // ));
+    chooser.addOption("BackUP", new AutoBack(RobotContainer.m_drivetrain, RobotContainer.m_ShooterSubsystem, RobotContainer.m_TurretSubsystem, RobotContainer.m_CameraSubsystem, RobotContainer.m_IntakeSubsystem, RobotContainer.m_FeedSubsystem, RobotContainer.m_ArmSubsytem));
+    chooser.addOption("ShootBack", new AutoShootBack(RobotContainer.m_drivetrain, RobotContainer.m_ShooterSubsystem, RobotContainer.m_TurretSubsystem, RobotContainer.m_CameraSubsystem, RobotContainer.m_IntakeSubsystem, RobotContainer.m_FeedSubsystem, RobotContainer.m_ArmSubsytem));
+    chooser.addOption("ShootBackIntake", new AutoShootBackIntake(RobotContainer.m_drivetrain, RobotContainer.m_ShooterSubsystem, RobotContainer.m_TurretSubsystem, RobotContainer.m_CameraSubsystem, RobotContainer.m_IntakeSubsystem, RobotContainer.m_FeedSubsystem, RobotContainer.m_ArmSubsytem));
+    chooser.addOption("ShootBackIntakeShoot", new AutoShootBackIntakeShoot(RobotContainer.m_drivetrain, RobotContainer.m_ShooterSubsystem, RobotContainer.m_TurretSubsystem, RobotContainer.m_CameraSubsystem, RobotContainer.m_IntakeSubsystem, RobotContainer.m_FeedSubsystem, RobotContainer.m_ArmSubsytem));
 
     autoTab.add("Auto Selector", chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(3,0).withSize(2, 1);
   

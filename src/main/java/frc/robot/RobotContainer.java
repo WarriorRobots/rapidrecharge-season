@@ -170,7 +170,7 @@ public class RobotContainer {
   // Turret
   private final TurretRotate m_TurretRotate = new TurretRotate(m_TurretSubsystem, () -> IO.getXBoxRightX());
   private final TurretPreset m_TurretPreset90 = new TurretPreset(m_TurretSubsystem, 90);
-  private final TurretPreset m_TurretPreset180 = new TurretPreset(m_TurretSubsystem, 180);
+  private final TurretPreset m_TurretPreset180 = new TurretPreset(m_TurretSubsystem, Vars.TURRET_180);
   // private final TurretPreset m_TurretPresetMinus90 = new
   // TurretPreset(m_TurretSubsystem, -90);
   private final TurretPreset m_TurretPresetMinus50 = new TurretPreset(m_TurretSubsystem, -50);
@@ -289,9 +289,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new CommandBase() {
+    return AutoContainer.getInstance().getAutoCommand();
 
-    };
+    
   }
 
   /**
