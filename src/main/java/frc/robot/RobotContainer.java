@@ -118,6 +118,17 @@ public class RobotContainer {
       new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem,
           () -> DashboardContainer.getInstance().FrontRPMInput(), () -> DashboardContainer.getInstance().BackRPMInput()));
 
+  private final SequentialCommandGroup m_ShooterBoostButton = new SequentialCommandGroup(
+      new ParallelCommandGroup(
+        // the arm should move away from the shooter...
+        new ArmMakeRoom(m_ArmSubsytem),
+        // while making sure there are no balls touching the shooter...
+        new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
+            new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW))),
+      // and then shoot and feed while aiming
+      new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem,
+          () -> DashboardContainer.getInstance().FrontBoostRPMInput(), () -> DashboardContainer.getInstance().BackBoostRPMInput()));
+
   private final SequentialCommandGroup m_ShooterButtonLeft = new SequentialCommandGroup(
       new ParallelCommandGroup(
         // the arm should move away from the shooter...
@@ -274,7 +285,7 @@ public class RobotContainer {
     IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
 
     IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
-
+    IO.leftJoystick_4.whenPressed(m_ShooterBoostButton);
     IO.rightJoystick_1.whileHeld(m_ShooterButton);
     IO.rightJoystick_2.whileHeld(m_DriverIntakeSequence).whenReleased(m_ArmPosition0);
     IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(m_ArmStabilize));

@@ -59,6 +59,9 @@ public class Vars {
   /**Back SHooter  Estimated RPM */
     public static final double SHOOTER_BACK_DEFAULT_RPM = 6000;
 
+    public static final double SHOOTER_BOOST_FRONT_RPM = 3500;
+    public static final double SHOOTER_BOOST_BACK_RPM = 7500;
+
   /** Typical motor output as percent */
   public static final double SHOOTER_FRONT_ESTIMATED_PERCENTAGE =  0.88;
   public static final double SHOOTER_FRONT_REVERSE = -0.3;
