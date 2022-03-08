@@ -262,52 +262,22 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Changes pipline to driver POV when pressed
-    // IO.leftJoystick_10.whenPressed(m_DriverCameraChangePipeline);
-    // Changes to Tracking Josh POV when Pressed
-    // IO.leftJoystick_11.whenPressed(m_TrackingCameraChangePipeline);
-    // IO.leftJoystick_12.whileHeld(m_linear);
-    // IO.xbox_Y.whileHeld(m_TurretRotate);
-    // IO.xbox_RT.whileHeld(m_ShooterPercent);
-    // IO.xbox_LT.whileHeld(m_IntakePercentage);
-    // IO.xbox_LB.whileHeld(m_IntakeBallBack);
-    // IO.xbox_RB.whileHeld(m_FeedPercentage);
-    // IO.xbox_A.whileHeld(m_ArmPosition0);
-    // IO.xbox_B.whileHeld(m_ArmPosition45);
-    // IO.xbox_X.whileHeld(m_ArmPosition90);
-    // IO.xbox_SELECT.whileHeld(m_FeedPercentageBack);
+    IO.xbox_LT.whileHeld(m_UNJAMintake).whenReleased(m_ArmPosition0);
+    IO.xbox_RT.whileHeld(m_ShooterReverse);
+    IO.xbox_RB.whileHeld(m_IntakeSequence).whenReleased(m_ArmPosition0);
+    IO.xbox_Y.whenPressed(m_TurretPreset0);
+    IO.xbox_B.whenPressed(m_TurretPreset180);
+    IO.xbox_X.whenPressed(m_ArmPositionIN);
+    IO.xbox_A.whenPressed(m_ArmPositionIntake);
+    IO.xboxUp.whileHeld(m_ArmPosition0);
+    IO.xbox_L_JOYSTICK.whileHeld(m_ArmLinear);
+    IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
 
-    // XXX check for driverstation update
+    IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
 
     IO.rightJoystick_1.whileHeld(m_ShooterButton);
     IO.rightJoystick_2.whileHeld(m_DriverIntakeSequence).whenReleased(m_ArmPosition0);
-    // IO.rightJoystick_2.and(IO.rightJoystick_1.negate()).whenActive(m_ShooterPrep);
-    // IO.rightJoystick_2.negate().and(IO.rightJoystick_1.negate()).whileActiveOnce(m_ShooterStop);
-    // IO.rightJoystick_2.whileHeld(m_ShooterPercent);
-    IO.rightJoystick_3.whileHeld(m_ShooterRPM.alongWith(m_FeedPercentage));
-    IO.rightJoystick_4.whileHeld(m_TurretAim);
     IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(m_ArmStabilize));
-    IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
-
-    IO.xbox_RB.whileHeld(m_IntakeSequence).whenReleased(m_ArmPosition0);
-    // Arm Xbox Buttons
-    IO.xboxUp.whileHeld(m_ArmPosition0);
-    // IO.xboxDown.whileHeld(m_ArmPositionIntake);
-    // xbOX UNJAM BUTTONS
-    IO.xbox_RT.whileHeld(m_ShooterReverse);
-    IO.xbox_LT.whileHeld(m_UNJAMintake).whenReleased(m_ArmPosition0);
-
-    IO.xbox_L_JOYSTICK.whileHeld(m_ArmLinear);
-    // XXX Arm to positions requires magnet on arm
-
-    IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
-    IO.xbox_Y.whenPressed(m_TurretPreset0);
-    IO.xbox_X.whenPressed(m_ArmPositionIN);
-    IO.xbox_B.whenPressed(m_TurretPreset180);
-    IO.xbox_A.whenPressed(m_ArmPositionIntake);
-    // IO.leftJoystick_9.whileHeld(m_TurretAim);
-
-    // XXX check limelight with turret
   }
 
   /**
