@@ -64,14 +64,21 @@ public class Vars {
   public static final double SHOOTER_FEED = 1; // percent (for hopper and feed to feed)
   /** SLow feed to prepare shooter */
   public static final double SHOOTER_SLOW_FEED = 0.2; // percent (for hopper and feed to feed when the shooter is not rev-ed)
-  /**Slow intake to prepare shooter */
-  public static final double SHOOTER_SLOW_INTAKE = 0.2;
-  public static final double SHOOTER_BACK_FEED_TIME = 0.25; // seconds
   // Estimated Shooter Output
   /**Front shoote estimated RPM */
-  public static final double SHOOTER_FRONT_DEFAULT_RPM = 2300;
+   public static final double SHOOTER_SLOW_INTAKE = 0.2;
+   public static final double SHOOTER_BACK_FEED_TIME = 0.25; // seconds
+  //Arms
+  public static final double ARM_AWAY = 10;
+
+
+
+
+  // Estimated Shooter Output
+  /**Front shoote estimated RPM */
+    public static final double SHOOTER_FRONT_DEFAULT_RPM = 2400;
   /**Back SHooter  Estimated RPM */
-    public static final double SHOOTER_BACK_DEFAULT_RPM = 6000;
+    public static final double SHOOTER_BACK_DEFAULT_RPM = 7500;
 
   /** Typical motor output as percent */
   public static final double SHOOTER_FRONT_ESTIMATED_PERCENTAGE =  0.50;
