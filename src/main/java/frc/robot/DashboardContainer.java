@@ -122,13 +122,12 @@ public class DashboardContainer {
     driver.addNumber("Xbox left Y", () -> IO.getXBoxLeftY()).withPosition(9, 0);
     driver.addNumber("Xbox right X", () -> IO.getXBoxRightX()).withPosition(9, 1);
     driver.addNumber("Joystick Right Y", () -> IO.getRightY()).withPosition(9, 2);
+    FrontRPMInput = driver.add("Front Shooter RPM Input", Vars.SHOOTER_FRONT_DEFAULT_RPM).withPosition(0, 0).withSize(2, 1).getEntry();
+    BackRPMInput = driver.add("Back Shooter RPM Input", Vars.SHOOTER_BACK_DEFAULT_RPM).withPosition(0, 1).withSize(2, 1).getEntry();
   }
 
   private void setupConfig() {
     ShuffleboardTab config = getTab(TabsIndex.kConfig);
-    
-    FrontRPMInput = config.add("Front Shooter RPM Input", Vars.SHOOTER_FRONT_DEFAULT_RPM).withPosition(0, 0).withSize(2, 1).getEntry();
-    BackRPMInput = config.add("Back Shooter RPM Input", Vars.SHOOTER_BACK_DEFAULT_RPM).withPosition(0, 1).withSize(2, 1).getEntry();
     FrontPercentInput = config.add("Front Shooter Percent Input", Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE).withPosition(4, 0).withSize(2, 1).getEntry();
     BackPercentInput = config.add("Back Shooter Percent Input", Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE).withPosition(4, 1).withSize(2, 1).getEntry();
   }
