@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.arm.ArmHoldPosition;
 import frc.robot.commands.arm.ArmLinear;
+import frc.robot.commands.arm.ArmMakeRoom;
 import frc.robot.commands.arm.ArmPosition;
 import frc.robot.commands.arm.ArmStabilize;
 import frc.robot.commands.arm.ArmZero;
@@ -47,9 +48,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -309,7 +312,7 @@ public class RobotContainer {
     
     // XXX check for driverstation update
 
-    IO.rightJoystick_1.whileHeld(m_ShooterAimAndShoot);
+    IO.rightJoystick_1.whileHeld(m_ShooterButton);
     IO.rightJoystick_2.and(IO.rightJoystick_1.negate()).whenActive(m_ShooterPrep);
     IO.rightJoystick_2.negate().and(IO.rightJoystick_1.negate()).whileActiveOnce(m_ShooterStop);
     // IO.rightJoystick_2.whileHeld(m_ShooterPercent);
