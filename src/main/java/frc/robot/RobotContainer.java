@@ -285,7 +285,7 @@ public class RobotContainer {
     IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
 
     IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
-    IO.leftJoystick_4.whenPressed(m_ShooterBoostButton);
+    IO.leftJoystick_4.whileHeld(m_ShooterBoostButton);
     IO.rightJoystick_1.whileHeld(m_ShooterButton);
     IO.rightJoystick_2.whileHeld(m_DriverIntakeSequence).whenReleased(m_ArmPosition0);
     IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(m_ArmStabilize));
