@@ -129,6 +129,10 @@ public class ClimbSubsystem extends SubsystemBase {
       return value;
     }
   } 
+  public double getGain () 
+  {
+    return m_extension.getMotorOutputPercent();
+  }
 
   @Override
   public void periodic() {
