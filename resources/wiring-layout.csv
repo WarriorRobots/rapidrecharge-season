@@ -8,7 +8,7 @@ L5,05-LP,LowerPickup,TalonSRX,BAG,-
 L6,,,,,
 L7,,LimeLight,,,
 L8,,,,,
-L9,,,,,
+L9,09-C,Climb,TalonFX,Falcon500,Integrated
 L10,10-UP,UpperPickup,TalonSRX,BAG,-
 L11,11-F,Feed,TalonSRX,BAG,-
 H12,12-T,Turret,TalonSRX,BAG,Quadrature
