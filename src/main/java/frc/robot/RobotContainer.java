@@ -39,6 +39,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.FeedSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.ClimbSubsystem.ClimbState;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -71,6 +72,8 @@ public class RobotContainer {
   protected static final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
   protected static final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   protected static final FeedSubsystem m_FeedSubsystem = new FeedSubsystem();
+  protected static final PneumaticsSubsystem m_Pneumatics_Subsystem = new PneumaticsSubsystem();
+
 
   // Drivetrain
   private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, () -> IO.getLeftY(), () -> IO.getRightY());
@@ -102,7 +105,7 @@ public class RobotContainer {
   // }}
   // )
   // );
-
+  
   // private final AimShootFeed m_ShooterAimAndShoot = new
   // AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem,
   // m_FeedSubsystem, m_CameraSubsystem,
