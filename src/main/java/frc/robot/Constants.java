@@ -31,8 +31,8 @@ public final class Constants {
 	public static final double PPR_V = PIXELS_V / RAD_V; // Pixels per Radian
   public static final double Target_ELEVATION = 104; //in
 
-  //TODO change Camera_ELEVATION
-  public static final double Camera_ELEVATION = 0; //in
+  //TODO fix Camera_ELEVATION
+  public static final double Camera_ELEVATION = 31; //in
   public static final double Camera_TILT = 35.4; //deg
 
   //Field Constants (May be Incomplete) 

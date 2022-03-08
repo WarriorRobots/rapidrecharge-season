@@ -32,7 +32,6 @@ import frc.robot.commands.shooter.ShooterRPM;
 import frc.robot.commands.turret.TurretAim;
 import frc.robot.commands.turret.TurretPreset;
 import frc.robot.commands.turret.TurretRotate;
-import frc.robot.commands.turret.TurretUnsafeRotate;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -63,35 +62,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private ShuffleboardTab turrettab = Shuffleboard.getTab("Turret");
-  private NetworkTableEntry TurretClicks = turrettab.add("Turret Clicks", 0)
-      .getEntry();
-  private NetworkTableEntry TurretDeg = turrettab.add("Turret Degrees", 0)
-      .getEntry();
-  private ShuffleboardTab shootertab = Shuffleboard.getTab("Shoot");
-  private NetworkTableEntry FrontRPM = shootertab.add("FShootInput", Vars.SHOOTER_FRONT_DEFAULT_RPM)
-      .getEntry();
-  private NetworkTableEntry PhysicalRPM = shootertab.add("FrontRPMOut", 0)
-      .getEntry();
-  private NetworkTableEntry BackSpinRPM = shootertab.add("BShootOutput", 0)
-      .getEntry();
-  private NetworkTableEntry BackSpinRPMINPUT = shootertab.add("BShootInput", Vars.SHOOTER_BACK_DEFAULT_RPM)
-      .getEntry();
-  // private NetworkTableEntry FeedPercent =
-  // tab1.add("Feed Percentage", 0)
-  // .getEntry();
-  // private NetworkTableEntry IntakeBottomInput =
-  // tab1.add("Intake Bottom Input", 0)
-  // .getEntry();
-  // private NetworkTableEntry IntakeTopInput =
-  // tab1.add("Intake Top Input", 0)
-  // .getEntry();
-  private NetworkTableEntry ShooterFrontPercentage = shootertab.add("SFPInput", Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE)
-      .getEntry();
-  private NetworkTableEntry ShooterBackPercentage = shootertab.add("SBPInput", Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE)
-      .getEntry();
-  private ShuffleboardTab armtab = Shuffleboard.getTab("Arm");
-
   // The robot's subsystems and commands are defined here...
   protected static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   protected static final CameraSubsystem m_CameraSubsystem = new CameraSubsystem();
@@ -139,8 +109,7 @@ public class RobotContainer {
   // ()->FrontRPM.getDouble(Vars.SHOOTER_FRONT_ESTIMATED_RPM),
   // ()->BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_ESTIMATED_RPM));
   private final ShooterFeed m_ShootAndFeed = new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem,
-      () -> FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM),
-      () -> BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM));
+      () -> DashboardContainer.getInstance().FrontRPMInput(), () -> DashboardContainer.getInstance().BackRPMInput());
 
   private final SequentialCommandGroup m_ShooterButton = new SequentialCommandGroup(
       new ParallelCommandGroup(
@@ -152,8 +121,7 @@ public class RobotContainer {
       ),
       // and then shoot and feed while aiming
       new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem,
-          () -> FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM),
-          () -> BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM)));
+          () -> DashboardContainer.getInstance().FrontRPMInput(), () -> DashboardContainer.getInstance().BackRPMInput()));
 
   private final SequentialCommandGroup m_ShooterButtonLeft = new SequentialCommandGroup(
       new ParallelCommandGroup(
@@ -165,13 +133,12 @@ public class RobotContainer {
       ),
       // and then shoot and feed
       new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem,
-          () -> FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM),
-          () -> BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM)));
+          () -> DashboardContainer.getInstance().FrontRPMInput(),
+          () -> DashboardContainer.getInstance().BackRPMInput()));
 
   private final ParallelCommandGroup m_ShooterPrep = new ParallelCommandGroup(
       new TurretAim(m_CameraSubsystem, m_TurretSubsystem).perpetually(),
-      new ShooterRPM(m_ShooterSubsystem, () -> FrontRPM.getDouble(Vars.SHOOTER_FRONT_DEFAULT_RPM),
-          () -> BackSpinRPMINPUT.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM)) {
+      new ShooterRPM(m_ShooterSubsystem, () -> DashboardContainer.getInstance().FrontRPMInput(), () -> DashboardContainer.getInstance().BackRPMInput()) {
         public void end(boolean interrupted) {
           /* m_ShooterStop will be called to stop the shooter */}
       },
@@ -203,14 +170,10 @@ public class RobotContainer {
   private final CameraChangePipeline m_DriverCameraChangePipeline = new CameraChangePipeline(m_CameraSubsystem,
       CameraSubsystem.Drive_Pipline);
 
-  // TODO robot should be able to shoot balls high using values from the
-  // dashboard; see:
-  // https://github.com/WarriorRobots/dummyRobot2022/blob/aeeb984605764853f1215d135f280ca5627459ee/src/main/java/frc/robot/RobotContainer.java#L36
+  // TODO robot should be able to shoot balls high using values from the dashboard; see: https://github.com/WarriorRobots/dummyRobot2022/blob/aeeb984605764853f1215d135f280ca5627459ee/src/main/java/frc/robot/RobotContainer.java#L36
 
   // Turret
   private final TurretRotate m_TurretRotate = new TurretRotate(m_TurretSubsystem, () -> IO.getXBoxRightX());
-  private final TurretUnsafeRotate m_TurretUnsafeRotate = new TurretUnsafeRotate(m_TurretSubsystem,
-      () -> IO.getXBoxLeftY());
   private final TurretPreset m_TurretPreset90 = new TurretPreset(m_TurretSubsystem, 90);
   private final TurretPreset m_TurretPreset180 = new TurretPreset(m_TurretSubsystem, 180);
   // private final TurretPreset m_TurretPresetMinus90 = new
@@ -267,7 +230,7 @@ public class RobotContainer {
   // XXX Zero arm command (should move linearly to find the hall effect)
 
   // Write to DashBoard
-  private final RunCommand m_DashWriter = new RunCommand(() -> WriteToDashboard()) {
+  private final RunCommand m_DashWriter = new RunCommand(() -> DashboardContainer.getInstance().putDashboard()) {
     public boolean runsWhenDisabled() {
       return true;
     }
@@ -283,8 +246,8 @@ public class RobotContainer {
   private final IntakeBall m_IntakeBall = new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, Vars.INTAKE_PERCENT,
       Vars.SHOOTER_SLOW_INTAKE);
   // Shooter
-  private final ShooterRPM m_ShooterRPM = new ShooterRPM(m_ShooterSubsystem, () -> FrontRPM.getDouble(0),
-      () -> BackSpinRPMINPUT.getDouble(0));
+  private final ShooterRPM m_ShooterRPM = new ShooterRPM(m_ShooterSubsystem, () -> DashboardContainer.getInstance().FrontRPMInput(),
+      () -> DashboardContainer.getInstance().BackRPMInput());
   private final ShooterPercentage m_ShooterReverse = new ShooterPercentage(m_ShooterSubsystem,
       () -> Vars.SHOOTER_FRONT_REVERSE, () -> Vars.SHOOTER_BACK_REVERSE);
 
@@ -297,15 +260,6 @@ public class RobotContainer {
     configureButtonBindings();
     CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_tankDrive);
     CommandScheduler.getInstance().schedule(m_DashWriter);
-
-    armtab.addBoolean("HallEffect Detection", () -> m_ArmSubsytem.getHallEffect());
-    shootertab.addBoolean("Ball Detection", () -> m_FeedSubsystem.containsBall());
-    armtab.addNumber("Xbox left Y", () -> IO.getXBoxLeftY());
-    turrettab.addNumber("Xbox right X", () -> IO.getXBoxRightX());
-    shootertab.addNumber("Joystick Right Y", () -> IO.getRightY());
-    armtab.addNumber("Arm Position", () -> m_ArmSubsytem.getPosition());
-    armtab.addNumber("Arm Gain", () -> m_ArmSubsytem.getGain());
-    turrettab.addNumber("Turret Gain", () -> m_TurretSubsystem.getTurretGain());
   }
 
   /**
@@ -369,17 +323,6 @@ public class RobotContainer {
     // IO.leftJoystick_9.whileHeld(m_TurretAim);
 
     // XXX check limelight with turret
-  }
-
-  public void WriteToDashboard() {
-    TurretClicks.setDouble(m_TurretSubsystem.getClicks());
-    TurretDeg.setDouble(m_TurretSubsystem.getRotationDegrees());
-    PhysicalRPM.setDouble(m_ShooterSubsystem.getRPMFront());
-    BackSpinRPM.setDouble(m_ShooterSubsystem.getRPMBack());
-
-    // InfraredSensor.setBoolean(m_FeedSubsystem.containsBall());
-    // HallEffect.setBoolean(m_ArmSubsytem.getHallEffect());
-
   }
 
   /**
