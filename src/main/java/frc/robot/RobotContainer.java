@@ -279,7 +279,7 @@ public class RobotContainer {
 
     IO.rightJoystick_1.whileHeld(m_ShooterButton);
     IO.rightJoystick_2.whileHeld(m_DriverIntakeSequence).whenReleased(m_ArmPosition0);
-    IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(m_ArmStabilize));
+    IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(m_ArmPositionIN)); // arm is commanded to the IN position instead of stazilize because commanding stabilize runs into the 3d printed blocks
   }
 
   /**
