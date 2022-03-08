@@ -106,26 +106,18 @@ public class RobotContainer {
   private final ShooterFeed m_ShootAndFeed = new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem,
       () -> DashboardContainer.getInstance().FrontRPMInput(), () -> DashboardContainer.getInstance().BackRPMInput());
 
-  private final SequentialCommandGroup m_ShooterButton = new SequentialCommandGroup(
-      new ParallelCommandGroup(
-        // the arm should move away from the shooter...
-        new ArmMakeRoom(m_ArmSubsytem),
-        // while making sure there are no balls touching the shooter...
-        new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
-            new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW))
-      ),
+  private final Command m_ShooterButton = new SequentialCommandGroup(
+      // while making sure there are no balls touching the shooter...
+      new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
+          new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW)),
       // and then shoot and feed while aiming
       new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem,
           () -> DashboardContainer.getInstance().FrontRPMInput(), () -> DashboardContainer.getInstance().BackRPMInput()));
 
-  private final SequentialCommandGroup m_ShooterButtonLeft = new SequentialCommandGroup(
-      new ParallelCommandGroup(
-        // the arm should move away from the shooter...
-        new ArmMakeRoom(m_ArmSubsytem),
-        // while making sure there are no balls touching the shooter...
-        new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
-            new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW))
-      ),
+  private final Command m_ShooterButtonLeft = new SequentialCommandGroup(
+      // while making sure there are no balls touching the shooter...
+      new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
+          new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW)),
       // and then shoot and feed
       new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem,
           () -> DashboardContainer.getInstance().FrontRPMInput(),
