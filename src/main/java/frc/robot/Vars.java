@@ -3,14 +3,15 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
 /**
  * All variables tied to the physical behavior of the robot. Tuning, reverse booleans, etc.
  */
 public class Vars {
   // robot characteristics
   public static final double WHEEL_DIAMETER = 6; // inches
-  public static final double MAX_VELOCITY = 100; // inches/sec
-  public static final double MAX_ACCELERATION = 200; // inches/sec^2
+  public static final double MAX_VELOCITY = 75; // inches/sec
+  public static final double MAX_ACCELERATION = 150; // inches/sec^2
   public static final StatorCurrentLimitConfiguration DRIVETRAIN_CURRENTLIMIT = // Current limiting applied to the drivetrain
     new StatorCurrentLimitConfiguration(
       // limiting?, limit (A), threshold (A), threshold time (s)
@@ -37,9 +38,7 @@ public class Vars {
    * Equivilant to 1/Gear Ratio.
    * Use this to convert from 1 rotation of the motor to 1 rotation of the output shaft: input * GEARING = output.
    */
-  public static final double DRIVETRAIN_GEARING = 12.0/50.0 * 20.0/54.0;
-
-
+  public static final double DRIVETRAIN_GEARING = 1/10.91;
   // turret
   public static final double TURRET_MAX_ROTATION = 210 ; // degrees clockwise, clockwise bound // TODO ask josh about this value
   public static final double TURRET_MIN_ROTATION = -50; // degrees clockwise, counterclockwise bound
@@ -99,11 +98,11 @@ public class Vars {
   public static final double ARM_ZERO_VOLTAGE = -0.2;
   public static final double ARM_IN = 5;
   // Pathing 
-  public static final double DRIVE_KS = 0; // Volts
-  public static final double DRIVE_KV = 0; // Volts * s/m
-  public static final double DRIVE_KA = 0; // Volts * s^2/m
-  public static final double TRACK_WIDTH = 0; // meters
-  public static final double AUTO_PATH_KP = 0;
+  public static final double DRIVE_KS = 0.62263; // Volts
+  public static final double DRIVE_KV = 2.4428; // Volts * s/m
+  public static final double DRIVE_KA = 0.29807; // Volts * s^2/m
+  public static final double TRACK_WIDTH = Units.inchesToMeters(26.255); // meters
+  public static final double AUTO_PATH_KP = 3.2308;
   public static final DifferentialDriveKinematics KINEMATICS =
     new DifferentialDriveKinematics(TRACK_WIDTH);
   // Reasonable baseline values for a RAMSETE follower in units of meters and 
@@ -112,8 +111,9 @@ public class Vars {
   public static final double RAMSETE_ZETA = 0.7;
   
   // auto
+  public static final double AUTO_SPEED_TOLERANCE = 0.1; // inches per sec
   public static final double AUTO_LINEAR_TOLERANCE = 2; // inches
-  public static final double AUTO_LINEAR_P = 0.03;
+  public static final double AUTO_LINEAR_P = 0.1;
   public static final double AUTO_LINEAR_I = 0;
   public static final double AUTO_LINEAR_D = 0;
   public static final double AUTO_LINEAR_ANGLE_P = 0.02;
@@ -121,7 +121,13 @@ public class Vars {
   public static final double AUTO_ANGULAR_P = 0.01;
   public static final double AUTO_ANGULAR_I = 0;
   public static final double AUTO_ANGULAR_D = 0;
-  public static final double AUTO_MAX_M_PER_S_SQUARED = 0;
-  public static final double AUTO_MAX_M_PER_S = -0;
+  public static final double AUTO_WAIT_TO_SHOOT_TIME = 2;
+  // public static final double DRIVE_MAX_M_PER_S =189.72441; // in/s //XXX find this
+  // public static final double DRIVE_MAX_M_PER_S_SQUARED = 1743; // in/s^2 //XXX find this value
+  public static final double AUTO_MAX_M_PER_S = 25; // in/s XXX ???
+  public static final double AUTO_MAX_M_PER_S_SQUARED = 10; // in/s^2 XXX ???
+
+  public static final double AUTO_BACKUP_DISTANCE = -60; //in
+  public static final double AUTO_FORWARD_DISTANCE = 30;
 
 }
