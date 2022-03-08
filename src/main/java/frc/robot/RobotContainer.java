@@ -20,6 +20,7 @@ import frc.robot.commands.turret.TurretUnsafeRotate;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -44,6 +45,7 @@ public class RobotContainer {
   protected static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   protected static final CameraSubsystem m_CameraSubsystem = new CameraSubsystem();
   protected static final TurretSubsystem m_TurretSubsystem = new TurretSubsystem();
+  protected static final PneumaticsSubsystem m_Pneumatics_Subsystem = new PneumaticsSubsystem();
 
 
   private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, ()->IO.getLeftY(), ()->IO.getRightY());
