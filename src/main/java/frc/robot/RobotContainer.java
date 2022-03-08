@@ -229,6 +229,7 @@ public class RobotContainer {
   // Feed
   private final FeedPercentage m_FeedPercentage = new FeedPercentage(m_FeedSubsystem, 1.0);
   private final FeedPercentage m_FeedPercentageBack = new FeedPercentage(m_FeedSubsystem, -1.0);
+  private final FeedPercentage m_ReverseFeed = new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSE_BUTTON);
   // Intake
   private final IntakePercentage m_IntakePercentage = new IntakePercentage(m_IntakeSubsystem, Vars.INTAKE_PERCENT,
       Vars.INTAKE_PERCENT);
@@ -272,6 +273,7 @@ public class RobotContainer {
     IO.xboxUp.whileHeld(m_ArmPosition0);
     IO.xbox_L_JOYSTICK.whileHeld(m_ArmLinear);
     IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
+    IO.xbox_LB.whileHeld(m_ReverseFeed);
 
     IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
 

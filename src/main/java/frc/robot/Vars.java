@@ -31,6 +31,7 @@ public class Vars {
   public static final double INTAKE_PERCENT = 1;
   public static final double FEED_REVERSED_PERCENT = -1;
   public static final double FEED_REVERSED_PERCENT_SLOW = -0.2;
+  public static final double FEED_REVERSE_BUTTON = -0.2;
   /** output rotations per input rotations */
   public static final double SHOOTER_FRONT_GEARING = 40.0/54.0; // output rotations / input rotations
   public static final double SHOOTER_TOLERANCE = 200; // +rpm
@@ -75,4 +76,5 @@ public class Vars {
   public static final int SHOOTER_BACK_NATIVE_ESTIMATED_VELOCITY = (int)(SHOOTER_BACK_ESTIMATED_RPM / 600 * Constants.CLICKS_PER_REV_QUADRATURE);
 
 
+  
 }
