@@ -173,6 +173,22 @@ public class ShooterSubsystem extends SubsystemBase {
     return ((rpm / 600) * Constants.CLICKS_PER_REV_QUADRATURE);
   }
 
+  /**
+   * Approximates the RPM required to make a shot at specific distances.
+   * @param distance in inches
+   * @return RPM required to make a shot at a distance
+   */
+  public static double calculateRPM(double distance)
+  {
+    // calculation from https://www.desmos.com/calculator/hpovyyzgi5
+    double m1 = 0.87988;
+    double b1 = 6.14384;
+    double m2 = 2.85714;
+    double b2 = 2107.14;
+    double g = m2 * distance + b2;
+    double f = m1 * g + b1;
+    return f;
+  }
 
   public void stop()
   {
