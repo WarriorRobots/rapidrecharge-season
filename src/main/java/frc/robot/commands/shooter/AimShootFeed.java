@@ -65,8 +65,8 @@ public class AimShootFeed extends CommandBase {
   }
 
   private boolean shooterReady(){
-    return (Math.abs(m_shooter.getRPMFront()-m_ShooterRPM.getAsDouble()) < Vars.SHOOTER_TOLERANCE) &&
-    (m_camera.TargetExists() && Math.abs(m_camera.GetTargetX())<Vars.TURRET_TOLERANCE);
+    return (Math.abs(m_shooter.getRPMFront()-m_ShooterRPM.getAsDouble()) < Vars.SHOOTER_TOLERANCE);
+    // (m_camera.TargetExists() && Math.abs(m_camera.GetTargetX())<Vars.TURRET_TOLERANCE);
   }
 
 
