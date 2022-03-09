@@ -62,7 +62,9 @@ public class AimShootFeed extends CommandBase {
       }
     }
     m_shooter.setRPM(m_ShooterRPM.getAsDouble(), m_SHOOTERRPMBACK.getAsDouble());
-  }
+    System.out.println("Front RPM" + m_shooter.getRPMFront());
+    System.out.println("Back RPM" + m_shooter.getRPMBack());
+  } 
 
   private boolean shooterReady(){
     return (Math.abs(m_shooter.getRPMFront()-m_ShooterRPM.getAsDouble()) < Vars.SHOOTER_TOLERANCE);

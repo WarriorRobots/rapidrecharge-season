@@ -40,7 +40,7 @@ public class AutoShootBackIntake extends SequentialCommandGroup {
         new TurretPreset(Turret, Vars.TURRET_180),
         new ParallelDeadlineGroup(
             new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME),
-            new AimShootFeed(Shooter, Turret, Intake, Feed, Camera, () -> DashboardContainer.getInstance().FrontRPMInput(), () -> DashboardContainer.getInstance().BackRPMInput())),
+            new AimShootFeed(Shooter, Turret, Intake, Feed, Camera, () -> Vars.AUTO_FRONT_SHOOTER_RPM, () -> Vars.AUTO_BACK_SHOOTER_RPM)),
         new PrintCommand("Going Backwards!"),
         new ParallelDeadlineGroup(
             new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE),

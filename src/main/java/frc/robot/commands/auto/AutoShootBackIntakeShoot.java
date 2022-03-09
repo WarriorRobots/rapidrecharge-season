@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.DashboardContainer;
+import frc.robot.DashboardContainer;
 import frc.robot.Vars;
 import frc.robot.commands.arm.ArmHoldPosition;
 import frc.robot.commands.arm.ArmPosition;
@@ -28,33 +30,38 @@ import frc.robot.subsystems.TurretSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoShootBackIntakeShoot extends SequentialCommandGroup {
-  /** Creates a new AutoBackIntake. */
-  public AutoShootBackIntakeShoot(DrivetrainSubsystem drive, ShooterSubsystem Shooter, TurretSubsystem Turret,
-      CameraSubsystem Camera, IntakeSubsystem Intake, FeedSubsystem Feed, ArmSubsystem Arm) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-        new ArmStabilize(Arm),
-        new PrintCommand("Shooting now"),
-        new TurretPreset(Turret, Vars.TURRET_180),
-        new ParallelDeadlineGroup(
-            new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME),
-            new AimShootFeed(Shooter, Turret, Intake, Feed, Camera, () -> Vars.SHOOTER_BACK_DEFAULT_RPM,
-                () -> Vars.SHOOTER_FRONT_DEFAULT_RPM)),
-        new PrintCommand("Going Backwards!"),
-        new ParallelDeadlineGroup(
-            new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE),
-            new ArmHoldPosition(Arm, Vars.ARM_ANGLE_PICKUP),
-            new IntakeBall(Intake, Feed, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE)),
-            new ArmPosition(Arm, Vars.ARM_IN),
-            new ArmStabilize(Arm),
-        new ParallelDeadlineGroup(
-          new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_BACKWARD_DISTANCE),
-          new AimShootFeed(Shooter, Turret, Intake, Feed, Camera, () -> Vars.SHOOTER_BACK_DEFAULT_RPM,
-        () -> Vars.SHOOTER_FRONT_DEFAULT_RPM)),
-      
-        new PrintCommand("Auto Done")
+    /** Creates a new AutoBackIntake. */
+    public AutoShootBackIntakeShoot(DrivetrainSubsystem drive, ShooterSubsystem Shooter, TurretSubsystem Turret,
+            CameraSubsystem Camera, IntakeSubsystem Intake, FeedSubsystem Feed, ArmSubsystem Arm) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new ArmStabilize(Arm),
+                new PrintCommand("Shooting now"),
+                new TurretPreset(Turret, Vars.TURRET_180),
+                new ParallelDeadlineGroup(
+                        new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME),
+                        new AimShootFeed(Shooter, Turret, Intake, Feed, Camera,
+                                () -> Vars.AUTO_FRONT_SHOOTER_RPM,
+                                () -> Vars.AUTO_BACK_SHOOTER_RPM)),
+                new PrintCommand("Going Backwards!"),
+                new ParallelDeadlineGroup(
+                        new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE),
+                        new ArmHoldPosition(Arm, Vars.ARM_ANGLE_PICKUP),
+                        new IntakeBall(Intake, Feed, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE)),
+                new PrintCommand("Picked up ball! (maybe?)"),
+                new ParallelDeadlineGroup(
+                        new SequentialCommandGroup(
+                                new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_BACKWARD_DISTANCE),
+                                new ParallelDeadlineGroup(
+                                        new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME),
+                                        new AimShootFeed(Shooter, Turret, Intake, Feed, Camera,
+                                                () -> Vars.AUTO_FRONT_SHOOTER_RPM,
+                                                () -> Vars.AUTO_BACK_SHOOTER_RPM))),
+                        new ArmPosition(Arm, Vars.ARM_IN)),
 
-    );
-  }
+                new PrintCommand("Auto Done")
+
+        );
+    }
 }

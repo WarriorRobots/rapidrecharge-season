@@ -254,6 +254,7 @@ public class RobotContainer {
     configureButtonBindings();
     CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_tankDrive);
     CommandScheduler.getInstance().schedule(m_DashWriter);
+    
   }
 
   /**
