@@ -43,13 +43,13 @@ public class AutoShootBackIntakeShoot extends SequentialCommandGroup {
                 () -> Vars.SHOOTER_FRONT_DEFAULT_RPM)),
         new PrintCommand("Going Backwards!"),
         new ParallelDeadlineGroup(
-            new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_BACKWARD_DISTANCE),
+            new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE),
             new ArmHoldPosition(Arm, Vars.ARM_ANGLE_PICKUP),
             new IntakeBall(Intake, Feed, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE)),
             new ArmPosition(Arm, Vars.ARM_IN),
             new ArmStabilize(Arm),
         new ParallelDeadlineGroup(
-          new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE),
+          new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_BACKWARD_DISTANCE),
           new AimShootFeed(Shooter, Turret, Intake, Feed, Camera, () -> Vars.SHOOTER_BACK_DEFAULT_RPM,
         () -> Vars.SHOOTER_FRONT_DEFAULT_RPM)),
       

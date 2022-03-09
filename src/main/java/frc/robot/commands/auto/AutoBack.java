@@ -27,7 +27,7 @@ public class AutoBack extends SequentialCommandGroup {
     addCommands(
       new ArmStabilize(Arm),
       new PrintCommand("going backwards!"),
-      new AutoLinear(drive, Vars.AUTO_BACKUP_DISTANCE)
+      new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE)
     );
   }
 }

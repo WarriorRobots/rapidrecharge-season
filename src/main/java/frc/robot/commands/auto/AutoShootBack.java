@@ -32,7 +32,6 @@ public class AutoShootBack extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmStabilize(Arm),
-        new TurretPreset(Turret, Vars.TURRET_180),
         new PrintCommand("Shooting now"),
         new ParallelDeadlineGroup(
             new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME),
