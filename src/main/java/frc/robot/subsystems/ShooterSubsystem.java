@@ -185,9 +185,9 @@ public class ShooterSubsystem extends SubsystemBase {
     double b1 = 6.14384;
     double m2 = 2.85714;
     double b2 = 2107.14;
-    double g = m2 * distance + b2;
-    double f = m1 * g + b1;
-    return f;
+    double f = m1 * distance + b1;
+    double g = m2 * f + b2;
+    return g;
   }
 
   public void stop()
