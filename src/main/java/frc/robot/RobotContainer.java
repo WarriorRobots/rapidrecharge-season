@@ -45,6 +45,7 @@ import frc.robot.subsystems.ClimbSubsystem.ClimbState;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -285,8 +286,9 @@ public class RobotContainer {
     IO.xbox_X.whenPressed(m_ArmPositionIN);
     IO.xbox_A.whenPressed(m_ArmPositionIntake);
     IO.xboxLeft.whenPressed(m_ClimbVertical);
-    IO.xboxUp.whenPressed(m_ClimbUp);
-    IO.xboxDown.whenPressed(m_ClimbDown);
+    // TODO req position, req linear, req magic
+    // IO.xboxUp.whenPressed(m_ClimbUp);
+    // IO.xboxDown.whenPressed(m_ClimbDown);
     IO.xboxRight.whenPressed(m_ClimbAngled);
     IO.xbox_L_JOYSTICK.whileHeld(m_ArmLinear);
     IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
@@ -297,6 +299,32 @@ public class RobotContainer {
     IO.rightJoystick_1.whileHeld(m_ShooterButton);
     IO.rightJoystick_2.whileHeld(m_DriverIntakeSequence).whenReleased(m_ArmPosition0);
     IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(new ArmPosition(m_ArmSubsytem, Vars.ARM_IN))); // arm is commanded to the IN position instead of stazilize because commanding stabilize runs into the 3d printed blocks
+
+    // XXX programmer DON'T STAGE
+    IO.rightJoystick_8.whileHeld(
+      new FunctionalCommand(
+        ()->{},
+        ()->m_ClimbSubsystem.LinearClimb(IO.getRightSlider()),
+        (interrupted)->m_ClimbSubsystem.stop(),
+        ()->false, m_ClimbSubsystem
+      )
+    );
+
+    // XXX setup of climb list
+    // climb
+    // - flash falcon
+    // - id falcon
+    // - enter contstants
+    // - check dashboard
+    // - check compressor
+    // - check postion calculation
+
+    // - linear control
+    // - (check flipped)
+    // - pistons
+
+    // - profile
+    // - sequence
   }
 
   /**

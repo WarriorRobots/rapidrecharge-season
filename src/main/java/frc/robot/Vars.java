@@ -1,5 +1,7 @@
 package frc.robot;
 
+import frc.robot.subsystems.ClimbSubsystem;
+
 public class Vars {
 
   //TODO change values
@@ -69,22 +71,24 @@ public class Vars {
   public static final double ARM_ZERO_VOLTAGE = -0.2;
   public static final double ARM_IN = 5;
 
-  public static final int CLIMB_MINIMUM = 30; //TODO Adjust as some point
-  public static final int CLIMB_MAXIMUM = 60; //TODO Adjust as some point
+  public static final int CLIMB_MINIMUM = 0;
+  public static final int CLIMB_MAXIMUM = 100; // XXX ?
 
-  public static final int CLIMB_TRACK_DIAMETER = 55; //TODO adjust at some point
-  public static final int CLIMB_GEARING = 26; //TODO adjust at some point
-  public static final int CLIMB_CLICKS_PER_REV = 300; //TODO adjust at some point
+  public static final int CLIMB_TRACK_DIAMETER = 55; // XXX ?
+  public static final int CLIMB_GEARING = 26; // XXX ?
 
-  public static final double CLIMB_KP = 0.01; //TODO adjust at somepoint
-  public static final double CLIMB_KI = 0; //TODO adjust at somepoint
-  public static final double CLIMB_KD = 0; //TODO adjust at somepoint
-  public static final double CLIMB_KF = 0; //TODO adjust at somepoint
+  public static final double CLIMB_KP = 0; // XXX ?
+  public static final double CLIMB_KI = 0; // XXX ?
+  public static final double CLIMB_KD = 0; // XXX ?
+  public static final double CLIMB_KF = 0; // XXX ?
   public static final double CLIMB_TOLERANCE = 1; //+- inches
-  public static final double CLIMB_SPEED = 3000; //Native units/100 ms TODO adjust at some point
-  public static final double CLIMB_ACCELERATION = 3000; //(Native units/100 ms)/sec TODO adjust
+  // XXX below for magic
+  public static final double CLIMB_SPEED = 12; // inches / sec
+  public static final double CLIMB_ACCELERATION = 6; // inches / sec^2
+  public static final double CLIMB_NATIVE_PER100MS = ClimbSubsystem.toClicks(CLIMB_SPEED*0.1); //Native units/100 ms
+  public static final double CLIMB_NATIVE_PER_100MS_PER_SEC = ClimbSubsystem.toClicks(CLIMB_ACCELERATION*0.1); //(Native units/100 ms)/sec
 
-  public static final int SMOOTHING = 0;
+  public static final int SMOOTHING = 0; // XXX for magic
 
   public static final double CLIMB_DOWN = 0;
   public static final double CLIMB_UP = 100; //Inches TODO change later

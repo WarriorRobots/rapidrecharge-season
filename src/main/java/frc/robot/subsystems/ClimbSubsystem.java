@@ -31,11 +31,11 @@ public class ClimbSubsystem extends SubsystemBase {
     m_extension.config_kI(Constants.PRIMARY_PID, Vars.CLIMB_KI, Constants.MS_TIMEOUT);
     m_extension.config_kD(Constants.PRIMARY_PID, Vars.CLIMB_KD, Constants.MS_TIMEOUT);
     m_extension.config_kF(Constants.PRIMARY_PID, Vars.CLIMB_KF, Constants.MS_TIMEOUT);
-    m_extension.configMotionCruiseVelocity(Vars.CLIMB_SPEED, Constants.MS_TIMEOUT);
-    m_extension.configMotionAcceleration(Vars.CLIMB_ACCELERATION, Constants.MS_TIMEOUT);
+    m_extension.configMotionCruiseVelocity(Vars.CLIMB_NATIVE_PER100MS, Constants.MS_TIMEOUT);
+    m_extension.configMotionAcceleration(Vars.CLIMB_NATIVE_PER_100MS_PER_SEC, Constants.MS_TIMEOUT);
     m_extension.configMotionSCurveStrength(Vars.SMOOTHING, Constants.MS_TIMEOUT);
-    m_anglearm1 = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ID_CLIMB_EXTENSION1, RobotMap.ID_CLIMB_RECALL1);
-    m_anglearm2 = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ID_CLIMB_EXTENSION2, RobotMap.ID_CLIMB_RECALL2);
+    m_anglearm1 = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ID_CLIMB_EXTENSION_LEFT, RobotMap.ID_CLIMB_RECALL_LEFT);
+    m_anglearm2 = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.ID_CLIMB_EXTENSION_RIGHT, RobotMap.ID_CLIMB_RECALL_RIGHT);
   }
 
   /**
@@ -93,16 +93,16 @@ public class ClimbSubsystem extends SubsystemBase {
    * @param inches Number of inches of upwards motion of the climb.
    * @return Number of clicks of rotation of the motor.
    */
-  public double toClicks(double inches) {
-    return (inches / Math.PI / Vars.CLIMB_TRACK_DIAMETER / Vars.CLIMB_GEARING * Vars.CLIMB_CLICKS_PER_REV);
+  public static double toClicks(double inches) {
+    return (inches / Math.PI / Vars.CLIMB_TRACK_DIAMETER / Vars.CLIMB_GEARING * Constants.CLICKS_PER_REV_INTEGRATED);
   }
 /**
    * Convert clicks of movement of the motor into inches of movement of the climb.
    * @param clicks Number of clicks of rotation of the motor.
    * @return Number of Clicks of rotation of the motor.
    */
-  public double toInches(double clicks) {
-    return clicks / Vars.CLIMB_CLICKS_PER_REV * Vars.CLIMB_GEARING * Math.PI * Vars.CLIMB_TRACK_DIAMETER;
+  public static double toInches(double clicks) {
+    return clicks / Constants.CLICKS_PER_REV_INTEGRATED * Constants.CLICKS_PER_REV_INTEGRATED * Math.PI * Vars.CLIMB_TRACK_DIAMETER;
   }
 
   /**
@@ -132,6 +132,14 @@ public class ClimbSubsystem extends SubsystemBase {
   public double getGain () 
   {
     return m_extension.getMotorOutputPercent();
+  }
+
+  /**
+   * Stops the winch.
+   */
+  public void stop()
+  {
+    m_extension.stopMotor();
   }
 
   @Override

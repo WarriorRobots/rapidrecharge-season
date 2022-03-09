@@ -25,10 +25,10 @@ public class RobotMap {
 
   // Pneumatics
   public static final int ID_PCM = 0;
-  public static final int ID_CLIMB_EXTENSION1 = 4; //TODO Update at some point
-  public static final int ID_CLIMB_RECALL1 = 6;
-  public static final int ID_CLIMB_EXTENSION2 = 5; //TODO Update at some point
-  public static final int ID_CLIMB_RECALL2 = 7;
+  public static final int ID_CLIMB_EXTENSION_LEFT = 2; //TODO Update at some point
+  public static final int ID_CLIMB_RECALL_LEFT = 3;
+  public static final int ID_CLIMB_EXTENSION_RIGHT = 5; //TODO Update at some point
+  public static final int ID_CLIMB_RECALL_RIGHT = 4;
 
   // DIO
   public static final int ID_FEED_INFRARED = 1;
