@@ -111,6 +111,7 @@ public class ClimbSubsystem extends SubsystemBase {
    */
   public void setAngle(ClimbState state){
     m_anglearm1.set(state.getValue());
+    m_anglearm2.set(state.getValue());
   }
   /**
    * kOff -> None/stop <p>
