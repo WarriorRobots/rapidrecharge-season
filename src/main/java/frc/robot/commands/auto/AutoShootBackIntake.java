@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.DashboardContainer;
 import frc.robot.Vars;
 import frc.robot.commands.arm.ArmHoldPosition;
 import frc.robot.commands.arm.ArmPosition;
@@ -39,8 +40,7 @@ public class AutoShootBackIntake extends SequentialCommandGroup {
         new TurretPreset(Turret, Vars.TURRET_180),
         new ParallelDeadlineGroup(
             new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME),
-            new AimShootFeed(Shooter, Turret, Intake, Feed, Camera, () -> Vars.SHOOTER_BACK_DEFAULT_RPM,
-                () -> Vars.SHOOTER_FRONT_DEFAULT_RPM)),
+            new AimShootFeed(Shooter, Turret, Intake, Feed, Camera, () -> DashboardContainer.getInstance().FrontRPMInput(), () -> DashboardContainer.getInstance().BackRPMInput())),
         new PrintCommand("Going Backwards!"),
         new ParallelDeadlineGroup(
             new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE),
