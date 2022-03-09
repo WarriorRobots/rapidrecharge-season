@@ -114,6 +114,16 @@ public class RobotContainer {
       new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem,
           () -> DashboardContainer.getInstance().FrontRPMInput(), () -> DashboardContainer.getInstance().BackRPMInput()));
 
+  private final SequentialCommandGroup m_ShooterBoostButton = new SequentialCommandGroup(
+      new ParallelCommandGroup(
+        // the arm should move away from the shooter...
+        new ArmMakeRoom(m_ArmSubsytem),
+        // while making sure there are no balls touching the shooter...
+        new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
+            new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW))),
+      // and then shoot and feed while aiming
+      new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem,
+          () -> DashboardContainer.getInstance().FrontBoostRPMInput(), () -> DashboardContainer.getInstance().BackBoostRPMInput()));
   private final Command m_ShooterButtonLeft = new SequentialCommandGroup(
       // while making sure there are no balls touching the shooter...
       new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
@@ -268,10 +278,10 @@ public class RobotContainer {
     IO.xbox_LB.whileHeld(m_ReverseFeed);
 
     IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
-
+    IO.leftJoystick_4.whileHeld(m_ShooterBoostButton);
     IO.rightJoystick_1.whileHeld(m_ShooterButton);
     IO.rightJoystick_2.whileHeld(m_DriverIntakeSequence).whenReleased(m_ArmPosition0);
-    IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(m_ArmPositionIN)); // arm is commanded to the IN position instead of stazilize because commanding stabilize runs into the 3d printed blocks
+    IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(new ArmPosition(m_ArmSubsytem, Vars.ARM_IN))); // arm is commanded to the IN position instead of stazilize because commanding stabilize runs into the 3d printed blocks
   }
 
   /**

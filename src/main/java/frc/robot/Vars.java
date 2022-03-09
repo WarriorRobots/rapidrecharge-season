@@ -49,6 +49,8 @@ public class Vars {
   public static final double SHOOTER_BACK_REVERSE = -0.3; // percent
   public static final double SHOOTER_FRONT_DEFAULT_RPM = 2400; // rpm (on dashboard)
   public static final double SHOOTER_BACK_DEFAULT_RPM = 7500; // rpm (on dashboard)
+  public static final double SHOOTER_BOOST_FRONT_RPM = 3500;
+  public static final double SHOOTER_BOOST_BACK_RPM = 7500;
   public static final double SHOOTER_FRONT_KP = 0.07;
   public static final double SHOOTER_BACKSPIN_KP = 0.05;
   // below used to calculate feed forward of shooter wheels

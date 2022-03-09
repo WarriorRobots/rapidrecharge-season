@@ -23,7 +23,7 @@ public class DashboardContainer {
   private static DashboardContainer instance = null;
 
   private SendableChooser<Integer> verbosityChooser = new SendableChooser<Integer>();
-  private NetworkTableEntry FrontRPMInput, BackRPMInput, FrontPercentInput, BackPercentInput;
+  private NetworkTableEntry FrontRPMInput, BackRPMInput, FrontPercentInput, BackPercentInput, FrontBoostRPMInput, BackBoostRPMInput;
   private NetworkTableEntry FrontRPMOutput, BackRPMOutput, FeedContainsBall;
 
   // This constructor is private because it is a singleton
@@ -113,7 +113,7 @@ public class DashboardContainer {
     verbosityChooser.addOption("Middle", 3);
     verbosityChooser.addOption("Programmer", 4);
     verbosityChooser.addOption("Programmer Debug", 5);
-    driver.add("Verbosity",verbosityChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 3).withSize(2, 1);
+    driver.add("Verbosity",verbosityChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(2, 3).withSize(2, 1);
 
     FrontRPMOutput = driver.add("Front RPM", 0).withPosition(7, 0).getEntry();
     BackRPMOutput = driver.add("Back RPM", 0).withPosition(7, 1).getEntry();
@@ -124,6 +124,8 @@ public class DashboardContainer {
     driver.addNumber("Joystick Right Y", () -> IO.getRightY()).withPosition(9, 2);
     FrontRPMInput = driver.add("Front Shooter RPM Input", Vars.SHOOTER_FRONT_DEFAULT_RPM).withPosition(0, 0).withSize(2, 1).getEntry();
     BackRPMInput = driver.add("Back Shooter RPM Input", Vars.SHOOTER_BACK_DEFAULT_RPM).withPosition(0, 1).withSize(2, 1).getEntry();
+    FrontBoostRPMInput = driver.add("Front Boost RPM Input", Vars.SHOOTER_BOOST_FRONT_RPM).withPosition(0, 2).withSize(2, 1).getEntry();
+    BackBoostRPMInput = driver.add("Back Boost RPM Input", Vars.SHOOTER_BOOST_BACK_RPM).withPosition(0, 3).withSize(2, 1).getEntry();
   }
 
   private void setupConfig() {
@@ -140,6 +142,15 @@ public class DashboardContainer {
   public double BackRPMInput()
   {
     return BackRPMInput.getDouble(Vars.SHOOTER_BACK_DEFAULT_RPM);
+  }
+  public double FrontBoostRPMInput()
+  {
+    return FrontBoostRPMInput.getDouble(Vars.SHOOTER_BOOST_FRONT_RPM);
+  }
+
+  public double BackBoostRPMInput()
+  {
+    return BackBoostRPMInput.getDouble(Vars.SHOOTER_BOOST_BACK_RPM);
   }
 
   public double FrontPercentInput()
