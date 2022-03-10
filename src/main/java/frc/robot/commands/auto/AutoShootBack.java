@@ -33,12 +33,13 @@ public class AutoShootBack extends SequentialCommandGroup {
     addCommands(
         new ArmStabilize(Arm),
         new PrintCommand("Shooting now"),
+        new TurretPreset(Turret, Vars.TURRET_180),
         new ParallelDeadlineGroup(
             new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME),
             new AimShootFeed(Shooter, Turret, Intake, Feed, Camera, () -> Vars.SHOOTER_BACK_DEFAULT_RPM,
                 () -> Vars.SHOOTER_FRONT_DEFAULT_RPM)),
         new PrintCommand("going backwards!"),
-        new AutoLinear(drive, Vars.AUTO_BACKUP_DISTANCE),
+        new AutoLinear(drive, Vars.AUTO_SHOOT_MOVE_DISTANCE),
         new PrintCommand("finished auto!")
 
     );

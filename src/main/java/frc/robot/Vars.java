@@ -103,7 +103,7 @@ public static final double DRIVETRAIN_GEARING = 1/10.91;
  public static final double AUTO_MAX_M_PER_S = 25; // in/s XXX ???
  public static final double AUTO_MAX_M_PER_S_SQUARED = 10; // in/s^2 XXX ???
 // Distances
- public static final double AUTO_BACKUP_DISTANCE = -60; //in
+ public static final double AUTO_SHOOT_MOVE_DISTANCE = 60; //in
  public static final double AUTO_FORWARD_DISTANCE = 30; // in
  public static final double AUTO_BACK_FORWARD = 60; // in
  public static final double AUTO_INTAKE_BALL_BACKWARD_DISTANCE = -36; // in
