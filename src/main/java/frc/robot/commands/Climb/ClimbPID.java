@@ -44,6 +44,7 @@ public class ClimbPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_climb.getPosition() - m_inches) < Vars.CLIMB_TOLERANCE;
+    return false; // XXX this is fine since the climb is not sequenced
+    // return Math.abs(m_climb.getPosition() - m_inches) < Vars.CLIMB_TOLERANCE;
   }
 }

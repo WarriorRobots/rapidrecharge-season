@@ -43,6 +43,6 @@ public class ClimbMagic extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return false; // XXX this is fine since the climb is not sequenced
   }
 }

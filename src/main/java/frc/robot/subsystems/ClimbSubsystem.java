@@ -51,25 +51,25 @@ public class ClimbSubsystem extends SubsystemBase {
    */
   public void ClimbPID(double position) {
     if (position < Vars.CLIMB_MINIMUM){
-      m_extension.set(ControlMode.Position, toClicks(Vars.CLIMB_MINIMUM));
+      m_extension.set(ControlMode.Position, (Vars.CLIMB_MINIMUM));
     }
     else if (position > Vars.CLIMB_MAXIMUM) {
-      m_extension.set(ControlMode.Position, toClicks(Vars.CLIMB_MAXIMUM));
+      m_extension.set(ControlMode.Position, (Vars.CLIMB_MAXIMUM));
     } 
     else {
-      m_extension.set(ControlMode.Position, toClicks(position));
+      m_extension.set(ControlMode.Position, (position));
     }
   }
 
   public void ClimbMagic(double position) {
     if (position < Vars.CLIMB_MINIMUM){
-      m_extension.set(ControlMode.MotionMagic, toClicks(Vars.CLIMB_MINIMUM));
+      m_extension.set(ControlMode.MotionMagic, (Vars.CLIMB_MINIMUM));
     }
     else if (position > Vars.CLIMB_MAXIMUM) {
-      m_extension.set(ControlMode.MotionMagic, toClicks(Vars.CLIMB_MAXIMUM));
+      m_extension.set(ControlMode.MotionMagic, (Vars.CLIMB_MAXIMUM));
     } 
     else {
-      m_extension.set(ControlMode.MotionMagic, toClicks(position));
+      m_extension.set(ControlMode.MotionMagic, (position));
     }
   }
   /**
@@ -81,29 +81,40 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   /**
-   * Get the position of the physical climb.
-   * @return Displacement of the climb upwards in inches.
+   * Get the encoder's native velocity.
+   * @return Number of clicks per 100ms.
    */
-  public double getPosition() {
-    return toInches(m_extension.getSelectedSensorPosition());
+  public double getEncVel()
+  {
+    return m_extension.getSelectedSensorVelocity();
   }
 
-  /**
-   * Convert inches of movement of the climb into clicks of movement of the motor.
-   * @param inches Number of inches of upwards motion of the climb.
-   * @return Number of clicks of rotation of the motor.
-   */
-  public static double toClicks(double inches) {
-    return (inches / Math.PI / Vars.CLIMB_TRACK_DIAMETER / Vars.CLIMB_GEARING * Constants.CLICKS_PER_REV_INTEGRATED);
-  }
-/**
-   * Convert clicks of movement of the motor into inches of movement of the climb.
-   * @param clicks Number of clicks of rotation of the motor.
-   * @return Number of Clicks of rotation of the motor.
-   */
-  public static double toInches(double clicks) {
-    return clicks / Constants.CLICKS_PER_REV_INTEGRATED * Constants.CLICKS_PER_REV_INTEGRATED * Math.PI * Vars.CLIMB_TRACK_DIAMETER;
-  }
+  // /**
+  //  * Get the position of the physical climb.
+  //  * @return Displacement of the climb upwards in inches.
+  //  */
+  // public double getPosition() {
+  //   return toInches(m_extension.getSelectedSensorPosition());
+  // }
+
+//   /**
+//    * Convert inches of movement of the climb into clicks of movement of the motor.
+//    * @param inches Number of inches of upwards motion of the climb.
+//    * @return Number of clicks of rotation of the motor.
+//    */
+//   @Deprecated
+//   public static double toClicks(double inches) {
+//     return (inches / Math.PI / Vars.CLIMB_TRACK_DIAMETER / Vars.CLIMB_GEARING * Constants.CLICKS_PER_REV_INTEGRATED);
+//   }
+// /**
+//    * Convert clicks of movement of the motor into inches of movement of the climb.
+//    * @param clicks Number of clicks of rotation of the motor.
+//    * @return Number of Clicks of rotation of the motor.
+//    */
+//   @Deprecated
+//   public static double toInches(double clicks) {
+//     return clicks / Constants.CLICKS_PER_REV_INTEGRATED * Constants.CLICKS_PER_REV_INTEGRATED * Math.PI * Vars.CLIMB_TRACK_DIAMETER;
+//   }
 
   /**
    * Set the angle of climb. <p>

@@ -313,15 +313,15 @@ public class RobotContainer {
 
     // XXX setup of climb list
     // climb
-    // - flash falcon
-    // - id falcon
-    // - enter contstants
-    // - check dashboard
-    // - check compressor
-    // - check postion calculation
+    // + flash falcon
+    // + id falcon
+    // + enter contstants
+    // + check dashboard
+    // + check compressor
+    // N check postion calculation
 
-    // - linear control
-    // - (check flipped)
+    // + linear control
+    // + (check flipped)
     // - pistons
 
     // - profile

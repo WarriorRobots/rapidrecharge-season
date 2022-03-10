@@ -186,6 +186,7 @@ public void putDashboard(){
       SmartDashboard.putNumber("Arm/Encoder", RobotContainer.m_ArmSubsytem.getEnc());
       SmartDashboard.putNumber("Turret/Clicks", RobotContainer.m_TurretSubsystem.getClicks());
       SmartDashboard.putNumber("Climb/EncoderClicks", RobotContainer.m_ClimbSubsystem.getEnc());
+      SmartDashboard.putNumber("Climb/EncoderVelocity", RobotContainer.m_ClimbSubsystem.getEncVel());
     case 4:
       SmartDashboard.putNumber("Shooter/FrontGain", RobotContainer.m_ShooterSubsystem.getGainFront());
       SmartDashboard.putNumber("Shooter/BackGain", RobotContainer.m_ShooterSubsystem.getGainBack());
@@ -202,7 +203,7 @@ public void putDashboard(){
       SmartDashboard.putNumber("Camera/TargetDistance", RobotContainer.m_CameraSubsystem.getTargetDistance());
       SmartDashboard.putBoolean("Arm/HallEffect", RobotContainer.m_ArmSubsytem.getHallEffect());
       SmartDashboard.putNumber("Arm/Position", RobotContainer.m_ArmSubsytem.getPosition());
-      SmartDashboard.putNumber("Climb/Position", RobotContainer.m_ClimbSubsystem.getPosition());
+      // SmartDashboard.putNumber("Climb/Position", RobotContainer.m_ClimbSubsystem.getPosition());
     case 1:
       FrontRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMFront());
       BackRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMBack());
