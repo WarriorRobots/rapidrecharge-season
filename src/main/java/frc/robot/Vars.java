@@ -96,7 +96,7 @@ public static final double DRIVETRAIN_GEARING = 1/10.91;
  public static final double AUTO_ANGULAR_D = 0;
  public static final double AUTO_WAIT_TO_SHOOT_TIME = 2;
  public static final double AUTO_RUNNING_INTAKE = 10;
- public static final double AUTO_FRONT_SHOOTER_RPM = 2400; //rpm
+ public static final double AUTO_FRONT_SHOOTER_RPM = 1900; //rpm
  public static final double AUTO_BACK_SHOOTER_RPM= 7500; //rpm
  // public static final double DRIVE_MAX_M_PER_S =189.72441; // in/s //XXX find this
  // public static final double DRIVE_MAX_M_PER_S_SQUARED = 1743; // in/s^2 //XXX find this value
@@ -107,7 +107,7 @@ public static final double DRIVETRAIN_GEARING = 1/10.91;
  public static final double AUTO_FORWARD_DISTANCE = 30; // in
  public static final double AUTO_BACK_FORWARD = 60; // in
  public static final double AUTO_INTAKE_BALL_BACKWARD_DISTANCE = -36; // in
- public static final double AUTO_INTAKE_BALL_FORWARD_DISTANCE= 39; // in
+ public static final double AUTO_INTAKE_BALL_FORWARD_DISTANCE= 51; // in
  
   // Pathing 
 public static final double DRIVE_KS = 0.62263; // Volts
