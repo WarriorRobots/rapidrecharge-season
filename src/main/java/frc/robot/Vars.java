@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import frc.robot.subsystems.ClimbSubsystem;
 
 public class Vars {
 
@@ -19,6 +20,7 @@ public class Vars {
   public static final boolean FEED_REVERSED = false;
   public static final boolean INTAKE_TOP_REVERSED = false;
   public static final boolean INTAKE_BOTTOM_REVERSED = true;
+  public static final boolean CLIMB_MOTOR_REVERSED = false;
   
   // flipped concoders
   public static final boolean TURRET_ENCODER_REVERSED = false;
@@ -116,6 +118,27 @@ public static final double AUTO_PATH_KP = 3.2308;
 public static final DifferentialDriveKinematics KINEMATICS =
   new DifferentialDriveKinematics(TRACK_WIDTH);
 
+  public static final int CLIMB_MINIMUM = 0;
+  public static final int CLIMB_MAXIMUM = 100; // XXX ?
 
-  
+  public static final int CLIMB_TRACK_DIAMETER = 55; // XXX ?
+  public static final int CLIMB_GEARING = 26; // XXX ?
+
+  public static final double CLIMB_KP = 0; // XXX ?
+  public static final double CLIMB_KI = 0; // XXX ?
+  public static final double CLIMB_KD = 0; // XXX ?
+  public static final double CLIMB_KF = 0; // XXX ?
+  public static final double CLIMB_TOLERANCE = 1; //+- inches
+  // XXX below for magic
+  public static final double CLIMB_SPEED = 12; // inches / sec
+  public static final double CLIMB_ACCELERATION = 6; // inches / sec^2
+  public static final double CLIMB_NATIVE_PER100MS = ClimbSubsystem.toClicks(CLIMB_SPEED*0.1); //Native units/100 ms
+  public static final double CLIMB_NATIVE_PER_100MS_PER_SEC = ClimbSubsystem.toClicks(CLIMB_ACCELERATION*0.1); //(Native units/100 ms)/sec
+
+  public static final int SMOOTHING = 0; // XXX for magic
+
+  public static final double CLIMB_DOWN = 0;
+  public static final double CLIMB_UP = 100; //Inches TODO change later
+
+  public static final double PNEUMATIC_LOOP_COUNT = 5;
 }
