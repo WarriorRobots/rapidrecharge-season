@@ -54,7 +54,7 @@ public class Vars {
   public static final double SHOOTER_BACK_DEFAULT_RPM = 7500; // rpm (on dashboard)
   public static final double SHOOTER_BOOST_FRONT_RPM = 3500;
   public static final double SHOOTER_BOOST_BACK_RPM = 7500;
-  public static final double SHOOTER_FRONT_KP = 0.07;
+  public static final double SHOOTER_FRONT_KP = 0.03;
   public static final double SHOOTER_BACKSPIN_KP = 0.05;
   // below used to calculate feed forward of shooter wheels
   public static final double SHOOTER_FRONT_ESTIMATED_PERCENTAGE =  0.515; // using this percent...
@@ -97,7 +97,7 @@ public static final double DRIVETRAIN_GEARING = 1/10.91;
  public static final double AUTO_ANGULAR_D = 0;
  public static final double AUTO_WAIT_TO_SHOOT_TIME = 2;
  public static final double AUTO_RUNNING_INTAKE = 10;
- public static final double AUTO_FRONT_SHOOTER_RPM = 1700; //rpm
+ public static final double AUTO_FRONT_SHOOTER_RPM = 1900; //rpm
  public static final double AUTO_BACK_SHOOTER_RPM= 7500; //rpm
  // public static final double DRIVE_MAX_M_PER_S =189.72441; // in/s //XXX find this
  // public static final double DRIVE_MAX_M_PER_S_SQUARED = 1743; // in/s^2 //XXX find this value
