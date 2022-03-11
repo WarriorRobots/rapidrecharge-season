@@ -227,7 +227,10 @@ public class RobotContainer {
   // TODO this shouldn't be how you write commands
   private final Command m_ClimbFinish = new FunctionalCommand(()->{}, ()->m_ClimbSubsystem.LinearClimb(Vars.CLIMB_FINISH_PERCENT), (interrupted)->m_ClimbSubsystem.stop(), ()->false, m_ClimbSubsystem);
   private final ClimbMagic m_ClimbDown = new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_DOWN);
-  private final ClimbPiston m_ClimbAngled = new ClimbPiston(m_ClimbSubsystem, ClimbState.armup);
+  private final Command m_ClimbAngled = new SequentialCommandGroup(
+    new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_OUT_AND_UP),
+    new ClimbPiston(m_ClimbSubsystem, ClimbState.armup)
+  );
   private final ClimbPiston m_ClimbVertical = new ClimbPiston(m_ClimbSubsystem, ClimbState.armdown);
   private final ClimbMagic m_ClimbUp = new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_UP);
   private final SequentialCommandGroup m_UNJAMintake = new SequentialCommandGroup(

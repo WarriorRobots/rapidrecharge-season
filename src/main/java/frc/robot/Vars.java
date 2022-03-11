@@ -126,7 +126,7 @@ public static final DifferentialDriveKinematics KINEMATICS =
   public static final double CLIMB_KI = 0; // XXX ?
   public static final double CLIMB_KD = 0; // XXX ?
   public static final double CLIMB_KF = 0.15; // XXX ?
-  public static final double CLIMB_TOLERANCE = 1000; //+- native
+  public static final double CLIMB_TOLERANCE = 2000; //+- native
   // XXX below for magic
   // public static final double CLIMB_SPEED = 12; // inches / sec
   // public static final double CLIMB_ACCELERATION = 6; // inches / sec^2
@@ -140,7 +140,7 @@ public static final DifferentialDriveKinematics KINEMATICS =
   public static final double CLIMB_FINISH_PERCENT = -0.3;
   public static final double CLIMB_DOWN = -250;
   public static final double CLIMB_UP = 200000; //native TODO change later
-  public static final double CLIMB_RESET = 168294; // native TODO change later
+  public static final double CLIMB_OUT_AND_UP = 10000; // native (used when the pistons are put out so the climb does not get stuck) TODO change later
 
   public static final double PNEUMATIC_LOOP_COUNT = 5;
 

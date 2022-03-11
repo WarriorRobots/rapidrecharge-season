@@ -5,6 +5,7 @@
 package frc.robot.commands.Climb;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Vars;
 import frc.robot.subsystems.ClimbSubsystem;
 
 public class ClimbMagic extends CommandBase {
@@ -43,6 +44,6 @@ public class ClimbMagic extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false; // XXX this is fine since the climb is not sequenced
+    return Math.abs(m_climb.getEnc() - m_inches) < Vars.CLIMB_TOLERANCE;
   }
 }
