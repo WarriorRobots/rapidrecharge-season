@@ -137,7 +137,7 @@ public static final DifferentialDriveKinematics KINEMATICS =
 
   public static final int SMOOTHING = 0; // XXX for magic
 
-  public static final double CLIMB_FINISH_PERCENT = -0.25;
+  public static final double CLIMB_FINISH_PERCENT = -0.3;
   public static final double CLIMB_DOWN = -250;
   public static final double CLIMB_UP = 200000; //native TODO change later
   public static final double CLIMB_RESET = 168294; // native TODO change later
