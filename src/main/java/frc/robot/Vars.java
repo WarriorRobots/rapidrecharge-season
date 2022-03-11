@@ -20,11 +20,12 @@ public class Vars {
   public static final boolean FEED_REVERSED = false;
   public static final boolean INTAKE_TOP_REVERSED = false;
   public static final boolean INTAKE_BOTTOM_REVERSED = true;
-  public static final boolean CLIMB_MOTOR_REVERSED = true;
+  public static final boolean CLIMB_MOTOR_REVERSED = false;
   
   // flipped concoders
   public static final boolean TURRET_ENCODER_REVERSED = false;
   public static final boolean ARM_ENCODER_REVERSED = false;
+  public static final boolean CLIMB_ENCODER_REVERSED = false;
 
   // turret
   public static final double TURRET_MAX_ROTATION = 210 ; // degrees clockwise, clockwise bound // TODO ask josh about this value
@@ -96,7 +97,7 @@ public static final double DRIVETRAIN_GEARING = 1/10.91;
  public static final double AUTO_ANGULAR_D = 0;
  public static final double AUTO_WAIT_TO_SHOOT_TIME = 2;
  public static final double AUTO_RUNNING_INTAKE = 10;
- public static final double AUTO_FRONT_SHOOTER_RPM = 1900; //rpm
+ public static final double AUTO_FRONT_SHOOTER_RPM = 1700; //rpm
  public static final double AUTO_BACK_SHOOTER_RPM= 7500; //rpm
  // public static final double DRIVE_MAX_M_PER_S =189.72441; // in/s //XXX find this
  // public static final double DRIVE_MAX_M_PER_S_SQUARED = 1743; // in/s^2 //XXX find this value
@@ -106,7 +107,7 @@ public static final double DRIVETRAIN_GEARING = 1/10.91;
  public static final double AUTO_SHOOT_MOVE_DISTANCE = 60; //in
  public static final double AUTO_FORWARD_DISTANCE = 30; // in
  public static final double AUTO_BACK_FORWARD = 60; // in
- public static final double AUTO_INTAKE_BALL_BACKWARD_DISTANCE = -36; // in
+ public static final double AUTO_INTAKE_BALL_BACKWARD_DISTANCE = -48; // in
  public static final double AUTO_INTAKE_BALL_FORWARD_DISTANCE= 51; // in
  
   // Pathing 
@@ -118,29 +119,32 @@ public static final double AUTO_PATH_KP = 3.2308;
 public static final DifferentialDriveKinematics KINEMATICS =
   new DifferentialDriveKinematics(TRACK_WIDTH);
 
-  public static final int CLIMB_MINIMUM = 0;
-  public static final int CLIMB_MAXIMUM = 188294; // native
-
   // public static final int CLIMB_TRACK_DIAMETER = 55; // XXX ?
   // public static final int CLIMB_GEARING = 26; // XXX ?
 
-  public static final double CLIMB_KP = 0; // XXX ?
+  public static final double CLIMB_KP = 0.16; // XXX ?
   public static final double CLIMB_KI = 0; // XXX ?
   public static final double CLIMB_KD = 0; // XXX ?
-  public static final double CLIMB_KF = 0; // XXX ?
+  public static final double CLIMB_KF = 0.15; // XXX ?
   public static final double CLIMB_TOLERANCE = 1000; //+- native
   // XXX below for magic
   // public static final double CLIMB_SPEED = 12; // inches / sec
   // public static final double CLIMB_ACCELERATION = 6; // inches / sec^2
   // public static final double CLIMB_NATIVE_PER100MS = ClimbSubsystem.toClicks(CLIMB_SPEED*0.1); //Native units/100 ms
   // public static final double CLIMB_NATIVE_PER_100MS_PER_SEC = ClimbSubsystem.toClicks(CLIMB_ACCELERATION*0.1); //(Native units/100 ms)/sec
-  public static final double CLIMB_NATIVE_PER100MS = 11000; //Native units/100 ms
-  public static final double CLIMB_NATIVE_PER_100MS_PER_SEC = 6000; //(Native units/100 ms)/sec
+  public static final double CLIMB_NATIVE_PER100MS = 94149; //Native units/100 ms
+  public static final double CLIMB_NATIVE_PER_100MS_PER_SEC = 150000; //(Native units/100 ms)/sec
 
   public static final int SMOOTHING = 0; // XXX for magic
 
-  public static final double CLIMB_DOWN = 0;
-  public static final double CLIMB_UP = 188294; //Inches TODO change later
+  public static final double CLIMB_FINISH_PERCENT = -0.25;
+  public static final double CLIMB_DOWN = -250;
+  public static final double CLIMB_UP = 200000; //native TODO change later
+  public static final double CLIMB_RESET = 168294; // native TODO change later
 
   public static final double PNEUMATIC_LOOP_COUNT = 5;
+
+  // TODO make this not follow after the competition
+  public static final double CLIMB_MINIMUM = CLIMB_DOWN;
+  public static final double CLIMB_MAXIMUM = CLIMB_UP; // native
 }

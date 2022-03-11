@@ -224,6 +224,8 @@ public class RobotContainer {
       new ArmHoldPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP),
       new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE));
 
+  // TODO this shouldn't be how you write commands
+  private final Command m_ClimbFinish = new FunctionalCommand(()->{}, ()->m_ClimbSubsystem.LinearClimb(Vars.CLIMB_FINISH_PERCENT), (interrupted)->m_ClimbSubsystem.stop(), ()->false, m_ClimbSubsystem);
   private final ClimbMagic m_ClimbDown = new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_DOWN);
   private final ClimbPiston m_ClimbAngled = new ClimbPiston(m_ClimbSubsystem, ClimbState.armup);
   private final ClimbPiston m_ClimbVertical = new ClimbPiston(m_ClimbSubsystem, ClimbState.armdown);
@@ -288,8 +290,9 @@ public class RobotContainer {
     IO.xbox_A.whenPressed(m_ArmPositionIntake);
     IO.xboxLeft.whenPressed(m_ClimbVertical);
     // TODO req position, req linear, req magic
-    // IO.xboxUp.whenPressed(m_ClimbUp);
-    // IO.xboxDown.whenPressed(m_ClimbDown);
+    IO.xboxUp.whenPressed(m_ClimbUp);
+    IO.xboxDown.whenPressed(m_ClimbDown);
+    IO.xbox_SELECT.whileHeld(m_ClimbFinish);
     IO.xboxRight.whenPressed(m_ClimbAngled);
     IO.xbox_L_JOYSTICK.whileHeld(m_ArmLinear);
     IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
@@ -319,10 +322,11 @@ public class RobotContainer {
     // + check dashboard
     // + check compressor
     // N check postion calculation
+    // + (check flipped)
 
     // + linear control
     // + (check flipped)
-    // - pistons
+    // + pistons
 
     // - profile
     // - sequence

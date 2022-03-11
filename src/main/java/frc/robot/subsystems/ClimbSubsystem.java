@@ -25,6 +25,7 @@ public class ClimbSubsystem extends SubsystemBase {
     m_extension = new WPI_TalonFX(RobotMap.ID_CLIMB_MOTOR);
     m_extension.setInverted(Vars.CLIMB_MOTOR_REVERSED);
     m_extension.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
+    m_extension.setSensorPhase(Vars.CLIMB_ENCODER_REVERSED);
     m_extension.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.MS_TIMEOUT);
     m_extension.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.MS_TIMEOUT);
     m_extension.config_kP(Constants.PRIMARY_PID, Vars.CLIMB_KP, Constants.MS_TIMEOUT);
