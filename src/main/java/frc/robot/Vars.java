@@ -96,6 +96,7 @@ public static final double DRIVETRAIN_GEARING = 1/10.91;
  public static final double AUTO_ANGULAR_I = 0;
  public static final double AUTO_ANGULAR_D = 0;
  public static final double AUTO_WAIT_TO_SHOOT_TIME = 2;
+ public static final double AUTO_WAIT_TO_SHOOT_TIME_LONG = 4;
  public static final double AUTO_RUNNING_INTAKE = 10;
  public static final double AUTO_FRONT_SHOOTER_RPM = 1650; //rpm
  public static final double AUTO_BACK_SHOOTER_RPM= 7500; //rpm

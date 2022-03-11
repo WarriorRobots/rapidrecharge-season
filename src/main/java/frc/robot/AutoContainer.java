@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 // import frc.robot.commands.auto.trajectories.TLine;
 import frc.robot.DashboardContainer.TabsIndex;
 import frc.robot.commands.auto.AutoBack;
+import frc.robot.commands.auto.AutoIntakeShoot;
 import frc.robot.commands.auto.AutoShootBack;
 import frc.robot.commands.auto.AutoShootBackIntake;
 import frc.robot.commands.auto.AutoShootBackIntakeShoot;
@@ -58,6 +59,7 @@ public class AutoContainer {
     chooser.addOption("ShootBackIntake", new AutoShootBackIntake(RobotContainer.m_drivetrain, RobotContainer.m_ShooterSubsystem, RobotContainer.m_TurretSubsystem, RobotContainer.m_CameraSubsystem, RobotContainer.m_IntakeSubsystem, RobotContainer.m_FeedSubsystem, RobotContainer.m_ArmSubsytem));
     // Facing away from the target robot shoots moves back intakes and shoots again
     chooser.addOption("ShootBackIntakeShoot", new AutoShootBackIntakeShoot(RobotContainer.m_drivetrain, RobotContainer.m_ShooterSubsystem, RobotContainer.m_TurretSubsystem, RobotContainer.m_CameraSubsystem, RobotContainer.m_IntakeSubsystem, RobotContainer.m_FeedSubsystem, RobotContainer.m_ArmSubsytem));
+    chooser.addOption("IntakeShoot", new AutoIntakeShoot(RobotContainer.m_drivetrain, RobotContainer.m_ShooterSubsystem, RobotContainer.m_TurretSubsystem, RobotContainer.m_CameraSubsystem, RobotContainer.m_IntakeSubsystem, RobotContainer.m_FeedSubsystem, RobotContainer.m_ArmSubsytem));
 
     autoTab.add("Auto Selector", chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(3,0).withSize(2, 1);
   
