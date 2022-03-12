@@ -4,6 +4,7 @@
 
 package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -18,6 +19,7 @@ import frc.robot.commands.arm.ArmStabilize;
 import frc.robot.commands.feed.FeedPercentage;
 import frc.robot.commands.intake.IntakeBall;
 import frc.robot.commands.shooter.AimShootFeed;
+import frc.robot.commands.shooter.ShooterRPM;
 import frc.robot.commands.turret.TurretPreset;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
@@ -41,7 +43,8 @@ public class AutoIntakeShoot extends SequentialCommandGroup {
                 new PrintCommand("Going Backwards!"),
                 // move forwards to pick up the ball
                 new ParallelDeadlineGroup(
-                        // make sure to have completed rotating the turret and moving the distance
+                        // make sure to have completed rotating the turret and moving the
+                        // distance
                         // before shooting
                         new ParallelCommandGroup(
                                 new TurretPreset(Turret, Vars.TURRET_180),
@@ -52,14 +55,29 @@ public class AutoIntakeShoot extends SequentialCommandGroup {
                                 Vars.SHOOTER_SLOW_INTAKE)),
                 new PrintCommand("Picked up ball! (maybe?)"),
                 new PrintCommand("Shooting now"),
+                // new FunctionalCommand(()->{},
+                // ()->Shooter.setRPM(Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
+                // DashboardContainer.getInstance().BackRPMInput()), ()->{}, ()->(return
+                // Math.abs(Shooter.getRPMFront()-Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT)<Vars.SHOOTER_TOLERANCE),
+                // Shooter),
+                // Note: don't mimic this spaghetti, this is why we make different commands
+                new ShooterRPM(Shooter,
+                        () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
+                        () -> DashboardContainer.getInstance().BackRPMInput()) {
+                    public void end(boolean interrupted) {
+                        /* m_ShooterStop will be called to stop the shooter */}
+                }.until(() -> Math.abs(Shooter.getRPMFront()
+                        - Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT) < Vars.SHOOTER_TOLERANCE),
                 new SequentialCommandGroup(
                         new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
-                                new FeedPercentage(Feed, Vars.FEED_REVERSED_PERCENT_SLOW)),
+                                new FeedPercentage(Feed,
+                                        Vars.FEED_REVERSED_PERCENT_SLOW)),
                         new ParallelDeadlineGroup(
                                 new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME_LONG),
                                 new AimShootFeed(Shooter, Turret, Intake, Feed, Camera,
                                         () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
-                                        () -> DashboardContainer.getInstance().BackRPMInput()))),
+                                        () -> DashboardContainer.getInstance()
+                                                .BackRPMInput()))),
                 new ArmPosition(Arm, Vars.ARM_IN),
                 new PrintCommand("Auto Done")
 
