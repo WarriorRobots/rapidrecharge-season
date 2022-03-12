@@ -54,33 +54,23 @@ public class AutoIntakeShoot extends SequentialCommandGroup {
                         new IntakeBall(Intake, Feed, Vars.INTAKE_PERCENT,
                                 Vars.SHOOTER_SLOW_INTAKE)),
                 new PrintCommand("Picked up ball! (maybe?)"),
+                new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
+                        new FeedPercentage(Feed,
+                                Vars.FEED_REVERSED_PERCENT_SLOW)),
                 new PrintCommand("Shooting now"),
-                // new FunctionalCommand(()->{},
-                // ()->Shooter.setRPM(Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
-                // DashboardContainer.getInstance().BackRPMInput()), ()->{}, ()->(return
-                // Math.abs(Shooter.getRPMFront()-Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT)<Vars.SHOOTER_TOLERANCE),
-                // Shooter),
-                // Note: don't mimic this spaghetti, this is why we make different commands
-                // XXX THIS LOGIC IS ABSOLUTELY NO DIFFERENT THAN THE COMMAND ITSELF
-                // what we wanted was to let the RPM settle before moving on but this does not do that
-                new ShooterRPM(Shooter,
-                        () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
-                        () -> DashboardContainer.getInstance().BackRPMInput()) {
-                    public void end(boolean interrupted) {
-                        /* m_ShooterStop will be called to stop the shooter */}
-                }.until(() -> Math.abs(Shooter.getRPMFront()
-                        - Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT) < Vars.SHOOTER_TOLERANCE),
-                // END of spaghetti
-                new SequentialCommandGroup(
-                        new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
-                                new FeedPercentage(Feed,
-                                        Vars.FEED_REVERSED_PERCENT_SLOW)),
-                        new ParallelDeadlineGroup(
-                                new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME_LONG),
-                                new AimShootFeed(Shooter, Turret, Intake, Feed, Camera,
-                                        () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
-                                        () -> DashboardContainer.getInstance()
-                                                .BackRPMInput()))),
+                new ParallelDeadlineGroup(new WaitCommand(Vars.AUTO_SHOOT_RAMP_TIME),
+                        new ShooterRPM(Shooter,
+                                () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
+                                () -> DashboardContainer.getInstance().BackRPMInput()) {
+                            public void end(boolean interrupted) {
+                                /* m_ShooterStop will be called to stop the shooter */}
+                        }),
+                new ParallelDeadlineGroup(
+                        new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME_LONG),
+                        new AimShootFeed(Shooter, Turret, Intake, Feed, Camera,
+                                () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
+                                () -> DashboardContainer.getInstance()
+                                        .BackRPMInput())),
                 new ArmPosition(Arm, Vars.ARM_IN),
                 new PrintCommand("Auto Done")
 
