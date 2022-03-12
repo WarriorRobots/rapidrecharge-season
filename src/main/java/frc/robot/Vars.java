@@ -110,7 +110,7 @@ public static final double DRIVETRAIN_GEARING = 1/10.91;
  public static final double AUTO_BACK_FORWARD = 60; // in
  public static final double AUTO_INTAKE_BALL_BACKWARD_DISTANCE = -48; // in
  public static final double AUTO_INTAKE_BALL_FORWARD_DISTANCE= 51; // in
- public static final double AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT = 2600; // rpm
+ public static final double AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT = 2400; // rpm
  
   // Pathing 
 public static final double DRIVE_KS = 0.62263; // Volts
