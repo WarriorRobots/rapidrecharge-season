@@ -57,14 +57,10 @@ public class AutoIntakeShoot extends SequentialCommandGroup {
                                 new FeedPercentage(Feed, Vars.FEED_REVERSED_PERCENT_SLOW)),
                         new ParallelDeadlineGroup(
                                 new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME_LONG),
-                                new AimShootFeed(Shooter, Turret,
-                                        Intake, Feed, Camera,
+                                new AimShootFeed(Shooter, Turret, Intake, Feed, Camera,
                                         () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
-                                        () -> DashboardContainer
-                                                .getInstance()
-                                                .BackRPMInput()),
-                                new ArmPosition(Arm, Vars.ARM_IN))),
-
+                                        () -> DashboardContainer.getInstance().BackRPMInput()))),
+                new ArmPosition(Arm, Vars.ARM_IN),
                 new PrintCommand("Auto Done")
 
         );
