@@ -47,14 +47,14 @@ public class Vars {
   public static final double SHOOTER_FEED = 1; // percent (for hopper and feed to feed)
   public static final double SHOOTER_SLOW_FEED = 0.2; // percent (for hopper and feed to feed when the shooter is not rev-ed)
   public static final double SHOOTER_SLOW_INTAKE = 0.2;
-  public static final double SHOOTER_BACK_FEED_TIME = 0.25; // seconds
+  public static final double SHOOTER_BACK_FEED_TIME = 0.5; // seconds
   public static final double SHOOTER_FRONT_REVERSE = -0.3; // percent
   public static final double SHOOTER_BACK_REVERSE = -0.3; // percent
   public static final double SHOOTER_FRONT_DEFAULT_RPM = 2400; // rpm (on dashboard)
   public static final double SHOOTER_BACK_DEFAULT_RPM = 7500; // rpm (on dashboard)
   public static final double SHOOTER_BOOST_FRONT_RPM = 3500;
   public static final double SHOOTER_BOOST_BACK_RPM = 7500;
-  public static final double SHOOTER_FRONT_KP = 0.03;
+  public static final double SHOOTER_FRONT_KP = 0.003;
   public static final double SHOOTER_BACKSPIN_KP = 0.05;
   // below used to calculate feed forward of shooter wheels
   public static final double SHOOTER_FRONT_ESTIMATED_PERCENTAGE =  0.515; // using this percent...
