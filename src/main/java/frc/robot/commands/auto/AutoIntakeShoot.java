@@ -61,6 +61,8 @@ public class AutoIntakeShoot extends SequentialCommandGroup {
                 // Math.abs(Shooter.getRPMFront()-Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT)<Vars.SHOOTER_TOLERANCE),
                 // Shooter),
                 // Note: don't mimic this spaghetti, this is why we make different commands
+                // XXX THIS LOGIC IS ABSOLUTELY NO DIFFERENT THAN THE COMMAND ITSELF
+                // what we wanted was to let the RPM settle before moving on but this does not do that
                 new ShooterRPM(Shooter,
                         () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
                         () -> DashboardContainer.getInstance().BackRPMInput()) {
@@ -68,6 +70,7 @@ public class AutoIntakeShoot extends SequentialCommandGroup {
                         /* m_ShooterStop will be called to stop the shooter */}
                 }.until(() -> Math.abs(Shooter.getRPMFront()
                         - Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT) < Vars.SHOOTER_TOLERANCE),
+                // END of spaghetti
                 new SequentialCommandGroup(
                         new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
                                 new FeedPercentage(Feed,
