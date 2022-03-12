@@ -59,9 +59,7 @@ public class AutoIntakeShoot extends SequentialCommandGroup {
                                 new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME_LONG),
                                 new AimShootFeed(Shooter, Turret,
                                         Intake, Feed, Camera,
-                                        () -> DashboardContainer
-                                                .getInstance()
-                                                .FrontRPMInput(),
+                                        () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
                                         () -> DashboardContainer
                                                 .getInstance()
                                                 .BackRPMInput()),
