@@ -18,6 +18,7 @@ import frc.robot.commands.arm.ArmPosition;
 import frc.robot.commands.arm.ArmStabilize;
 import frc.robot.commands.feed.FeedPercentage;
 import frc.robot.commands.intake.IntakeBall;
+import frc.robot.commands.intake.IntakePercentage;
 import frc.robot.commands.shooter.AimShootFeed;
 import frc.robot.commands.shooter.ShooterRPM;
 import frc.robot.commands.turret.TurretPreset;
@@ -52,11 +53,12 @@ public class AutoIntakeShoot extends SequentialCommandGroup {
                                         Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE)),
                         new ArmHoldPosition(Arm, Vars.ARM_ANGLE_PICKUP),
                         new IntakeBall(Intake, Feed, Vars.INTAKE_PERCENT,
-                                Vars.SHOOTER_SLOW_INTAKE)),
+                                0)),
                 new PrintCommand("Picked up ball! (maybe?)"),
-                new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
+                new ParallelDeadlineGroup(new WaitCommand(Vars.AUTO_SHOOTER_BACK_FEED_TIME),
                         new FeedPercentage(Feed,
-                                Vars.FEED_REVERSED_PERCENT_SLOW)),
+                                Vars.AUTO_FEED_REVERSED_PERCENT),
+                                new IntakePercentage(Intake, Vars.AUTO_INTAKE_TOP_REVERSED_PERCENT, Vars.AUTO_INTAKE_BOTTOM_REVERSED_PERCENT)),
                 new PrintCommand("Shooting now"),
                 new ParallelDeadlineGroup(new WaitCommand(Vars.AUTO_SHOOT_RAMP_TIME),
                         new ShooterRPM(Shooter,
