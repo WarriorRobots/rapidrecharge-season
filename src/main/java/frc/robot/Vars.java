@@ -47,7 +47,7 @@ public class Vars {
   public static final double FEED_REVERSE_BUTTON = -0.4;
   /** output rotations per input rotations */
   public static final double SHOOTER_FRONT_GEARING = 40.0/54.0; // output rotations / input rotations
-  public static final double SHOOTER_TOLERANCE = 200; // +rpm
+  public static final double SHOOTER_TOLERANCE = 100; // +rpm
   public static final double SHOOTER_PRE = 0.2; // percent (for hopper and feed to pulse back)
   public static final double SHOOTER_FEED = 1; // percent (for hopper and feed to feed)
   public static final double SHOOTER_SLOW_FEED = 0.2; // percent (for hopper and feed to feed when the shooter is not rev-ed)
@@ -60,7 +60,7 @@ public class Vars {
   public static final double SHOOTER_BACK_DEFAULT_RPM = 7500; // rpm (on dashboard)
   public static final double SHOOTER_BOOST_FRONT_RPM = 3500;
   public static final double SHOOTER_BOOST_BACK_RPM = 7500;
-  public static final double SHOOTER_FRONT_KP = 0.003;
+  public static final double SHOOTER_FRONT_KP = 0.00075;
   public static final double SHOOTER_BACKSPIN_KP = 0.05;
   // below used to calculate feed forward of shooter wheels
   public static final double SHOOTER_FRONT_ESTIMATED_PERCENTAGE =  0.515; // using this percent...
@@ -117,7 +117,7 @@ public static final double DRIVETRAIN_GEARING = 1/10.91;
  public static final double AUTO_INTAKE_BALL_BACKWARD_DISTANCE = -48; // in
  public static final double AUTO_INTAKE_BALL_FORWARD_DISTANCE= 51; // in
  public static final double AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT = 2525; // rpm
- public static final double AUTO_SHOOT_RAMP_TIME = 1; // second
+ public static final double AUTO_SHOOT_RAMP_TIME = 2; // second
  
   // Pathing 
 public static final double DRIVE_KS = 0.62263; // Volts
@@ -149,7 +149,7 @@ public static final DifferentialDriveKinematics KINEMATICS =
   public static final double CLIMB_FINISH_PERCENT = -0.4;
   public static final double CLIMB_DOWN = -250;
   public static final double CLIMB_UP = 200000; //native TODO change later
-  public static final double CLIMB_OUT_AND_UP = 10000; // native (used when the pistons are put out so the climb does not get stuck) TODO change later
+  public static final double CLIMB_OUT_AND_UP = 40000; // native (used when the pistons are put out so the climb does not get stuck) TODO change later
 
   public static final double PNEUMATIC_LOOP_COUNT = 5;
 

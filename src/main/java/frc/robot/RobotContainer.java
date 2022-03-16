@@ -232,6 +232,9 @@ public class RobotContainer {
     new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_OUT_AND_UP),
     new ClimbPiston(m_ClimbSubsystem, ClimbState.armup)
   );
+  private final Command m_ClimbAngleOnly = new SequentialCommandGroup(
+    new ClimbPiston(m_ClimbSubsystem, ClimbState.armup)
+  );
   private final ClimbPiston m_ClimbVertical = new ClimbPiston(m_ClimbSubsystem, ClimbState.armdown);
   private final ClimbMagic m_ClimbUp = new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_UP);
   private final SequentialCommandGroup m_UNJAMintake = new SequentialCommandGroup(
@@ -301,6 +304,7 @@ public class RobotContainer {
     IO.xbox_L_JOYSTICK.whileHeld(m_ArmLinear);
     IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
     IO.xbox_LB.whileHeld(m_ReverseFeed);
+    IO.xbox_START.whenPressed(m_ClimbAngleOnly);
 
     IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
     IO.leftJoystick_4.whileHeld(m_ShooterBoostButton);

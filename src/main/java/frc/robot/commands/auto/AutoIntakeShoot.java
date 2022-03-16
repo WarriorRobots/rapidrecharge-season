@@ -60,13 +60,13 @@ public class AutoIntakeShoot extends SequentialCommandGroup {
                                 Vars.AUTO_FEED_REVERSED_PERCENT),
                                 new IntakePercentage(Intake, Vars.AUTO_INTAKE_TOP_REVERSED_PERCENT, Vars.AUTO_INTAKE_BOTTOM_REVERSED_PERCENT)),
                 new PrintCommand("Shooting now"),
-                new ParallelDeadlineGroup(new WaitCommand(Vars.AUTO_SHOOT_RAMP_TIME),
-                        new ShooterRPM(Shooter,
-                                () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
-                                () -> DashboardContainer.getInstance().BackRPMInput()) {
-                            public void end(boolean interrupted) {
-                                /* m_ShooterStop will be called to stop the shooter */}
-                        }),
+                // new ParallelDeadlineGroup(new WaitCommand(Vars.AUTO_SHOOT_RAMP_TIME),
+                //         new ShooterRPM(Shooter,
+                //                 () -> Vars.AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT,
+                //                 () -> DashboardContainer.getInstance().BackRPMInput()) {
+                //             public void end(boolean interrupted) {
+                //                 /* m_ShooterStop will be called to stop the shooter */}
+                //         }),
                 new ParallelDeadlineGroup(
                         new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME_LONG),
                         new AimShootFeed(Shooter, Turret, Intake, Feed, Camera,
