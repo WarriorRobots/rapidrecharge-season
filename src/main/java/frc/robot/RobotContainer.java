@@ -45,6 +45,7 @@ import frc.robot.subsystems.ClimbSubsystem.ClimbState;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -232,6 +233,7 @@ public class RobotContainer {
     new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_OUT_AND_UP),
     new ClimbPiston(m_ClimbSubsystem, ClimbState.armup)
   );
+  private final ConditionalCommand m_ClimbBack = new ConditionalCommand(m_ClimbAngled,new ClimbPiston(m_ClimbSubsystem, ClimbState.armup) , m_ClimbSubsystem::ClimbHookCondition);
   private final Command m_ClimbAngleOnly = new SequentialCommandGroup(
     new ClimbPiston(m_ClimbSubsystem, ClimbState.armup)
   );
@@ -300,7 +302,7 @@ public class RobotContainer {
     IO.xboxUp.whenPressed(m_ClimbUp);
     IO.xboxDown.whenPressed(m_ClimbDown);
     IO.xbox_SELECT.whileHeld(m_ClimbFinish);
-    IO.xboxRight.whenPressed(m_ClimbAngled);
+    IO.xboxRight.whenPressed(m_ClimbBack);
     IO.xbox_L_JOYSTICK.whileHeld(m_ArmLinear);
     IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
     IO.xbox_LB.whileHeld(m_ReverseFeed);

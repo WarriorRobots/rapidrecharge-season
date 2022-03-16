@@ -146,6 +146,9 @@ public class ClimbSubsystem extends SubsystemBase {
   {
     return m_extension.getMotorOutputPercent();
   }
+  public boolean ClimbHookCondition(){
+    return getEnc()<30000;
+  }
 
   /**
    * Stops the winch.
