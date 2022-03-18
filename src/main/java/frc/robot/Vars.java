@@ -32,7 +32,7 @@ public class Vars {
   public static final double TURRET_MAX_ROTATION = 210 ; // degrees clockwise, clockwise bound // TODO ask josh about this value
   public static final double TURRET_MIN_ROTATION = -50; // degrees clockwise, counterclockwise bound
   public static final double TURRET_TOLERANCE = 2; // degrees
-  public static final double TURRET_KP = 7;
+  public static final double TURRET_KP = 10;
   public static final double TURRET_180 = 180;
   public static final double TURRET_0 = 0;
   public static final double TURRET_RAMP_UP_TIME = 0.1; // Seconds 
