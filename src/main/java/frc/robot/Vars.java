@@ -32,7 +32,7 @@ public class Vars {
   public static final double TURRET_MAX_ROTATION = 210 ; // degrees clockwise, clockwise bound // TODO ask josh about this value
   public static final double TURRET_MIN_ROTATION = -50; // degrees clockwise, counterclockwise bound
   public static final double TURRET_TOLERANCE = 2; // degrees
-  public static final double TURRET_KP = 4;
+  public static final double TURRET_KP = 7;
   public static final double TURRET_180 = 180;
   public static final double TURRET_0 = 0;
   public static final double TURRET_RAMP_UP_TIME = 0.1; // Seconds 
@@ -59,7 +59,7 @@ public class Vars {
   public static final double AUTO_SHOOTER_BACK_FEED_TIME = .2; //seconds
   public static final double SHOOTER_FRONT_REVERSE = -0.3; // percent
   public static final double SHOOTER_BACK_REVERSE = -0.3; // percent
-  public static final double SHOOTER_FRONT_DEFAULT_RPM = 2450; // rpm (on dashboard)
+  public static final double SHOOTER_FRONT_DEFAULT_RPM = 2550; // rpm (on dashboard)
   public static final double SHOOTER_BACK_DEFAULT_RPM = 7500; // rpm (on dashboard)
   public static final double SHOOTER_BOOST_FRONT_RPM = 3500;
   public static final double SHOOTER_BOOST_BACK_RPM = 7500;
@@ -119,7 +119,7 @@ public static final double DRIVETRAIN_GEARING = 1/10.91;
  public static final double AUTO_BACK_FORWARD = 60; // in
  public static final double AUTO_INTAKE_BALL_BACKWARD_DISTANCE = -48; // in
  public static final double AUTO_INTAKE_BALL_FORWARD_DISTANCE= 51; // in
- public static final double AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT = 2575; // rpm
+ public static final double AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT = 2675; // rpm
  public static final double AUTO_SHOOT_RAMP_TIME = 2; // second
  
   // Pathing 
