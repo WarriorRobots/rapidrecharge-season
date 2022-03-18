@@ -38,6 +38,7 @@ public class ShooterFeed extends CommandBase {
   @Override
   public void execute() {
    
+    // TODO this logic does not match that of AimShootFeed
     if(Math.abs(m_shooter.getRPMFront()-m_ShooterRPM.getAsDouble()) < Vars.SHOOTER_TOLERANCE){
       m_intake.setPercentage(Vars.SHOOTER_FEED, Vars.SHOOTER_FEED);
       m_feed.setPercentage(Vars.SHOOTER_FEED);
