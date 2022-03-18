@@ -22,6 +22,7 @@ public class Vars {
   public static final boolean INTAKE_BOTTOM_REVERSED = true;
   public static final boolean CLIMB_MOTOR_REVERSED = false;
   
+  
   // flipped concoders
   public static final boolean TURRET_ENCODER_REVERSED = false;
   public static final boolean ARM_ENCODER_REVERSED = false;
@@ -34,6 +35,7 @@ public class Vars {
   public static final double TURRET_KP = 10;
   public static final double TURRET_180 = 180;
   public static final double TURRET_0 = 0;
+  public static final double TURRET_RAMP_UP_TIME = 0.2; // Seconds 
 
   //TODO change values
   public static final double INTAKE_PERCENT = 1;
@@ -148,7 +150,7 @@ public static final DifferentialDriveKinematics KINEMATICS =
   public static final int SMOOTHING = 0; // XXX for magic
 
   public static final double CLIMB_FINISH_PERCENT = -0.3;
-  public static final double CLIMB_DOWN = -250;
+  public static final double CLIMB_DOWN = 0;
   public static final double CLIMB_UP = 200000; //native TODO change later
   public static final double CLIMB_OUT_AND_UP = 40000; // native (used when the pistons are put out so the climb does not get stuck) TODO change later
 
