@@ -160,8 +160,7 @@ public static final DifferentialDriveKinematics KINEMATICS =
   public static final double CLIMB_OUT_AND_UP = 40000; // native (used when the pistons are put out so the climb does not get stuck) TODO change later
   public static final double CLIMB_IZONE = 50; // ms
   public static final double PNEUMATIC_LOOP_COUNT = 5;
-  public static final double CLIMB_HEIGHT_FEED_FORWARD = CLIMB_DOWN;
-  public static final double CLIMB_FEED_FORWARD = 0.105;
+
   // TODO make this not follow after the competition
   public static final double CLIMB_MINIMUM = CLIMB_DOWN;
   public static final double CLIMB_MAXIMUM = CLIMB_UP; // native

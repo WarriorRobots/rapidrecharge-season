@@ -65,19 +65,15 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void ClimbMagic(double position) {
-    double feedforward = 0;
-    // if(position <= Vars.CLIMB_HEIGHT_FEED_FORWARD){
-    //   // feedforward = Vars.CLIMB_FEED_FORWARD;
-    // } else feedforward = 0;
 
     if (position < Vars.CLIMB_MINIMUM){
-      m_extension.set(ControlMode.MotionMagic, (Vars.CLIMB_MINIMUM), DemandType.ArbitraryFeedForward, feedforward);
+      m_extension.set(ControlMode.MotionMagic, (Vars.CLIMB_MINIMUM));
     }
     else if (position > Vars.CLIMB_MAXIMUM) {
-      m_extension.set(ControlMode.MotionMagic, (Vars.CLIMB_MAXIMUM), DemandType.ArbitraryFeedForward, feedforward);
+      m_extension.set(ControlMode.MotionMagic, (Vars.CLIMB_MAXIMUM));
     } 
     else {
-      m_extension.set(ControlMode.MotionMagic, (position), DemandType.ArbitraryFeedForward, feedforward);
+      m_extension.set(ControlMode.MotionMagic, (position));
     }
   }
   /**
