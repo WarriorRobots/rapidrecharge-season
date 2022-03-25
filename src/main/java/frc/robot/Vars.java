@@ -92,6 +92,11 @@ public static final double MAX_ACCELERATION = 150; // inches/sec^2
  * Equivilant to 1/Gear Ratio.
  * Use this to convert from 1 rotation of the motor to 1 rotation of the output shaft: input * GEARING = output.
  */
+// Drivetrain
+/**
+ * Drive train ramp time for not falling over like joel did circa 3/2022
+ */
+public static final double DRIVETRAIN_RAMP_TIME = 0.25; //seconds 
 public static final double DRIVETRAIN_GEARING = 1/10.91;
  // auto
  public static final double AUTO_SPEED_TOLERANCE = 0.1; // inches per sec
