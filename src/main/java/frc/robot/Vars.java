@@ -139,8 +139,8 @@ public static final DifferentialDriveKinematics KINEMATICS =
   // public static final int CLIMB_TRACK_DIAMETER = 55; // XXX ?
   // public static final int CLIMB_GEARING = 26; // XXX ?
 
-  public static final double CLIMB_KP = 0.16; // XXX ?
-  public static final double CLIMB_KI = 0; // XXX ?
+  public static final double CLIMB_KP = 0.32; // XXX ?
+  public static final double CLIMB_KI = 0.0001; // XXX ?
   public static final double CLIMB_KD = 0; // XXX ?
   public static final double CLIMB_KF = 0.15; // XXX ?
   public static final double CLIMB_TOLERANCE = 2000; //+- native
@@ -155,12 +155,13 @@ public static final DifferentialDriveKinematics KINEMATICS =
   public static final int SMOOTHING = 0; // XXX for magic
 
   public static final double CLIMB_FINISH_PERCENT = -0.3;
-  public static final double CLIMB_DOWN = 2000;
+  public static final double CLIMB_DOWN = 50;
   public static final double CLIMB_UP = 204000; //native TODO change later
   public static final double CLIMB_OUT_AND_UP = 40000; // native (used when the pistons are put out so the climb does not get stuck) TODO change later
-
+  public static final double CLIMB_IZONE = 50; // ms
   public static final double PNEUMATIC_LOOP_COUNT = 5;
-
+  public static final double CLIMB_HEIGHT_FEED_FORWARD = CLIMB_DOWN;
+  public static final double CLIMB_FEED_FORWARD = 0.105;
   // TODO make this not follow after the competition
   public static final double CLIMB_MINIMUM = CLIMB_DOWN;
   public static final double CLIMB_MAXIMUM = CLIMB_UP; // native

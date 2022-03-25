@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -24,6 +25,7 @@ public class ClimbSubsystem extends SubsystemBase {
   public ClimbSubsystem() {
     m_extension = new WPI_TalonFX(RobotMap.ID_CLIMB_MOTOR);
     m_extension.setInverted(Vars.CLIMB_MOTOR_REVERSED);
+    m_extension.config_IntegralZone(Constants.PRIMARY_PID, Vars.CLIMB_IZONE, Constants.MS_TIMEOUT);
     m_extension.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
     m_extension.setSensorPhase(Vars.CLIMB_ENCODER_REVERSED);
     m_extension.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.MS_TIMEOUT);
@@ -63,14 +65,19 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void ClimbMagic(double position) {
+    double feedforward = 0;
+    // if(position <= Vars.CLIMB_HEIGHT_FEED_FORWARD){
+    //   // feedforward = Vars.CLIMB_FEED_FORWARD;
+    // } else feedforward = 0;
+
     if (position < Vars.CLIMB_MINIMUM){
-      m_extension.set(ControlMode.MotionMagic, (Vars.CLIMB_MINIMUM));
+      m_extension.set(ControlMode.MotionMagic, (Vars.CLIMB_MINIMUM), DemandType.ArbitraryFeedForward, feedforward);
     }
     else if (position > Vars.CLIMB_MAXIMUM) {
-      m_extension.set(ControlMode.MotionMagic, (Vars.CLIMB_MAXIMUM));
+      m_extension.set(ControlMode.MotionMagic, (Vars.CLIMB_MAXIMUM), DemandType.ArbitraryFeedForward, feedforward);
     } 
     else {
-      m_extension.set(ControlMode.MotionMagic, (position));
+      m_extension.set(ControlMode.MotionMagic, (position), DemandType.ArbitraryFeedForward, feedforward);
     }
   }
   /**
