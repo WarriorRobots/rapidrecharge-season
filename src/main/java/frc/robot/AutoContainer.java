@@ -22,6 +22,9 @@ import frc.robot.commands.auto.AutoIntakeShoot;
 import frc.robot.commands.auto.AutoShootBack;
 import frc.robot.commands.auto.AutoShootBackIntake;
 import frc.robot.commands.auto.AutoShootBackIntakeShoot;
+import frc.robot.commands.auto.RamseteContainer;
+import frc.robot.commands.auto.trajectories.TBack;
+import frc.robot.commands.auto.trajectories.TLine;
 /**
  * A singleton tool to handle the auto selection.
  */
@@ -60,6 +63,9 @@ public class AutoContainer {
     // Facing away from the target robot shoots moves back intakes and shoots again
     chooser.addOption("ShootBackIntakeShoot", new AutoShootBackIntakeShoot(RobotContainer.m_drivetrain, RobotContainer.m_ShooterSubsystem, RobotContainer.m_TurretSubsystem, RobotContainer.m_CameraSubsystem, RobotContainer.m_IntakeSubsystem, RobotContainer.m_FeedSubsystem, RobotContainer.m_ArmSubsytem));
     chooser.addOption("IntakeShoot", new AutoIntakeShoot(RobotContainer.m_drivetrain, RobotContainer.m_ShooterSubsystem, RobotContainer.m_TurretSubsystem, RobotContainer.m_CameraSubsystem, RobotContainer.m_IntakeSubsystem, RobotContainer.m_FeedSubsystem, RobotContainer.m_ArmSubsytem));
+     chooser.addOption("Forward 1 Foot",
+      new RamseteContainer(RobotContainer.m_drivetrain, new TLine(){public double getLengthIn() {return 51;}}).getCommandAndStop()
+    );
 
     autoTab.add("Auto Selector", chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(3,0).withSize(2, 1);
   
