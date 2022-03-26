@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.DashboardContainer;
 
 /**
  * LedController sends PWM signals to the REV Blinkin to change the color of LEDs
@@ -74,5 +75,8 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   @Override
-	public void periodic() {}
+	public void periodic() {
+    updateColor(DashboardContainer.getInstance().ColorInput());
+    updatePattern(DashboardContainer.getInstance().PatternInput());
+  }
 }
