@@ -7,6 +7,7 @@ package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -38,6 +39,7 @@ import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.FeedSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
@@ -75,6 +77,7 @@ public class RobotContainer {
   protected static final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   protected static final FeedSubsystem m_FeedSubsystem = new FeedSubsystem();
   protected static final PneumaticsSubsystem m_Pneumatics_Subsystem = new PneumaticsSubsystem();
+  protected static final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
 
 
   // Drivetrain
@@ -219,6 +222,33 @@ public class RobotContainer {
 
   }
 
+  public void UpdateLED(){
+    if (m_FeedSubsystem.TwoBallsPresent()){
+      m_LEDSubsystem.updatePattern(Vars.PATTERN_2BALLS);
+    }
+    else if (m_FeedSubsystem.BallPresent()){
+      m_LEDSubsystem.updatePattern(Vars.PATTERN_1BALLS);
+    }
+    else {
+      m_LEDSubsystem.updatePattern(Vars.PATTERN_0BALLS);
+    }
+
+    if (Timer.getMatchTime() < 10){
+      m_LEDSubsystem.updateColor(Vars.COLOR10SEC);
+    }
+    else if (Timer.getMatchTime() < 20){
+      m_LEDSubsystem.updateColor(Vars.COLOR20SEC);
+    }
+    else if (Timer.getMatchTime() < 30){
+      m_LEDSubsystem.updateColor(Vars.COLOR30SEC);
+    }
+    else if (Timer.getMatchTime() < 40){
+      m_LEDSubsystem.updateColor(Vars.COLOR40SEC);
+    }
+    else {
+      m_LEDSubsystem.updateColor(Vars.COLORDEFAULT);
+    }
+  }
   private final ParallelCommandGroup m_IntakeSequence = new ParallelCommandGroup(
       new ArmHoldPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP),
       new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE));
@@ -252,6 +282,11 @@ public class RobotContainer {
       return true;
     }
   };
+  private final RunCommand m_LEDUpdater = new RunCommand(() -> UpdateLED()) {
+    public boolean runsWhenDisabled() {
+      return true;
+    }
+  };
   // Feed
   private final FeedPercentage m_FeedPercentage = new FeedPercentage(m_FeedSubsystem, 1.0);
   private final FeedPercentage m_FeedPercentageBack = new FeedPercentage(m_FeedSubsystem, -1.0);
@@ -278,6 +313,7 @@ public class RobotContainer {
     configureButtonBindings();
     CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_tankDrive);
     CommandScheduler.getInstance().schedule(m_DashWriter);
+    CommandScheduler.getInstance().schedule(m_LEDUpdater);
     
   }
 

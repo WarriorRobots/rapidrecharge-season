@@ -87,8 +87,5 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   @Override
-	public void periodic() {
-    updateColor(DashboardContainer.getInstance().ColorInput());
-    updatePattern(DashboardContainer.getInstance().PatternInput());
-  }
+	public void periodic() {}
 }
