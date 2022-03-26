@@ -208,7 +208,9 @@ public void putDashboard(){
       FrontRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMFront());
       BackRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMBack());
       FeedContainsBall.setBoolean(RobotContainer.m_FeedSubsystem.FeedcontainsBall());
-      SmartDashboard.putNumber("Balls Present", RobotContainer.m_FeedSubsystem.BallsPresent());
+      SmartDashboard.putBoolean("One Ball Present", RobotContainer.m_FeedSubsystem.oneBallPresent());
+      SmartDashboard.putBoolean("Two Balls Present", RobotContainer.m_FeedSubsystem.TwoBallsPresent());
+
       // SmartDashboard.putNumber("Shooter/FrontRPM", RobotContainer.m_ShooterSubsystem.getRPMFront());
       // SmartDashboard.putNumber("Shooter/BackRPM", RobotContainer.m_ShooterSubsystem.getRPMBack());
       // SmartDashboard.putBoolean("Feed/ContainsBall", RobotContainer.m_FeedSubsystem.containsBall());

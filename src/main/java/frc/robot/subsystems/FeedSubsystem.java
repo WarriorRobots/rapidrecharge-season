@@ -45,19 +45,40 @@ public class FeedSubsystem extends SubsystemBase {
   }
   public boolean IntakecontainsBall()
   {
-    return !m_intakeInfraredSensor.get();
+    return !m_intakeInfraredSensor.get(); // infrared reads false when it sees a ball
   }
   /**
    * 
-   * @return Amount of Balls Present in the Robot   */
-  public double BallsPresent() {
-    if(FeedcontainsBall() && IntakecontainsBall()){
-      return 2;
-    }else{
-      return 1;
-    }
+   * @return true, If 2 Balls Present in the Robot   */
+  public boolean TwoBallsPresent() {
+   return (FeedcontainsBall() && IntakecontainsBall());
     
   }
+  /**
+   * 
+   * @return true, If one ball is present
+   */
+  public boolean oneBallPresent(){
+    return (FeedcontainsBall() ^ IntakecontainsBall());
+  }
+  /**
+   * 
+   * @return true, if a ball is Present in the robot
+   */
+  public boolean BallPresent(){
+    return (FeedcontainsBall() || IntakecontainsBall());
+  }
+/**
+ * 
+ * @return True, if no balls present
+ */
+  public boolean NoBallsPresent(){
+    return !BallPresent();
+  }
+
+  
+  
+
 
   /**
    * Stops the feed motor.
