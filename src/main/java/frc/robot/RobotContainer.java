@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.commands.Climb.ClimbMagic;
+import frc.robot.commands.Climb.ClimbPiston;
 import frc.robot.commands.arm.ArmHoldPosition;
 import frc.robot.commands.arm.ArmLinear;
 import frc.robot.commands.arm.ArmMakeRoom;
@@ -32,14 +34,19 @@ import frc.robot.commands.turret.TurretPreset;
 import frc.robot.commands.turret.TurretRotate;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.FeedSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
+import frc.robot.subsystems.ClimbSubsystem.ClimbState;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -62,10 +69,13 @@ public class RobotContainer {
   protected static final DrivetrainSubsystem m_drivetrain = new DrivetrainSubsystem();
   protected static final CameraSubsystem m_CameraSubsystem = new CameraSubsystem();
   protected static final TurretSubsystem m_TurretSubsystem = new TurretSubsystem();
+  protected static final ClimbSubsystem m_ClimbSubsystem = new ClimbSubsystem();
   protected static final ArmSubsystem m_ArmSubsytem = new ArmSubsystem();
   protected static final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
   protected static final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   protected static final FeedSubsystem m_FeedSubsystem = new FeedSubsystem();
+  protected static final PneumaticsSubsystem m_Pneumatics_Subsystem = new PneumaticsSubsystem();
+
 
   // Drivetrain
   private final TankDrive m_tankDrive = new TankDrive(m_drivetrain, () -> IO.getLeftY(), () -> IO.getRightY());
@@ -97,7 +107,7 @@ public class RobotContainer {
   // }}
   // )
   // );
-
+  
   // private final AimShootFeed m_ShooterAimAndShoot = new
   // AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem,
   // m_FeedSubsystem, m_CameraSubsystem,
@@ -109,25 +119,26 @@ public class RobotContainer {
   private final Command m_ShooterButton = new SequentialCommandGroup(
       // while making sure there are no balls touching the shooter...
       new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
-          new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW)),
+          new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW),
+          new IntakePercentage(m_IntakeSubsystem, Vars.INTAKE_TOP_REVERSED_PERCENT, Vars.INTAKE_BOTTOM_REVERSED_PERCENT)),
       // and then shoot and feed while aiming
       new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem,
           () -> DashboardContainer.getInstance().FrontRPMInput(), () -> DashboardContainer.getInstance().BackRPMInput()));
 
-  private final SequentialCommandGroup m_ShooterBoostButton = new SequentialCommandGroup(
-      new ParallelCommandGroup(
-        // the arm should move away from the shooter...
-        new ArmMakeRoom(m_ArmSubsytem),
-        // while making sure there are no balls touching the shooter...
-        new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
-            new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW))),
+  private final Command m_ShooterBoostButton = new SequentialCommandGroup(
+      // while making sure there are no balls touching the shooter...
+      new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
+          new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW),
+          new IntakePercentage(m_IntakeSubsystem, Vars.INTAKE_TOP_REVERSED_PERCENT, Vars.INTAKE_BOTTOM_REVERSED_PERCENT)),
       // and then shoot and feed while aiming
       new AimShootFeed(m_ShooterSubsystem, m_TurretSubsystem, m_IntakeSubsystem, m_FeedSubsystem, m_CameraSubsystem,
           () -> DashboardContainer.getInstance().FrontBoostRPMInput(), () -> DashboardContainer.getInstance().BackBoostRPMInput()));
+
   private final Command m_ShooterButtonLeft = new SequentialCommandGroup(
       // while making sure there are no balls touching the shooter...
       new ParallelDeadlineGroup(new WaitCommand(Vars.SHOOTER_BACK_FEED_TIME),
           new FeedPercentage(m_FeedSubsystem, Vars.FEED_REVERSED_PERCENT_SLOW)),
+          // TODO missing intake percentage
       // and then shoot and feed
       new ShooterFeed(m_ShooterSubsystem, m_IntakeSubsystem, m_FeedSubsystem,
           () -> DashboardContainer.getInstance().FrontRPMInput(),
@@ -172,7 +183,7 @@ public class RobotContainer {
   // Turret
   private final TurretRotate m_TurretRotate = new TurretRotate(m_TurretSubsystem, () -> IO.getXBoxRightX());
   private final TurretPreset m_TurretPreset90 = new TurretPreset(m_TurretSubsystem, 90);
-  private final TurretPreset m_TurretPreset180 = new TurretPreset(m_TurretSubsystem, 180);
+  private final TurretPreset m_TurretPreset180 = new TurretPreset(m_TurretSubsystem, Vars.TURRET_180);
   // private final TurretPreset m_TurretPresetMinus90 = new
   // TurretPreset(m_TurretSubsystem, -90);
   private final TurretPreset m_TurretPresetMinus50 = new TurretPreset(m_TurretSubsystem, -50);
@@ -215,6 +226,19 @@ public class RobotContainer {
       new ArmHoldPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP),
       new IntakeBall(m_IntakeSubsystem, m_FeedSubsystem, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE));
 
+  // TODO this shouldn't be how you write commands
+  private final Command m_ClimbFinish = new FunctionalCommand(()->{}, ()->m_ClimbSubsystem.LinearClimb(Vars.CLIMB_FINISH_PERCENT), (interrupted)->m_ClimbSubsystem.stop(), ()->false, m_ClimbSubsystem);
+  private final ClimbMagic m_ClimbDown = new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_DOWN);
+  private final Command m_ClimbAngled = new SequentialCommandGroup(
+    new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_OUT_AND_UP),
+    new ClimbPiston(m_ClimbSubsystem, ClimbState.armup)
+  );
+  private final ConditionalCommand m_ClimbBack = new ConditionalCommand(m_ClimbAngled,new ClimbPiston(m_ClimbSubsystem, ClimbState.armup) , m_ClimbSubsystem::ClimbHookCondition);
+  private final Command m_ClimbAngleOnly = new SequentialCommandGroup(
+    new ClimbPiston(m_ClimbSubsystem, ClimbState.armup)
+  );
+  private final ClimbPiston m_ClimbVertical = new ClimbPiston(m_ClimbSubsystem, ClimbState.armdown);
+  private final ClimbMagic m_ClimbUp = new ClimbMagic(m_ClimbSubsystem, Vars.CLIMB_UP);
   private final SequentialCommandGroup m_UNJAMintake = new SequentialCommandGroup(
       new ArmPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP),
       new ParallelCommandGroup(
@@ -254,6 +278,7 @@ public class RobotContainer {
     configureButtonBindings();
     CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_tankDrive);
     CommandScheduler.getInstance().schedule(m_DashWriter);
+    
   }
 
   /**
@@ -272,16 +297,49 @@ public class RobotContainer {
     IO.xbox_B.whenPressed(m_TurretPreset180);
     IO.xbox_X.whenPressed(m_ArmPositionIN);
     IO.xbox_A.whenPressed(m_ArmPositionIntake);
-    IO.xboxUp.whileHeld(m_ArmPosition0);
+    IO.xboxLeft.whenPressed(m_ClimbVertical);
+    // TODO req position, req linear, req magic
+    IO.xboxUp.whenPressed(m_ClimbUp);
+    IO.xboxDown.whenPressed(m_ClimbDown);
+    IO.xbox_SELECT.whileHeld(m_ClimbFinish);
+    IO.xboxRight.whenPressed(m_ClimbBack);
     IO.xbox_L_JOYSTICK.whileHeld(m_ArmLinear);
     IO.xbox_R_JOYSTICK.whileHeld(m_TurretRotate);
     IO.xbox_LB.whileHeld(m_ReverseFeed);
+    IO.xbox_START.whenPressed(m_ClimbAngleOnly);
 
     IO.leftJoystick_1.whileHeld(m_ShooterButtonLeft);
     IO.leftJoystick_4.whileHeld(m_ShooterBoostButton);
     IO.rightJoystick_1.whileHeld(m_ShooterButton);
     IO.rightJoystick_2.whileHeld(m_DriverIntakeSequence).whenReleased(m_ArmPosition0);
     IO.rightJoystick_12.whenPressed(m_ArmZero.andThen(new ArmPosition(m_ArmSubsytem, Vars.ARM_IN))); // arm is commanded to the IN position instead of stazilize because commanding stabilize runs into the 3d printed blocks
+
+    // XXX programmer DON'T STAGE
+    IO.rightJoystick_8.whileHeld(
+      new FunctionalCommand(
+        ()->{},
+        ()->m_ClimbSubsystem.LinearClimb(IO.getRightSlider()),
+        (interrupted)->m_ClimbSubsystem.stop(),
+        ()->false, m_ClimbSubsystem
+      )
+    );
+
+    // XXX setup of climb list
+    // climb
+    // + flash falcon
+    // + id falcon
+    // + enter contstants
+    // + check dashboard
+    // + check compressor
+    // N check postion calculation
+    // + (check flipped)
+
+    // + linear control
+    // + (check flipped)
+    // + pistons
+
+    // - profile
+    // - sequence
   }
 
   /**
@@ -291,9 +349,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new CommandBase() {
+    return AutoContainer.getInstance().getAutoCommand();
 
-    };
+    
   }
 
   /**

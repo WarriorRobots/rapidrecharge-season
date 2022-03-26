@@ -17,9 +17,10 @@ public class TurretSubsystem extends SubsystemBase {
 
   public TurretSubsystem () {
     turret = new WPI_TalonSRX(RobotMap.ID_TURRET);
+    turret.configClosedloopRamp(Vars.TURRET_RAMP_UP_TIME, Constants.MS_TIMEOUT);
     turret.setInverted(Vars.TURRET_REVERSED);
     turret.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
-	turret.setSensorPhase(Vars.TURRET_ENCODER_REVERSED);
+	  turret.setSensorPhase(Vars.TURRET_ENCODER_REVERSED);
     turret.config_kP(Constants.PRIMARY_PID, Vars.TURRET_KP, Constants.MS_TIMEOUT);
   }  
 

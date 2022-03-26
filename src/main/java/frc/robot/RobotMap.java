@@ -14,7 +14,7 @@ public class RobotMap {
   // public static final int ID_06 = 6;
   // The Limelight isn't a device with an ID, if it did, it would be 07
   // public static final int ID_08 = 8;
-  // public static final int ID_09 = 9;
+  public static final int ID_CLIMB_MOTOR = 9;
   public static final int ID_PICKUP_UPPER = 5;
   public static final int ID_FEED = 11;
   public static final int ID_TURRET = 12;
@@ -25,6 +25,11 @@ public class RobotMap {
 
   // Pneumatics
   public static final int ID_PCM = 0;
+  // TODO it should be noted the left and the right are symetric so they cannot be distinguished
+  public static final int ID_CLIMB_EXTENSION_LEFT = 4;
+  public static final int ID_CLIMB_RECALL_LEFT = 2;
+  public static final int ID_CLIMB_EXTENSION_RIGHT = 3;
+  public static final int ID_CLIMB_RECALL_RIGHT = 5;
 
   // DIO
   public static final int ID_FEED_INFRARED = 1;

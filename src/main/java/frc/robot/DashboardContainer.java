@@ -23,6 +23,25 @@ public class DashboardContainer {
   private static DashboardContainer instance = null;
 
   private SendableChooser<Integer> verbosityChooser = new SendableChooser<Integer>();
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // TODO these are for testing 
+  private SendableChooser<Integer> patternChooser = new SendableChooser<Integer>();
+  private SendableChooser<Integer> colorChooser = new SendableChooser<Integer>();
+
+  private static int COLOR_RED = 0;
+  private static int COLOR_BLUE = 3;
+  private static int COLOR_WHITE = 2;
+  private static int COLOR_GRAY = 1;
+  private static int COLOR_COLOR1 = 4;
+  private static int COLOR_COLOR2 = 5;
+  private static int PATTERN_STROBE = 0;
+  private static int PATTERN_CHASE = 1;
+  private static int PATTERN_HEARTBEAT = 2;
+  private static int PATTERN_BREATH = 3;
+  private static int PATTERN_SHOT = 4;
+  private static int PATTERN_SOLID = 5;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
   private NetworkTableEntry FrontRPMInput, BackRPMInput, FrontPercentInput, BackPercentInput, FrontBoostRPMInput, BackBoostRPMInput;
   private NetworkTableEntry FrontRPMOutput, BackRPMOutput, FeedContainsBall;
 
@@ -132,6 +151,24 @@ public class DashboardContainer {
     ShuffleboardTab config = getTab(TabsIndex.kConfig);
     FrontPercentInput = config.add("Front Shooter Percent Input", Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE).withPosition(4, 0).withSize(2, 1).getEntry();
     BackPercentInput = config.add("Back Shooter Percent Input", Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE).withPosition(4, 1).withSize(2, 1).getEntry();
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // TODO for testing
+    colorChooser.setDefaultOption("Red", COLOR_RED);
+    colorChooser.addOption("Gray", COLOR_GRAY);
+    colorChooser.addOption("White", COLOR_WHITE);
+    colorChooser.addOption("Blue", COLOR_BLUE);
+    colorChooser.addOption("Color1", COLOR_COLOR1);
+    colorChooser.addOption("Color2", COLOR_COLOR2);
+    patternChooser.addOption("Strobe", PATTERN_STROBE);
+    patternChooser.addOption("Chase", PATTERN_CHASE);
+    patternChooser.addOption("Heartbeat", PATTERN_HEARTBEAT);
+    patternChooser.addOption("Breathing", PATTERN_BREATH);
+    patternChooser.addOption("Shot", PATTERN_SHOT);
+    patternChooser.setDefaultOption("Solid", PATTERN_SOLID);
+    config.add("LED Color", colorChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(4, 2).withSize(2, 1);
+    config.add("LED Pattern", colorChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(4, 3).withSize(2, 1);
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
   }
 
   public double FrontRPMInput()
@@ -163,6 +200,16 @@ public class DashboardContainer {
     return BackPercentInput.getDouble(Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE);
   }
 
+  public int ColorInput()
+  {
+    return colorChooser.getSelected();
+  }
+
+  public int PatternInput()
+  {
+    return patternChooser.getSelected();
+  }
+
   /**
    * Gets the verbosity level of the robot: <p>
    * 1 - Driver Info <p>
@@ -185,10 +232,13 @@ public void putDashboard(){
       SmartDashboard.putNumber("Shooter/Encoder", RobotContainer.m_ShooterSubsystem.getEncFront());
       SmartDashboard.putNumber("Arm/Encoder", RobotContainer.m_ArmSubsytem.getEnc());
       SmartDashboard.putNumber("Turret/Clicks", RobotContainer.m_TurretSubsystem.getClicks());
+      SmartDashboard.putNumber("Climb/EncoderClicks", RobotContainer.m_ClimbSubsystem.getEnc());
+      SmartDashboard.putNumber("Climb/EncoderVelocity", RobotContainer.m_ClimbSubsystem.getEncVel());
     case 4:
       SmartDashboard.putNumber("Shooter/FrontGain", RobotContainer.m_ShooterSubsystem.getGainFront());
       SmartDashboard.putNumber("Shooter/BackGain", RobotContainer.m_ShooterSubsystem.getGainBack());
       SmartDashboard.putNumber("Arm/Gain", RobotContainer.m_ArmSubsytem.getGain());
+      SmartDashboard.putNumber("Climb/Gain", RobotContainer.m_ClimbSubsystem.getGain());
     case 3:
       SmartDashboard.putNumber("Camera/TargetX", RobotContainer.m_CameraSubsystem.GetTargetX());
       SmartDashboard.putNumber("Camera/TargetY", RobotContainer.m_CameraSubsystem.GetTargetY());
@@ -200,6 +250,7 @@ public void putDashboard(){
       SmartDashboard.putNumber("Camera/TargetDistance", RobotContainer.m_CameraSubsystem.getTargetDistance());
       SmartDashboard.putBoolean("Arm/HallEffect", RobotContainer.m_ArmSubsytem.getHallEffect());
       SmartDashboard.putNumber("Arm/Position", RobotContainer.m_ArmSubsytem.getPosition());
+      // SmartDashboard.putNumber("Climb/Position", RobotContainer.m_ClimbSubsystem.getPosition());
     case 1:
       FrontRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMFront());
       BackRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMBack());
