@@ -16,6 +16,7 @@ import frc.robot.Vars;
 import frc.robot.commands.arm.ArmHoldPosition;
 import frc.robot.commands.arm.ArmPosition;
 import frc.robot.commands.arm.ArmStabilize;
+import frc.robot.commands.auto.trajectories.TLine;
 import frc.robot.commands.feed.FeedPercentage;
 import frc.robot.commands.intake.IntakeBall;
 import frc.robot.commands.intake.IntakePercentage;
@@ -49,8 +50,7 @@ public class AutoIntakeShoot extends SequentialCommandGroup {
                         // before shooting
                         new ParallelCommandGroup(
                                 new TurretPreset(Turret, Vars.TURRET_180),
-                                new AutoLinear(drive,
-                                        Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE)),
+                                new RamseteContainer(drive, new TLine(){public double getLengthIn() {return Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE;}}).getCommandAndStop()),
                         new ArmHoldPosition(Arm, Vars.ARM_ANGLE_PICKUP),
                         new IntakeBall(Intake, Feed, Vars.INTAKE_PERCENT,
                                 0)),

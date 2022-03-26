@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Vars;
 import frc.robot.commands.arm.ArmStabilize;
+import frc.robot.commands.auto.trajectories.TLine;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -27,7 +28,7 @@ public class AutoBack extends SequentialCommandGroup {
     addCommands(
       new ArmStabilize(Arm),
       new PrintCommand("going backwards!"),
-      new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE)
+     new RamseteContainer(drive, new TLine(){public double getLengthIn() {return Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE;}}).getCommandAndStop()
     );
   }
 }

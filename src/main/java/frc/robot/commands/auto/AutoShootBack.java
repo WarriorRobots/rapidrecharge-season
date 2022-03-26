@@ -6,6 +6,7 @@ package frc.robot.commands.auto;
 
 import frc.robot.Vars;
 import frc.robot.commands.arm.ArmStabilize;
+import frc.robot.commands.auto.trajectories.TLine;
 import frc.robot.commands.shooter.AimShootFeed;
 import frc.robot.commands.turret.TurretPreset;
 import frc.robot.subsystems.ArmSubsystem;
@@ -39,7 +40,7 @@ public class AutoShootBack extends SequentialCommandGroup {
             new AimShootFeed(Shooter, Turret, Intake, Feed, Camera, () -> Vars.SHOOTER_BACK_DEFAULT_RPM,
                 () -> Vars.SHOOTER_FRONT_DEFAULT_RPM)),
         new PrintCommand("going backwards!"),
-        new AutoLinear(drive, Vars.AUTO_SHOOT_MOVE_DISTANCE),
+        new RamseteContainer(drive, new TLine(){public double getLengthIn() {return Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE;}}).getCommandAndStop(),
         new PrintCommand("finished auto!")
 
     );

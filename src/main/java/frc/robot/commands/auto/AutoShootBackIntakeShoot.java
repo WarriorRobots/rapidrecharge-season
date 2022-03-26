@@ -15,6 +15,7 @@ import frc.robot.Vars;
 import frc.robot.commands.arm.ArmHoldPosition;
 import frc.robot.commands.arm.ArmPosition;
 import frc.robot.commands.arm.ArmStabilize;
+import frc.robot.commands.auto.trajectories.TLine;
 import frc.robot.commands.intake.IntakeBall;
 import frc.robot.commands.shooter.AimShootFeed;
 import frc.robot.commands.turret.TurretPreset;
@@ -46,13 +47,13 @@ public class AutoShootBackIntakeShoot extends SequentialCommandGroup {
                                 () -> Vars.AUTO_BACK_SHOOTER_RPM)),
                 new PrintCommand("Going Backwards!"),
                 new ParallelDeadlineGroup(
-                        new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE),
+                        new RamseteContainer(drive, new TLine(){public double getLengthIn() {return Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE;}}).getCommandAndStop(),
                         new ArmHoldPosition(Arm, Vars.ARM_ANGLE_PICKUP),
                         new IntakeBall(Intake, Feed, Vars.INTAKE_PERCENT, Vars.SHOOTER_SLOW_INTAKE)),
                 new PrintCommand("Picked up ball! (maybe?)"),
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
-                                new AutoLinear(drive, Vars.AUTO_INTAKE_BALL_BACKWARD_DISTANCE),
+                                new RamseteContainer(drive, new TLine(){public double getLengthIn() {return Vars.AUTO_INTAKE_BALL_BACKWARD_DISTANCE;}}).getCommandAndStop(),
                                 new ParallelDeadlineGroup(
                                         new WaitCommand(Vars.AUTO_WAIT_TO_SHOOT_TIME),
                                         new AimShootFeed(Shooter, Turret, Intake, Feed, Camera,
