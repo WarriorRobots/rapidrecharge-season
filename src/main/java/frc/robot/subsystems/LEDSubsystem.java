@@ -10,13 +10,12 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.DashboardContainer;
+import frc.robot.RobotMap;
 
 /**
  * LedController sends PWM signals to the REV Blinkin to change the color of LEDs
  */
 public class LEDSubsystem extends SubsystemBase {
-
-  private static final int LED_CONTROLLER_ID = 0; // move to RobotMap.java
 
   /** LED controller acts as a Spark motor controller for it's inputs for changing patterns. */
   private Spark LED_controller;
@@ -31,6 +30,21 @@ public class LEDSubsystem extends SubsystemBase {
    * 43 Fixed Pallete Pattern Breath, Blue
    */
   public static final double IDLE = -0.15;
+
+  public static int PatternStrobe = 0;
+  public static int PatternChase = 1;
+  public static int PatternHeartbeat = 2;
+  public static int PatternBreath = 3;
+  public static int PatternShot = 4;
+  public static int PatternSolid = 5;
+
+  public static int ColorRed = 0;
+  public static int ColorGray = 1;
+  public static int ColorWhite = 2;
+  public static int ColorBlue = 3;
+  public static int Color1 = 4;
+  public static int Color2 = 5;
+
   double[][] ColorPatternArray = {{-0.11, 0.99, -0.05, -0.09, 0.15, 0.35}, 
   {-0.31, -0.27, 0.99, -0.29, 0.01, 0.21},
   {-0.25, -0.19, -0.21, -0.23, 0.07, 0.27},
@@ -40,10 +54,8 @@ public class LEDSubsystem extends SubsystemBase {
 
   // check with drivers what indicators are needed
   
-
-
   public LEDSubsystem() {
-    LED_controller = new Spark(LED_CONTROLLER_ID);
+    LED_controller = new Spark(RobotMap.LED_CONTROLLER_ID);
   }
 
   public void updatePattern(int Pattern){

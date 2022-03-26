@@ -34,4 +34,6 @@ public class RobotMap {
   // DIO
   public static final int ID_FEED_INFRARED = 1;
   public static final int ID_ARM_HALLEFFECT = 0;
+  
+  public static final int LED_CONTROLLER_ID = 0; 
 }
