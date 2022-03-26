@@ -43,7 +43,7 @@ public class ShooterFeed extends CommandBase {
       m_intake.setPercentage(Vars.SHOOTER_FEED, Vars.SHOOTER_FEED);
       m_feed.setPercentage(Vars.SHOOTER_FEED);
     }else{
-      if(!m_feed.containsBall()){
+      if(!m_feed.FeedcontainsBall()){
         m_intake.setPercentage(Vars.SHOOTER_SLOW_FEED, Vars.SHOOTER_SLOW_FEED);
         m_feed.setPercentage(Vars.SHOOTER_SLOW_FEED);
       }else{
