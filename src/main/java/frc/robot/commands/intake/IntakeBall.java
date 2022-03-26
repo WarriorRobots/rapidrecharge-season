@@ -36,7 +36,7 @@ public class IntakeBall extends CommandBase {
   public void execute() {
     
     m_IntakeSubsystem.setPercentage(m_intakeValue, m_intakeValue);
-     if(!m_feedSubsystem.containsBall()){
+     if(!m_feedSubsystem.FeedcontainsBall()){
        m_feedSubsystem.setPercentage(m_feedValue);
      }else{
        m_feedSubsystem.stop();
