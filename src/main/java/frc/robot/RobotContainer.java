@@ -38,6 +38,7 @@ import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.FeedSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
@@ -75,6 +76,7 @@ public class RobotContainer {
   protected static final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   protected static final FeedSubsystem m_FeedSubsystem = new FeedSubsystem();
   protected static final PneumaticsSubsystem m_Pneumatics_Subsystem = new PneumaticsSubsystem();
+  protected static final LEDSubsystem m_LED_Subsystem = new LEDSubsystem();
 
 
   // Drivetrain
@@ -278,7 +280,15 @@ public class RobotContainer {
     configureButtonBindings();
     CommandScheduler.getInstance().setDefaultCommand(m_drivetrain, m_tankDrive);
     CommandScheduler.getInstance().schedule(m_DashWriter);
-    
+    CommandScheduler.getInstance().schedule(new RunCommand(() -> {
+      m_LED_Subsystem.changeColor(DashboardContainer.getInstance().ColorInput());
+      m_LED_Subsystem.changePattern(DashboardContainer.getInstance().PatternInput());
+      m_LED_Subsystem.Update();
+    }){
+      public boolean runsWhenDisabled() {
+        return true;
+      }
+    });
   }
 
   /**
