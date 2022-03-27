@@ -167,13 +167,13 @@ public static final DifferentialDriveKinematics KINEMATICS =
   public static final double CLIMB_MAXIMUM = CLIMB_UP; // native
 
   public static final int PATTERN_0BALLS = LEDSubsystem.PatternSolid;
-  public static final int PATTERN_1BALLS = LEDSubsystem.PatternChase;
+  public static final int PATTERN_1BALLS = LEDSubsystem.PatternHeartbeat;
   public static final int PATTERN_2BALLS = LEDSubsystem.PatternStrobe;
 
   public static final int COLOR10SEC = LEDSubsystem.ColorRed;
-  public static final int COLOR20SEC = LEDSubsystem.ColorBlue;
+  public static final int COLOR20SEC = LEDSubsystem.Color2; // purple
   public static final int COLOR30SEC = LEDSubsystem.ColorWhite;
   public static final int COLOR40SEC = LEDSubsystem.ColorBlue;
-  public static final int COLORDEFAULT = LEDSubsystem.ColorGray;
+  public static final int COLORDEFAULT = LEDSubsystem.Color1; // orange
   
 }
