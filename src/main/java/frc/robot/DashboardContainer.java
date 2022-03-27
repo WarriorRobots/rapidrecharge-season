@@ -167,7 +167,7 @@ public class DashboardContainer {
     patternChooser.addOption("Shot", PATTERN_SHOT);
     patternChooser.setDefaultOption("Solid", PATTERN_SOLID);
     config.add("LED Color", colorChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(4, 2).withSize(2, 1);
-    config.add("LED Pattern", colorChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(4, 3).withSize(2, 1);
+    config.add("LED Pattern", patternChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(4, 3).withSize(2, 1);
     ////////////////////////////////////////////////////////////////////////////////////////////////////
   }
 

@@ -224,30 +224,31 @@ public class RobotContainer {
 
   public void UpdateLED(){
     if (m_FeedSubsystem.TwoBallsPresent()){
-      m_LEDSubsystem.updatePattern(Vars.PATTERN_2BALLS);
+      m_LEDSubsystem.changePattern(Vars.PATTERN_2BALLS);
     }
     else if (m_FeedSubsystem.BallPresent()){
-      m_LEDSubsystem.updatePattern(Vars.PATTERN_1BALLS);
+      m_LEDSubsystem.changePattern(Vars.PATTERN_1BALLS);
     }
     else {
-      m_LEDSubsystem.updatePattern(Vars.PATTERN_0BALLS);
+      m_LEDSubsystem.changePattern(Vars.PATTERN_0BALLS);
     }
 
     if (Timer.getMatchTime() < 10){
-      m_LEDSubsystem.updateColor(Vars.COLOR10SEC);
+      m_LEDSubsystem.changeColor(Vars.COLOR10SEC);
     }
     else if (Timer.getMatchTime() < 20){
-      m_LEDSubsystem.updateColor(Vars.COLOR20SEC);
+      m_LEDSubsystem.changeColor(Vars.COLOR20SEC);
     }
     else if (Timer.getMatchTime() < 30){
-      m_LEDSubsystem.updateColor(Vars.COLOR30SEC);
+      m_LEDSubsystem.changeColor(Vars.COLOR30SEC);
     }
     else if (Timer.getMatchTime() < 40){
-      m_LEDSubsystem.updateColor(Vars.COLOR40SEC);
+      m_LEDSubsystem.changeColor(Vars.COLOR40SEC);
     }
     else {
-      m_LEDSubsystem.updateColor(Vars.COLORDEFAULT);
+      m_LEDSubsystem.changeColor(Vars.COLORDEFAULT);
     }
+    m_LEDSubsystem.Update();
   }
   private final ParallelCommandGroup m_IntakeSequence = new ParallelCommandGroup(
       new ArmHoldPosition(m_ArmSubsytem, Vars.ARM_ANGLE_PICKUP),

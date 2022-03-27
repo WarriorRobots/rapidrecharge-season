@@ -58,14 +58,27 @@ public class LEDSubsystem extends SubsystemBase {
     LED_controller = new Spark(RobotMap.LED_CONTROLLER_ID);
   }
 
-  public void updatePattern(int Pattern){
+  /**
+   * Change the selected color. Use Update() to change the LED controller.
+   * @param Color
+   */
+  public void changePattern(int Pattern){
     CurrentPattern = Pattern;
-    Update();
+    // don't call Update() directly to not have reduntant calls
   }
-  public void updateColor(int Color){
+  
+  /**
+   * Change the selected color. Use Update() to change the LED controller.
+   * @param Color
+   */
+  public void changeColor(int Color){
     CurrentColor = Color;
-    Update();
+    // don't call Update() directly to not have reduntant calls
   }
+
+  /**
+   * Send the current color and pattern to the LED controller
+   */
   public void Update(){
     setChannel(ColorPatternArray[CurrentPattern][CurrentColor]);
   }
