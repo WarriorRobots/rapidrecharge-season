@@ -234,5 +234,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    odometry.update(
+      Rotation2d.fromDegrees(-getAngleDegrees()), // - degrees because the CCW must be + as it is on a cartesion plane
+      Units.inchesToMeters(getLeftPosition()),
+      Units.inchesToMeters(getRightPosition())
+    );
   }
 }
