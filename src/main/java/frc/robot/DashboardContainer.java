@@ -43,7 +43,7 @@ public class DashboardContainer {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   private NetworkTableEntry FrontRPMInput, BackRPMInput, FrontPercentInput, BackPercentInput, FrontBoostRPMInput, BackBoostRPMInput;
-  private NetworkTableEntry FrontRPMOutput, BackRPMOutput, FeedContainsBall;
+  private NetworkTableEntry FrontRPMOutput, BackRPMOutput, FeedContainsBall, IntakeContainsBall;
 
   // This constructor is private because it is a singleton
   private DashboardContainer() {}
@@ -137,6 +137,7 @@ public class DashboardContainer {
     FrontRPMOutput = driver.add("Front RPM", 0).withPosition(7, 0).getEntry();
     BackRPMOutput = driver.add("Back RPM", 0).withPosition(7, 1).getEntry();
     FeedContainsBall = driver.add("Feed Contains Ball", false).withPosition(7, 2).getEntry();
+    IntakeContainsBall = driver.add("Intake Contains Ball", false).withPosition(7, 3).getEntry();
     
     driver.addNumber("Xbox left Y", () -> IO.getXBoxLeftY()).withPosition(9, 0);
     driver.addNumber("Xbox right X", () -> IO.getXBoxRightX()).withPosition(9, 1);
@@ -255,6 +256,7 @@ public void putDashboard(){
       FrontRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMFront());
       BackRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMBack());
       FeedContainsBall.setBoolean(RobotContainer.m_FeedSubsystem.FeedcontainsBall());
+      IntakeContainsBall.setBoolean(RobotContainer.m_FeedSubsystem.IntakecontainsBall());
       SmartDashboard.putBoolean("One Ball Present", RobotContainer.m_FeedSubsystem.oneBallPresent());
       SmartDashboard.putBoolean("Two Balls Present", RobotContainer.m_FeedSubsystem.TwoBallsPresent());
 
