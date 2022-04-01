@@ -138,11 +138,12 @@ public class Vars {
   public static final double AUTO_SHOOT_RAMP_TIME = 2; // second
 
   // Pathing
-  public static final double DRIVE_KS = 0.62263; // Volts
-  public static final double DRIVE_KV = 2.4428; // Volts * s/m
-  public static final double DRIVE_KA = 0.29807; // Volts * s^2/m
+  public static final double DRIVE_KS = 0.65294; // Volts
+  public static final double DRIVE_KV = 2.4346; // Volts * s/m
+  public static final double DRIVE_KA = 0.39146; // Volts * s^2/m
   public static final double TRACK_WIDTH = Units.inchesToMeters(26.255); // meters
-  public static final double AUTO_PATH_KP = 3.2308;
+  // public static final double AUTO_PATH_KP = 3.4146;
+  public static final double AUTO_PATH_KP = 0; //TODO for inital test only, change back to actual value
   public static final DifferentialDriveKinematics KINEMATICS = new DifferentialDriveKinematics(TRACK_WIDTH);
 
   // public static final int CLIMB_TRACK_DIAMETER = 55; // XXX ?
