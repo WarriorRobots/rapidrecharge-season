@@ -117,7 +117,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
    */
   public void tankdriveVoltage(double leftVoltage, double rightVoltage) {
     // -rightVoltage to make the right side act reversed
-    m_left.setVoltage(-leftVoltage);
+    m_left.setVoltage(leftVoltage);
     m_right.setVoltage(rightVoltage);
     m_drive.feed();
   }
