@@ -17,9 +17,18 @@ import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Vars;
 
-/** Add your docs here. */
+/**
+ * Base trajectory class for 2478.
+ * Streamlines the process of making a {@link Trajectory} using the WPI tools.
+ * <p>
+ * Requires at least a {@link #build()} function to set the {@link #start}, {@link #end},
+ * and {@link #Waypoints}.
+ * 
+ * @author Joshua B.
+ */
 public abstract class TBase {
-    /** Max speed of trajectory in/s*/
+
+  /** Max speed of trajectory in/s*/
   final double MAX_SPEED = maxSpeed();
   /** Max acceleration of trajectory (in in/s^2) */
   final double MAX_ACCELERATION = maxAcceleration();
@@ -32,7 +41,8 @@ public abstract class TBase {
 
   /** Whether the trajectory is the left or right mirror of the trajectory. */
   final boolean LEFT;
- /**
+
+  /**
    * Pose of the robot at the start of the trajectory.
    * (NOTE: pose need to be referenced in METERS)
    */
@@ -42,7 +52,7 @@ public abstract class TBase {
    * (NOTE: all points need to be referenced in METERS)
    */
   Pose2d end;
-   /**
+  /**
    * All interior waypoints the robot must pass through on the trajectory.
    * (NOTE: all points need to be referenced in METERS)
   */
@@ -159,7 +169,6 @@ public abstract class TBase {
     config.setStartVelocity(Units.inchesToMeters(START_VELOCITY));
     config.setEndVelocity(Units.inchesToMeters(END_VELOCITY));
 
-    // An example trajectory to follow.  All units in meters.
     trajectory = TrajectoryGenerator.generateTrajectory(start, Waypoints, end, config);
   }
 
@@ -171,4 +180,3 @@ public abstract class TBase {
   }
 
 }
-
