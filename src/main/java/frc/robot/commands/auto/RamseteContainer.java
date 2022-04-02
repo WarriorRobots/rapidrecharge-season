@@ -15,19 +15,38 @@ import frc.robot.Vars;
 import frc.robot.commands.auto.trajectories.TBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-/** Add your docs here. */
+/**
+ * A file to contain the Ramsete command to pass it into autonomous drive commands.
+ */
 public class RamseteContainer {
-    private RamseteCommand ramsete;
-    private DrivetrainSubsystem m_drive;
-    private Trajectory m_trajectory;
 
-    public RamseteContainer(DrivetrainSubsystem drive, TBase trajectoryBase){
-        m_drive = drive;
-        m_trajectory = trajectoryBase.getTrajectory();
+  private RamseteCommand ramsete;
 
-        ramsete = new RamseteCommand(m_trajectory, m_drive::getPose, new RamseteController(Vars.RAMSETE_B, Vars.RAMSETE_ZETA), new SimpleMotorFeedforward(Vars.DRIVE_KS, Vars.DRIVE_KV, Vars.DRIVE_KA), Vars.KINEMATICS, m_drive::getWheelSpeeds, new PIDController(Vars.AUTO_PATH_KP, 0, 0), new PIDController(Vars.AUTO_PATH_KP, 0, 0), m_drive::tankdriveVoltage, m_drive);
-    }
-        
+  private DrivetrainSubsystem m_drive;
+  private Trajectory m_trajectory;
+
+  public RamseteContainer(DrivetrainSubsystem drive, TBase trajectoryBase) {
+    m_drive = drive;
+    m_trajectory = trajectoryBase.getTrajectory();
+    // SmartDashboard.putNumber("Trajectory est.", m_trajectory.getTotalTimeSeconds());
+
+    ramsete = new RamseteCommand(
+      m_trajectory,
+      m_drive::getPose,
+      new RamseteController(Vars.RAMSETE_B, Vars.RAMSETE_ZETA),
+      new SimpleMotorFeedforward(Vars.DRIVE_KS,
+                                 Vars.DRIVE_KV,
+                                 Vars.DRIVE_KA),
+      Vars.KINEMATICS,
+      m_drive::getWheelSpeeds,
+      new PIDController(Vars.AUTO_PATH_KP, 0, 0),
+      new PIDController(Vars.AUTO_PATH_KP, 0, 0),
+      // RamseteCommand passes volts to the callback
+      m_drive::tankdriveVoltage,
+      m_drive
+    );
+  }
+
   /**
    * Gets the Ramsete Command
    * @return the ramsete command to follow the path
@@ -45,5 +64,4 @@ public class RamseteContainer {
             .andThen(ramsete)
             .andThen(new InstantCommand(m_drive::stop, m_drive));
   }
-    }
-
+}
