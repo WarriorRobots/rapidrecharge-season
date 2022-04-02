@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -46,20 +47,63 @@ public final class Constants {
   public static final double VISION_TAPE = 101.625; //Height of vision tape off floor
   // Ball positions (origin at the hub, viewed from the angle of the scoring table https://www.desmos.com/calculator/han6ahdh5e)
   // Balls are counted going clockwise around the hub
+  // Translation2d's are in meters because autonomous trajectories use uniters of meters
   // Blue Balls
-  public static final Translation2d BALL_BLUE_SIDE_BLUE_1 = new Translation2d(-25.11, -146.14);
-  public static final Translation2d BALL_BLUE_SIDE_BLUE_2 = new Translation2d(-121.09, -85.58);
-  public static final Translation2d BALL_BLUE_SIDE_BLUE_3 = new Translation2d(-125.41, 79.13);
-  public static final Translation2d BALL_BLUE_STATION = new Translation2d(-277.73, -115.91);
-  public static final Translation2d BALL_BLUE_SIDE_RED_1 = new Translation2d(-32.73, 144.63);
-  public static final Translation2d BALL_BLUE_SIDE_RED_2 = new Translation2d(144.63, 32.73);
-  public static final Translation2d BALL_BLUE_SIDE_RED_3 = new Translation2d(85.58, -121.09);
+  public static final Translation2d BALL_BLUE_SIDE_BLUE_1 = new Translation2d(
+    Units.inchesToMeters(-25.11),
+    Units.inchesToMeters(-146.14)
+  );
+  public static final Translation2d BALL_BLUE_SIDE_BLUE_2 = new Translation2d(
+    Units.inchesToMeters(-121.09),
+    Units.inchesToMeters(-85.58)
+  );
+  public static final Translation2d BALL_BLUE_SIDE_BLUE_3 = new Translation2d(
+    Units.inchesToMeters(-125.41),
+    Units.inchesToMeters(79.13)
+  );
+  public static final Translation2d BALL_BLUE_STATION = new Translation2d(
+    Units.inchesToMeters(-277.73),
+    Units.inchesToMeters(-115.91)
+  );
+  public static final Translation2d BALL_BLUE_SIDE_RED_1 = new Translation2d(
+    Units.inchesToMeters(-32.73),
+    Units.inchesToMeters(144.63)
+  );
+  public static final Translation2d BALL_BLUE_SIDE_RED_2 = new Translation2d(
+    Units.inchesToMeters(144.63),
+    Units.inchesToMeters(32.73)
+  );
+  public static final Translation2d BALL_BLUE_SIDE_RED_3 = new Translation2d(
+    Units.inchesToMeters(85.58),
+    Units.inchesToMeters(-121.09)
+  );
   // Red Balls
-  public static final Translation2d BALL_RED_SIDE_BLUE_1 = new Translation2d(25.11, 146.14);
-  public static final Translation2d BALL_RED_SIDE_BLUE_2 = new Translation2d(121.09, 85.58);
-  public static final Translation2d BALL_RED_SIDE_BLUE_3 = new Translation2d(125.41, -79.13);
-  public static final Translation2d BALL_RED_STATION = new Translation2d(32.73, -144.63);
-  public static final Translation2d BALL_RED_SIDE_RED_1 = new Translation2d(277.73, 115.91);
-  public static final Translation2d BALL_RED_SIDE_RED_2 = new Translation2d(-85.58, 121.09);
-  public static final Translation2d BALL_RED_SIDE_RED_3 = new Translation2d(-144.63, -32.73);
+  public static final Translation2d BALL_RED_SIDE_BLUE_1 = new Translation2d(
+    Units.inchesToMeters(25.11),
+    Units.inchesToMeters(146.14)
+  );
+  public static final Translation2d BALL_RED_SIDE_BLUE_2 = new Translation2d(
+    Units.inchesToMeters(121.09),
+    Units.inchesToMeters(85.58)
+  );
+  public static final Translation2d BALL_RED_SIDE_BLUE_3 = new Translation2d(
+    Units.inchesToMeters(125.41),
+    Units.inchesToMeters(-79.13)
+  );
+  public static final Translation2d BALL_RED_STATION = new Translation2d(
+    Units.inchesToMeters(32.73),
+    Units.inchesToMeters(-144.63)
+  );
+  public static final Translation2d BALL_RED_SIDE_RED_1 = new Translation2d(
+    Units.inchesToMeters(277.73),
+    Units.inchesToMeters(115.91)
+  );
+  public static final Translation2d BALL_RED_SIDE_RED_2 = new Translation2d(
+    Units.inchesToMeters(-85.58),
+    Units.inchesToMeters(121.09)
+  );
+  public static final Translation2d BALL_RED_SIDE_RED_3 = new Translation2d(
+    Units.inchesToMeters(-144.63),
+    Units.inchesToMeters(-32.73)
+  );
 }
