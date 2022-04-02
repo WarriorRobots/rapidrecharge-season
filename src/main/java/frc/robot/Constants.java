@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -41,4 +44,22 @@ public final class Constants {
   public static final double BAR3 = 75.625; 
   public static final double BAR4 = 91; 
   public static final double VISION_TAPE = 101.625; //Height of vision tape off floor
+  // Ball positions (origin at the hub, viewed from the angle of the scoring table https://www.desmos.com/calculator/han6ahdh5e)
+  // Balls are counted going clockwise around the hub
+  // Blue Balls
+  public static final Translation2d BALL_BLUE_SIDE_BLUE_1 = new Translation2d(-25.11, -146.14);
+  public static final Translation2d BALL_BLUE_SIDE_BLUE_2 = new Translation2d(-121.09, -85.58);
+  public static final Translation2d BALL_BLUE_SIDE_BLUE_3 = new Translation2d(-125.41, 79.13);
+  public static final Translation2d BALL_BLUE_STATION = new Translation2d(-277.73, -115.91);
+  public static final Translation2d BALL_BLUE_SIDE_RED_1 = new Translation2d(-32.73, 144.63);
+  public static final Translation2d BALL_BLUE_SIDE_RED_2 = new Translation2d(144.63, 32.73);
+  public static final Translation2d BALL_BLUE_SIDE_RED_3 = new Translation2d(85.58, -121.09);
+  // Red Balls
+  public static final Translation2d BALL_RED_SIDE_BLUE_1 = new Translation2d(25.11, 146.14);
+  public static final Translation2d BALL_RED_SIDE_BLUE_2 = new Translation2d(121.09, 85.58);
+  public static final Translation2d BALL_RED_SIDE_BLUE_3 = new Translation2d(125.41, -79.13);
+  public static final Translation2d BALL_RED_STATION = new Translation2d(32.73, -144.63);
+  public static final Translation2d BALL_RED_SIDE_RED_1 = new Translation2d(277.73, 115.91);
+  public static final Translation2d BALL_RED_SIDE_RED_2 = new Translation2d(-85.58, 121.09);
+  public static final Translation2d BALL_RED_SIDE_RED_3 = new Translation2d(-144.63, -32.73);
 }
