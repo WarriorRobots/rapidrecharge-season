@@ -89,46 +89,6 @@ public class AutoContainer {
     chooser.addOption("WPI Path",
       new RamseteContainer(RobotContainer.m_drivetrain, new TWPI()).getCommandAndStop()
     );
-     chooser.addOption("Barrel",
-      new RamseteContainer(RobotContainer.m_drivetrain, new TBarrel()).getCommandAndStop()
-    );
-
-    TrajectoryConfig config = new TrajectoryConfig(
-      Units.inchesToMeters(Vars.AUTO_MAX_M_PER_S),
-      Units.inchesToMeters(Vars.AUTO_MAX_M_PER_S_SQUARED)
-    );
-    // Add kinematics to ensure max speed is actually obeyed
-    config.setKinematics(Vars.KINEMATICS);
-    // Apply the voltage constraint
-    config.addConstraint(
-      new DifferentialDriveVoltageConstraint(
-        new SimpleMotorFeedforward(Vars.DRIVE_KS, Vars.DRIVE_KV, Vars.DRIVE_KA),
-        Vars.KINEMATICS, 
-        10
-    ));
-    
-    config.setStartVelocity(Units.inchesToMeters(0));
-    config.setEndVelocity(Units.inchesToMeters(0));
-
-    chooser.addOption("Manual Ramsete", new InstantCommand(RobotContainer.m_drivetrain::resetOdometry, RobotContainer.m_drivetrain).andThen(
-         new RamseteCommand(
-          TrajectoryGenerator.generateTrajectory(
-            new Pose2d(), 
-            new ArrayList<Translation2d>(),
-            new Pose2d(0, 1, new Rotation2d(Math.PI/2)),
-            config
-          ), 
-          RobotContainer.m_drivetrain::getPose,
-          new RamseteController(Vars.RAMSETE_B, Vars.RAMSETE_ZETA),
-          new SimpleMotorFeedforward(Vars.DRIVE_KS, Vars.DRIVE_KV, Vars.DRIVE_KA),
-          Vars.KINEMATICS,
-          RobotContainer.m_drivetrain::getWheelSpeeds,
-          new PIDController(Vars.AUTO_PATH_KP, 0, 0),
-          new PIDController(Vars.AUTO_PATH_KP, 0, 0),
-          RobotContainer.m_drivetrain::tankdriveVoltage,
-          RobotContainer.m_drivetrain
-         ))
-    );
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     autoTab.add("Auto Selector", chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(3,0).withSize(2, 1);
