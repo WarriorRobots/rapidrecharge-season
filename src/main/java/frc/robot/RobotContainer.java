@@ -5,22 +5,17 @@
 
 package frc.robot;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.Climb.ClimbMagic;
 import frc.robot.commands.Climb.ClimbPiston;
 import frc.robot.commands.arm.ArmHoldPosition;
 import frc.robot.commands.arm.ArmLinear;
-import frc.robot.commands.arm.ArmMakeRoom;
 import frc.robot.commands.arm.ArmPosition;
 import frc.robot.commands.arm.ArmStabilize;
 import frc.robot.commands.arm.ArmZero;
 import frc.robot.commands.camera.CameraChangePipeline;
-//import frc.robot.commands.drive.Linear;
 import frc.robot.commands.drive.TankDrive;
 import frc.robot.commands.feed.FeedPercentage;
 import frc.robot.commands.intake.IntakeBall;
@@ -45,14 +40,12 @@ import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.ClimbSubsystem.ClimbState;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;

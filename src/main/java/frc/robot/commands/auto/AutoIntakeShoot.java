@@ -4,13 +4,11 @@
 
 package frc.robot.commands.auto;
 
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.DashboardContainer;
 import frc.robot.DashboardContainer;
 import frc.robot.Vars;
 import frc.robot.commands.arm.ArmHoldPosition;
@@ -20,7 +18,6 @@ import frc.robot.commands.feed.FeedPercentage;
 import frc.robot.commands.intake.IntakeBall;
 import frc.robot.commands.intake.IntakePercentage;
 import frc.robot.commands.shooter.AimShootFeed;
-import frc.robot.commands.shooter.ShooterRPM;
 import frc.robot.commands.turret.TurretPreset;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;

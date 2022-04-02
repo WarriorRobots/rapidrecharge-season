@@ -2,7 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 
 public class Vars {
