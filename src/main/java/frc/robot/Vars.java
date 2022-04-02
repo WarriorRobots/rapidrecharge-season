@@ -123,8 +123,8 @@ public class Vars {
   // seconds
   public static final double RAMSETE_B = 2;
   public static final double RAMSETE_ZETA = 0.7;
-  public static final double AUTO_MAX_M_PER_S = 25; // in/s XXX ???
-  public static final double AUTO_MAX_M_PER_S_SQUARED = 10; // in/s^2 XXX ???
+  public static final double AUTO_MAX_M_PER_S = 84; // in/s XXX ???
+  public static final double AUTO_MAX_M_PER_S_SQUARED = 67; // in/s^2 XXX ???
   // Distances
   public static final double AUTO_SHOOT_MOVE_DISTANCE = 60; //in
   public static final double AUTO_FORWARD_DISTANCE = 30; // in

@@ -40,6 +40,7 @@ import frc.robot.commands.auto.RamseteContainer;
 import frc.robot.commands.auto.trajectories.TBack;
 import frc.robot.commands.auto.trajectories.TBarrel;
 import frc.robot.commands.auto.trajectories.TLine;
+import frc.robot.commands.auto.trajectories.TWPI;
 /**
  * A singleton tool to handle the auto selection.
  */
@@ -83,6 +84,9 @@ public class AutoContainer {
     );
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // XXX the enclosed is for testing purposes only
+    chooser.addOption("WPI Path",
+      new RamseteContainer(RobotContainer.m_drivetrain, new TWPI()).getCommandAndStop()
+    );
      chooser.addOption("Barrel",
       new RamseteContainer(RobotContainer.m_drivetrain, new TBarrel()).getCommandAndStop()
     );
