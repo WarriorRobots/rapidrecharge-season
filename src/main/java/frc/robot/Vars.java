@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 
 public class Vars {
 
@@ -164,4 +165,15 @@ public static final DifferentialDriveKinematics KINEMATICS =
   // TODO make this not follow after the competition
   public static final double CLIMB_MINIMUM = CLIMB_DOWN;
   public static final double CLIMB_MAXIMUM = CLIMB_UP; // native
+
+  public static final int PATTERN_0BALLS = LEDSubsystem.PatternSolid;
+  public static final int PATTERN_1BALLS = LEDSubsystem.PatternHeartbeat;
+  public static final int PATTERN_2BALLS = LEDSubsystem.PatternStrobe;
+
+  public static final int COLOR10SEC = LEDSubsystem.ColorRed;
+  public static final int COLOR20SEC = LEDSubsystem.Color2; // purple
+  public static final int COLOR30SEC = LEDSubsystem.ColorWhite;
+  public static final int COLOR40SEC = LEDSubsystem.ColorBlue;
+  public static final int COLORDEFAULT = LEDSubsystem.Color1; // orange
+  
 }
