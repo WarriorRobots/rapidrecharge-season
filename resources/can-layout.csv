@@ -1,0 +1,17 @@
+PORT PDP,Item
+VBAT controller,Rio
+VBAT PCM,PCM
+00-LR,LeftRear
+01-LF,LeftFront
+04-AR,ArmRotate
+05-LP,LowerPickup
+10-UP,UpperPickup
+15-RF,RightFront
+14-RR,RightRear
+09-C,Climb
+12-T,Turret
+?11-F,?Feed
+?03-KS,?KickerShooter
+?13-RS,?RightShooter
+?02-LS,?LeftShooter
+-,PDP

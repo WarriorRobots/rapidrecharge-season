@@ -13,6 +13,7 @@ folder.
 - [Guide](#Guide)
 - [Wiring guide](#Wiring-guide)
 - [Wiring layout](#Wiring-layout)
+- [CAN layout](#CAN-layout)
 - ~~[Button Binding](#Button-bindings)~~
 - [Path Weaver tool](#Path-Weaver-tool)
 - [Pipelines](#Pipelines)
@@ -39,6 +40,15 @@ Some notes about the file:
 - Ports are labled as H (for 40 Amp breakers) and L (for 5-30 Amp breakers)
 - IDs should start with the port number followed by a hyphen and (1 or) 2 letters describing the controller. eg. 01-RB stands for Right-Back Drive
 - Values are left blank on purose instead of being filled with NA
+- Excel may cover cells due to poor formatting as Excel struggles with non-xlsx files.
+
+## CAN Layout
+
+A csv file that contains the electronics plugged into the CAN loop and the order they are in it. This file is a csv so that changes can be seen in plain text in the git history.
+
+Some notes about the file:
+- Ports are labled as H (for 40 Amp breakers) and L (for 5-30 Amp breakers)
+- IDs should start with the port number followed by a hyphen and (1 or) 2 letters describing the controller. eg. 01-RB stands for Right-Back Drive
 - Excel may cover cells due to poor formatting as Excel struggles with non-xlsx files.
 
 ## Button Bindings

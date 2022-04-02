@@ -33,5 +33,8 @@ public class RobotMap {
 
   // DIO
   public static final int ID_FEED_INFRARED = 1;
+  public static final int ID_INTAKE_INFRARED = 2; // TODO change once actual sensor is put on the robot
   public static final int ID_ARM_HALLEFFECT = 0;
+  
+  public static final int LED_CONTROLLER_ID = 0; 
 }

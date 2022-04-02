@@ -40,7 +40,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DriveTrain. */
   public DrivetrainSubsystem() {
     m_frontLeft = new WPI_TalonFX(RobotMap.ID_LEFT_FRONT);
-    m_frontLeft.configOpenloopRamp(Vars.DRIVETRAIN_RAMP_TIME);
+   m_frontLeft.configOpenloopRamp(Vars.DRIVETRAIN_RAMP_TIME);
     m_frontLeft.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, Constants.PRIMARY_PID, Constants.MS_TIMEOUT);
     m_rearLeft = new WPI_TalonFX(RobotMap.ID_LEFT_REAR);
     m_rearLeft.configOpenloopRamp(Vars.DRIVETRAIN_RAMP_TIME);

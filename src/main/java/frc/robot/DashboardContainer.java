@@ -23,8 +23,27 @@ public class DashboardContainer {
   private static DashboardContainer instance = null;
 
   private SendableChooser<Integer> verbosityChooser = new SendableChooser<Integer>();
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  // TODO these are for testing 
+  private SendableChooser<Integer> patternChooser = new SendableChooser<Integer>();
+  private SendableChooser<Integer> colorChooser = new SendableChooser<Integer>();
+
+  private static int COLOR_RED = 0;
+  private static int COLOR_BLUE = 3;
+  private static int COLOR_WHITE = 2;
+  private static int COLOR_GRAY = 1;
+  private static int COLOR_COLOR1 = 4;
+  private static int COLOR_COLOR2 = 5;
+  private static int PATTERN_STROBE = 0;
+  private static int PATTERN_CHASE = 1;
+  private static int PATTERN_HEARTBEAT = 2;
+  private static int PATTERN_BREATH = 3;
+  private static int PATTERN_SHOT = 4;
+  private static int PATTERN_SOLID = 5;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
   private NetworkTableEntry FrontRPMInput, BackRPMInput, FrontPercentInput, BackPercentInput, FrontBoostRPMInput, BackBoostRPMInput;
-  private NetworkTableEntry FrontRPMOutput, BackRPMOutput, FeedContainsBall;
+  private NetworkTableEntry FrontRPMOutput, BackRPMOutput, FeedContainsBall, IntakeContainsBall;
 
   // This constructor is private because it is a singleton
   private DashboardContainer() {}
@@ -118,6 +137,7 @@ public class DashboardContainer {
     FrontRPMOutput = driver.add("Front RPM", 0).withPosition(7, 0).getEntry();
     BackRPMOutput = driver.add("Back RPM", 0).withPosition(7, 1).getEntry();
     FeedContainsBall = driver.add("Feed Contains Ball", false).withPosition(7, 2).getEntry();
+    IntakeContainsBall = driver.add("Intake Contains Ball", false).withPosition(7, 3).getEntry();
     
     driver.addNumber("Xbox left Y", () -> IO.getXBoxLeftY()).withPosition(9, 0);
     driver.addNumber("Xbox right X", () -> IO.getXBoxRightX()).withPosition(9, 1);
@@ -132,6 +152,24 @@ public class DashboardContainer {
     ShuffleboardTab config = getTab(TabsIndex.kConfig);
     FrontPercentInput = config.add("Front Shooter Percent Input", Vars.SHOOTER_FRONT_ESTIMATED_PERCENTAGE).withPosition(4, 0).withSize(2, 1).getEntry();
     BackPercentInput = config.add("Back Shooter Percent Input", Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE).withPosition(4, 1).withSize(2, 1).getEntry();
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // TODO for testing
+    colorChooser.setDefaultOption("Red", COLOR_RED);
+    colorChooser.addOption("Gray", COLOR_GRAY);
+    colorChooser.addOption("White", COLOR_WHITE);
+    colorChooser.addOption("Blue", COLOR_BLUE);
+    colorChooser.addOption("Color1", COLOR_COLOR1);
+    colorChooser.addOption("Color2", COLOR_COLOR2);
+    patternChooser.addOption("Strobe", PATTERN_STROBE);
+    patternChooser.addOption("Chase", PATTERN_CHASE);
+    patternChooser.addOption("Heartbeat", PATTERN_HEARTBEAT);
+    patternChooser.addOption("Breathing", PATTERN_BREATH);
+    patternChooser.addOption("Shot", PATTERN_SHOT);
+    patternChooser.setDefaultOption("Solid", PATTERN_SOLID);
+    config.add("LED Color", colorChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(4, 2).withSize(2, 1);
+    config.add("LED Pattern", patternChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(4, 3).withSize(2, 1);
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
   }
 
   public double FrontRPMInput()
@@ -161,6 +199,16 @@ public class DashboardContainer {
   public double BackPercentInput()
   {
     return BackPercentInput.getDouble(Vars.SHOOTER_BACK_ESTIMATED_PERCENTAGE);
+  }
+
+  public int ColorInput()
+  {
+    return colorChooser.getSelected();
+  }
+
+  public int PatternInput()
+  {
+    return patternChooser.getSelected();
   }
 
   /**
@@ -207,7 +255,11 @@ public void putDashboard(){
     case 1:
       FrontRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMFront());
       BackRPMOutput.setDouble(RobotContainer.m_ShooterSubsystem.getRPMBack());
-      FeedContainsBall.setBoolean(RobotContainer.m_FeedSubsystem.containsBall());
+      FeedContainsBall.setBoolean(RobotContainer.m_FeedSubsystem.FeedcontainsBall());
+      IntakeContainsBall.setBoolean(RobotContainer.m_FeedSubsystem.IntakecontainsBall());
+      SmartDashboard.putBoolean("One Ball Present", RobotContainer.m_FeedSubsystem.oneBallPresent());
+      SmartDashboard.putBoolean("Two Balls Present", RobotContainer.m_FeedSubsystem.TwoBallsPresent());
+
       // SmartDashboard.putNumber("Shooter/FrontRPM", RobotContainer.m_ShooterSubsystem.getRPMFront());
       // SmartDashboard.putNumber("Shooter/BackRPM", RobotContainer.m_ShooterSubsystem.getRPMBack());
       // SmartDashboard.putBoolean("Feed/ContainsBall", RobotContainer.m_FeedSubsystem.containsBall());

@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 
 public class Vars {
 
@@ -100,8 +101,8 @@ public class Vars {
   /**
    * Drive train ramp time for not falling over like joel did circa 3/2022
    */
-  public static final double DRIVETRAIN_RAMP_TIME = 0.25; // seconds
-  public static final double DRIVETRAIN_GEARING = 1 / 10.91;
+  public static final double DRIVETRAIN_RAMP_TIME = 0; //seconds 
+  public static final double DRIVETRAIN_GEARING = 1/10.91;
   // auto
   public static final double AUTO_SPEED_TOLERANCE = 0.1; // inches per sec
   public static final double AUTO_LINEAR_TOLERANCE = 2; // inches
@@ -122,21 +123,16 @@ public class Vars {
   // seconds
   public static final double RAMSETE_B = 2;
   public static final double RAMSETE_ZETA = 0.7;
-  // public static final double DRIVE_MAX_M_PER_S =189.72441; // in/s //XXX find
-  // this
-  // public static final double DRIVE_MAX_M_PER_S_SQUARED = 1743; // in/s^2 //XXX
-  // find this value
   public static final double AUTO_MAX_M_PER_S = 25; // in/s XXX ???
   public static final double AUTO_MAX_M_PER_S_SQUARED = 10; // in/s^2 XXX ???
   // Distances
-  public static final double AUTO_SHOOT_MOVE_DISTANCE = 60; // in
+  public static final double AUTO_SHOOT_MOVE_DISTANCE = 60; //in
   public static final double AUTO_FORWARD_DISTANCE = 30; // in
   public static final double AUTO_BACK_FORWARD = 60; // in
   public static final double AUTO_INTAKE_BALL_BACKWARD_DISTANCE = -48; // in
-  public static final double AUTO_INTAKE_BALL_FORWARD_DISTANCE = 51; // in
+  public static final double AUTO_INTAKE_BALL_FORWARD_DISTANCE= 51; // in
   public static final double AUTO_SHOOT_FRONT_SPEED_FOR_AUTOINTAKESHOOT = 2575; // rpm
   public static final double AUTO_SHOOT_RAMP_TIME = 2; // second
-
   // Pathing
   public static final double DRIVE_KS = 0.65294; // Volts
   public static final double DRIVE_KV = 2.4346; // Volts * s/m
@@ -177,4 +173,15 @@ public class Vars {
   // TODO make this not follow after the competition
   public static final double CLIMB_MINIMUM = CLIMB_DOWN;
   public static final double CLIMB_MAXIMUM = CLIMB_UP; // native
+
+  public static final int PATTERN_0BALLS = LEDSubsystem.PatternSolid;
+  public static final int PATTERN_1BALLS = LEDSubsystem.PatternHeartbeat;
+  public static final int PATTERN_2BALLS = LEDSubsystem.PatternStrobe;
+
+  public static final int COLOR10SEC = LEDSubsystem.ColorRed;
+  public static final int COLOR20SEC = LEDSubsystem.Color2; // purple
+  public static final int COLOR30SEC = LEDSubsystem.ColorWhite;
+  public static final int COLOR40SEC = LEDSubsystem.ColorBlue;
+  public static final int COLORDEFAULT = LEDSubsystem.Color1; // orange
+  
 }
