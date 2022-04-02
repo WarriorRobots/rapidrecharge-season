@@ -28,6 +28,12 @@ public class RamseteContainer {
   public RamseteContainer(DrivetrainSubsystem drive, TBase trajectoryBase) {
     m_drive = drive;
     m_trajectory = trajectoryBase.getTrajectory();
+    // Make the trajectory to be followed relative to the robot where the robot begins at the origin.
+    // This is because we will reset the robot's pose to the origin before following a path.
+    // While this can lead to errors that build up after the robot fails to complete the path percisely,
+    // this will garuntee that the behavior is consistant for each the Ramsete Container's command is used.
+    m_trajectory = m_trajectory.relativeTo(m_trajectory.getInitialPose());
+
     // SmartDashboard.putNumber("Trajectory est.", m_trajectory.getTotalTimeSeconds());
 
     ramsete = new RamseteCommand(
@@ -52,6 +58,7 @@ public class RamseteContainer {
    * @return the ramsete command to follow the path
    */
   public CommandBase getCommand() {
+    // resetOdometry is required as the trajectory starts from the origin, see above
     return new InstantCommand(m_drive::resetOdometry, m_drive).andThen(ramsete);
   }
 
@@ -60,6 +67,7 @@ public class RamseteContainer {
    * @return the command (and stops the drive after it finishes)
    */
   public CommandBase getCommandAndStop() {
+    // resetOdometry is required as the trajectory starts from the origin, see above
     return new InstantCommand(m_drive::resetOdometry, m_drive)
             .andThen(ramsete)
             .andThen(new InstantCommand(m_drive::stop, m_drive));
