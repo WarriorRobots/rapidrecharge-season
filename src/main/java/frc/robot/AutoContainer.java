@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 // import frc.robot.commands.auto.RamseteContainer;
 // import frc.robot.commands.auto.trajectories.TLine;
 import frc.robot.DashboardContainer.TabsIndex;
+import frc.robot.commands.auto.Auto3BallA;
 import frc.robot.commands.auto.AutoBack;
 import frc.robot.commands.auto.AutoIntakeShoot;
 import frc.robot.commands.auto.AutoShootBack;
@@ -82,6 +83,7 @@ public class AutoContainer {
      chooser.addOption("Forward",
       new RamseteContainer(RobotContainer.m_drivetrain, new TLine(){public double getLengthIn() {return Vars.AUTO_INTAKE_BALL_FORWARD_DISTANCE;}}).getCommandAndStop()
     );
+    chooser.addOption("3 Ball Auto", new Auto3BallA(RobotContainer.m_drivetrain, RobotContainer.m_ShooterSubsystem, RobotContainer.m_TurretSubsystem, RobotContainer.m_CameraSubsystem, RobotContainer.m_IntakeSubsystem, RobotContainer.m_FeedSubsystem, RobotContainer.m_ArmSubsytem));
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // XXX the enclosed is for testing purposes only
     chooser.addOption("WPI Path",

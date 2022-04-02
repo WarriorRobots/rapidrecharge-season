@@ -1,5 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -183,5 +186,21 @@ public class Vars {
   public static final int COLOR30SEC = LEDSubsystem.ColorWhite;
   public static final int COLOR40SEC = LEDSubsystem.ColorBlue;
   public static final int COLORDEFAULT = LEDSubsystem.Color1; // orange
+
+  // AUTO POINTS
+  public static final Pose2d AUTOBALLA0 = new Pose2d(Units.inchesToMeters(-25.6), Units.inchesToMeters(-80.83), Rotation2d.fromDegrees(270));
+  public static final Pose2d AUTOBALLA1 = new Pose2d(Units.inchesToMeters(-25.6), Units.inchesToMeters(-131.83), Rotation2d.fromDegrees(270));
+  public static final Pose2d AUTOBALLA2 = new Pose2d(Units.inchesToMeters(8.02), Units.inchesToMeters(-82.61), Rotation2d.fromDegrees(193.5));
+  public static final Translation2d AUTOBALL2W1 = new Translation2d(Units.inchesToMeters(-63.62),Units.inchesToMeters(-66.49));
+  public static final Pose2d AUTOBALLA3 = new Pose2d(Units.inchesToMeters(-108.02), Units.inchesToMeters(-78.27), Rotation2d.fromDegrees(206.5));
+  
+  // AUTO RPMs
+  public static final double AUTO_A1_FRONT_RPM = 2400; // rpm
+  public static final double AUTO_A1_BACK_RPM = 7500; // rpm
+
+  
+
+
+
   
 }
