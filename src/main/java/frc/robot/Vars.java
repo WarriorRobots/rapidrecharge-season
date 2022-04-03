@@ -192,7 +192,7 @@ public class Vars {
   public static final Pose2d AUTOBALLA1 = new Pose2d(Units.inchesToMeters(-25.6), Units.inchesToMeters(-131.83), Rotation2d.fromDegrees(270));
   public static final Pose2d AUTOBALLA2 = new Pose2d(Units.inchesToMeters(8.02), Units.inchesToMeters(-82.61), Rotation2d.fromDegrees(193.5));
   // public static final Translation2d AUTOBALL2W1 = new Translation2d(Units.inchesToMeters(-84.02),Units.inchesToMeters(-18.27));
-  public static final Pose2d AUTOBALLA3 = new Pose2d(Units.inchesToMeters(-77.02), Units.inchesToMeters(-53.27), Rotation2d.fromDegrees(206.5));
+  public static final Pose2d AUTOBALLA3 = new Pose2d(Units.inchesToMeters(-87.02), Units.inchesToMeters(-58.27), Rotation2d.fromDegrees(206.5));
   
   // AUTO RPMs
   public static final double AUTO_A1_FRONT_RPM = 2400; // rpm
