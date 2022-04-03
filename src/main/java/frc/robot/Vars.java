@@ -142,7 +142,7 @@ public class Vars {
   public static final double DRIVE_KA = 0.39146; // Volts * s^2/m
   public static final double TRACK_WIDTH = Units.inchesToMeters(26.255); // meters
   // public static final double AUTO_PATH_KP = 3.4146;
-  public static final double AUTO_PATH_KP = 0; //TODO for inital test only, change back to actual value
+  public static final double AUTO_PATH_KP = 0.075; //TODO for inital test only, change back to actual value
   public static final DifferentialDriveKinematics KINEMATICS = new DifferentialDriveKinematics(TRACK_WIDTH);
 
   // public static final int CLIMB_TRACK_DIAMETER = 55; // XXX ?
@@ -191,8 +191,8 @@ public class Vars {
   public static final Pose2d AUTOBALLA0 = new Pose2d(Units.inchesToMeters(-25.6), Units.inchesToMeters(-80.83), Rotation2d.fromDegrees(270));
   public static final Pose2d AUTOBALLA1 = new Pose2d(Units.inchesToMeters(-25.6), Units.inchesToMeters(-131.83), Rotation2d.fromDegrees(270));
   public static final Pose2d AUTOBALLA2 = new Pose2d(Units.inchesToMeters(8.02), Units.inchesToMeters(-82.61), Rotation2d.fromDegrees(193.5));
-  public static final Translation2d AUTOBALL2W1 = new Translation2d(Units.inchesToMeters(-63.62),Units.inchesToMeters(-66.49));
-  public static final Pose2d AUTOBALLA3 = new Pose2d(Units.inchesToMeters(-108.02), Units.inchesToMeters(-78.27), Rotation2d.fromDegrees(206.5));
+  public static final Translation2d AUTOBALL2W1 = new Translation2d(Units.inchesToMeters(-94.02),Units.inchesToMeters(-18.27));
+  public static final Pose2d AUTOBALLA3 = new Pose2d(Units.inchesToMeters(-104.02), Units.inchesToMeters(-28.27), Rotation2d.fromDegrees(206.5));
   
   // AUTO RPMs
   public static final double AUTO_A1_FRONT_RPM = 2400; // rpm

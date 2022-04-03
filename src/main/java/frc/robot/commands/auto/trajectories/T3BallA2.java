@@ -18,6 +18,11 @@ import frc.robot.Vars;
 public class T3BallA2 extends TBase {
 
   @Override
+  public boolean isReversed() {
+      return true;
+  }
+
+  @Override
   void build() {
     start = Vars.AUTOBALLA1;
     end = Vars.AUTOBALLA2;
