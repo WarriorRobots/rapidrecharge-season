@@ -20,7 +20,7 @@ public class T3BallA3 extends TBase {
   @Override
   void build() {
     start = Vars.AUTOBALLA2;
-    Waypoints.add(Vars.AUTOBALL2W1);
+    // Waypoints.add(Vars.AUTOBALL2W1);
     end = Vars.AUTOBALLA3;
   }
 }
