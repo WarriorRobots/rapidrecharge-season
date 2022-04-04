@@ -59,7 +59,7 @@ public class Vars {
   public static final double SHOOTER_FEED = 1; // percent (for hopper and feed to feed)
   public static final double SHOOTER_SLOW_FEED = 0.2; // percent (for hopper and feed to feed when the shooter is not
                                                       // rev-ed)
-  public static final double SHOOTER_SLOW_INTAKE = 0.2;
+  public static final double SHOOTER_SLOW_INTAKE = 0.4;
   public static final double SHOOTER_BACK_FEED_TIME = 0.2; // seconds
   public static final double AUTO_SHOOTER_BACK_FEED_TIME = .25; // seconds
   public static final double SHOOTER_FRONT_REVERSE = -0.3; // percent
