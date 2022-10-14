@@ -24,7 +24,7 @@ public class RobotMap {
   
 
   // Pneumatics
-  public static final int ID_PCM = 0;
+  public static final int ID_PCM = 2;
   // TODO it should be noted the left and the right are symetric so they cannot be distinguished
   public static final int ID_CLIMB_EXTENSION_LEFT = 4;
   public static final int ID_CLIMB_RECALL_LEFT = 2;
