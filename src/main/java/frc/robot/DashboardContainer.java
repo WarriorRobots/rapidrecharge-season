@@ -169,6 +169,7 @@ public class DashboardContainer {
     patternChooser.setDefaultOption("Solid", PATTERN_SOLID);
     config.add("LED Color", colorChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(4, 2).withSize(2, 1);
     config.add("LED Pattern", patternChooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(4, 3).withSize(2, 1);
+    config.addNumber("LED Spark Value", ()->RobotContainer.m_LEDSubsystem.getChannel()).withPosition(4, 4).withSize(2, 2);
     ////////////////////////////////////////////////////////////////////////////////////////////////////
   }
 
